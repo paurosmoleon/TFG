@@ -7,17 +7,18 @@ export default function Header() {
   const navItems = [
     { name: 'Inicio', to: '/home' },
     { name: 'Dashboard', to: '/dashboard' },
-    { name: 'Sobre nosotros', to: '/aboutus' },
+    { name: 'Sobre nosotros', to: '/about-us' },
   ];
 
   return (
-    <header className="flex shadow-lg py-4 px-4 sm:px-10 bg-white min-h-[70px] tracking-wide relative z-50">
+    <header className="flex shadow-lg py-4 px-4 sm:px-10 bg-white min-h-[70px] tracking-wide relative z-50"> 
       <div className="flex flex-wrap items-center justify-between gap-4 w-full">
         <Link
           to="/home"
           className="lg:absolute max-lg:left-10 lg:top-2/4 lg:left-2/4 lg:-translate-x-1/2 lg:-translate-y-1/2 max-sm:hidden"
         >
           <img
+            src="/whale-no-background.png"
             alt="logo"
             className="w-36"
           />
@@ -26,6 +27,7 @@ export default function Header() {
         {/* Logo reducido (móvil) */}
         <Link to="/home" className="hidden max-sm:block">
           <img
+            src="/whale-no-background.png"
             alt="logo"
             className="w-9"
           />
@@ -58,7 +60,7 @@ export default function Header() {
                 <li>
                   <Link to="/" className="block w-36 mb-6">
                     <img
-                      src="https://readymadeui.com/readymadeui.svg"
+                      src="/whale-no-background.png"
                       alt="logo"
                     />
                   </Link>
@@ -104,7 +106,7 @@ export default function Header() {
           >
             Login
           </Link>
-          <button className="px-4 py-2 text-sm rounded-sm font-medium text-white border border-blue-600 bg-blue-600 hover:bg-blue-700">
+          <button className="px-4 py-2 text-sm rounded-sm font-medium cursor-pointer text-white border border-blue-600 bg-blue-600 hover:bg-blue-700">
             Sign up
           </button>
           {/* Botón hamburguesa móvil */}
