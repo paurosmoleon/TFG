@@ -1,4 +1,5 @@
-import Docker from '../icons/Docker';
+import { FaDocker } from "react-icons/fa";
+
 
 export default function Footer() {
   return (
@@ -9,7 +10,7 @@ export default function Footer() {
             href="/dashboard"
             className="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse"
           >
-            <Docker className="h-8" />
+            <FaDocker className="h-8" />
             <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
               leftoversv2
             </span>
