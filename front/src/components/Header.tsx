@@ -1,30 +1,35 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
 
+  const navItems = [
+    { name: 'Inicio', to: '/home' },
+    { name: 'Dashboard', to: '/dashboard' },
+    { name: 'Sobre nosotros', to: '/aboutus' },
+  ];
+
   return (
     <header className="flex shadow-lg py-4 px-4 sm:px-10 bg-white min-h-[70px] tracking-wide relative z-50">
       <div className="flex flex-wrap items-center justify-between gap-4 w-full">
-        <a
-          href="#"
+        <Link
+          to="/home"
           className="lg:absolute max-lg:left-10 lg:top-2/4 lg:left-2/4 lg:-translate-x-1/2 lg:-translate-y-1/2 max-sm:hidden"
         >
           <img
-            src="https://readymadeui.com/readymadeui.svg"
             alt="logo"
             className="w-36"
           />
-        </a>
+        </Link>
 
         {/* Logo reducido (móvil) */}
-        <a href="#" className="hidden max-sm:block">
+        <Link to="/home" className="hidden max-sm:block">
           <img
-            src="https://readymadeui.com/readymadeui-short.svg"
             alt="logo"
             className="w-9"
           />
-        </a>
+        </Link>
 
         {/* Menú */}
         {isOpen && (
@@ -38,6 +43,7 @@ export default function Header() {
                 onClick={() => setIsOpen(false)}
                 className="fixed top-2 right-4 z-[100] rounded-full bg-white w-9 h-9 flex items-center justify-center border"
               >
+                {/* ícono de cerrar */}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="w-3.5 h-3.5 fill-black"
@@ -50,23 +56,24 @@ export default function Header() {
 
               <ul className="space-y-3">
                 <li>
-                  <a href="#" className="block w-36 mb-6">
+                  <Link to="/" className="block w-36 mb-6">
                     <img
                       src="https://readymadeui.com/readymadeui.svg"
                       alt="logo"
                     />
-                  </a>
+                  </Link>
                 </li>
-                {['Home', 'Team', 'Feature', 'Blog'].map((item, i) => (
+                {navItems.map((item, i) => (
                   <li key={i} className="border-b py-3 px-3">
-                    <a
-                      href="#"
+                    <Link
+                      to={item.to}
                       className={`block font-medium text-[15px] ${
-                        item === 'Home' ? 'text-blue-700' : 'text-slate-900'
+                        item.name === 'Inicio' ? 'text-blue-700' : 'text-slate-900'
                       } hover:text-blue-700`}
+                      onClick={() => setIsOpen(false)}
                     >
-                      {item}
-                    </a>
+                      {item.name}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -76,27 +83,27 @@ export default function Header() {
 
         {/* Navegación en escritorio */}
         <div className="hidden lg:flex gap-x-5">
-          {['Home', 'Team', 'Feature', 'Blog'].map((item, i) => (
-            <a
+          {navItems.map((item, i) => (
+            <Link
               key={i}
-              href="#"
+              to={item.to}
               className={`text-sm font-medium ${
-                item === 'Home' ? 'text-blue-700' : 'text-slate-900'
+                item.name === 'Inicio' ? 'text-blue-700' : 'text-slate-900'
               } hover:text-blue-700`}
             >
-              {item}
-            </a>
+              {item.name}
+            </Link>
           ))}
         </div>
 
         {/* Acciones (Login / Sign up / hamburguesa) */}
         <div className="flex items-center ml-auto space-x-6">
-          <a
-            href="#"
+          <Link
+            to="/login"
             className="font-medium text-[15px] text-blue-700 hover:underline"
           >
             Login
-          </a>
+          </Link>
           <button className="px-4 py-2 text-sm rounded-sm font-medium text-white border border-blue-600 bg-blue-600 hover:bg-blue-700">
             Sign up
           </button>

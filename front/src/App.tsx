@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import Landing from './components/landing';
 import AboutUs from './components/aboutus';
 import Dashboard from './components/dashbboard';
+import Home from './components/Home';
 import './index.css';
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/home" element={<Home />} />
       </Routes>
     </>
   );
