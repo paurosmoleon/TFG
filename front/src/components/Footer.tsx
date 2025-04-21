@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 
-
 export default function Footer() {
   return (
     <footer className="bg-white shadow-sm dark:bg-gray-900">
@@ -10,11 +9,7 @@ export default function Footer() {
             to="/home"
             className="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse"
           >
-           <img
-            src="/whale-no-background.png"
-            alt="logo"
-            className="w-36"
-            />            
+            <img src="/whale-no-background.png" alt="logo" className="w-36" />
             <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
               eFCT
             </span>
@@ -22,6 +17,11 @@ export default function Footer() {
           <ul className="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
             <li>
               <Link to="/" className="hover:underline me-4 md:me-6">
+                Landing
+              </Link>
+            </li>
+            <li>
+              <Link to="/home" className="hover:underline me-4 md:me-6">
                 Inicio
               </Link>
             </li>
