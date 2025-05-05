@@ -1,12 +1,15 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-import Landing          from './components/landing';
-import AboutUs          from './components/aboutus';
+import Landing          from './components/Landing';
+import AboutUs          from './components/AboutUs';
 import Home             from './components/Home';
-import Dashboard        from './components/dashbboard'; // Recuerda la doble b
-import MemoriaPracticas from './components/dashboardsComponents/memoriaPracticas';
-import FichaSemanal     from './components/dashboardsComponents/fichaSemanal';
-import Chats            from './components/dashboardsComponents/chats';
-import PerfilChat       from './components/dashboardsComponents/perfilChat';
+import Dashboard        from './components/Dashboard'; 
+import MemoriaPracticas from './components/dashboardsComponents/MemoriaPracticas';
+import FichaSemanal     from './components/dashboardsComponents/FichaSemanal';
+import Chats            from './components/dashboardsComponents/Chats';
+import PerfilChat       from './components/dashboardsComponents/PerfilChat';
+import PageNotFound     from './components/PageNotFound';
+import LogIn            from './components/LogIn';
+import SignUp           from './components/SignUp';
 import './index.css';
 
 function App() {
@@ -16,6 +19,9 @@ function App() {
       <Route path="/"         element={<Landing />} />
       <Route path="/about-us" element={<AboutUs />} />
       <Route path="/home"     element={<Home />} />
+      <Route path="/error-404"     element={<PageNotFound />} />
+      <Route path="/log-in"     element={<LogIn />} />
+      <Route path="/sign-up"     element={<SignUp />} />
 
       {/* Dashboard con rutas hijas */}
       <Route path="/dashboard" element={<Dashboard />}>
@@ -42,8 +48,8 @@ function App() {
         />
       </Route>
 
-      {/* Catch-all */}
-      <Route path="*" element={<Navigate to="/" replace />} />
+      {/* Si no encuentra ninguna ruta, redirige a error 404 */}
+      <Route path="*" element={<Navigate to="/error-404" replace />} />
     </Routes>
   );
 }
