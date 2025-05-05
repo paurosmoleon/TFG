@@ -10,7 +10,6 @@ export default function Dashboard() {
             <NavLink
               to="memoria-practicas"
               end
-              className={({ isActive }) => isActive ? 'active' : ''}
             >
               Memoria de Prácticas
             </NavLink>
@@ -18,16 +17,13 @@ export default function Dashboard() {
           <li>
             <NavLink
               to="ficha-semanal"
-              className={({ isActive }) => isActive ? 'active' : ''}
             >
               Ficha Semanal
             </NavLink>
           </li>
           <li>
             <NavLink
-              to="chats"
-              className={({ isActive }) => isActive ? 'active' : ''}
-            >
+              to="chats"            >
               Chats
             </NavLink>
           </li>
