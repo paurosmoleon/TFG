@@ -7,6 +7,7 @@ import Dashboard        from './components/dashbboard';
 import MemoriaPracticas from './components/dashboardsComponents/memoriaPracticas';
 import FichaSemanal     from './components/dashboardsComponents/fichaSemanal';
 import Chats            from './components/dashboardsComponents/chats';
+import PerfilChat       from './components/dashboardsComponents/perfilChat';
 import './index.css';
 
 function App() {
@@ -35,6 +36,10 @@ function App() {
         <Route
           path="chats"
           element={<Chats />}
+        />
+          <Route
+          path="perfil-chat"
+          element={<PerfilChat />}
         />
       </Route>
 
