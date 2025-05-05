@@ -118,12 +118,6 @@ const Chats: React.FC = () => {
       {/* Ventana de chat */}
       <div className="flex-1 flex flex-col bg-gray-100">
         <header className="flex items-center p-4 bg-white border-b border-gray-200">
-          <button
-            onClick={() => setSelectedChat(null)}
-            className="mr-4 text-blue-600 hover:underline"
-          >
-            ← Volver
-          </button>
           <Link to="/dashboard/perfil-chat" className="flex-shrink-0 mr-3">
             <img
               src={selectedChat.avatar}
