@@ -1,10 +1,11 @@
+// index.tsx
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 
-import Header from './components/Header.tsx';
-import Footer from './components/Footer.tsx';
-import App from './App.tsx';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import App    from './App';
 
 createRoot(document.getElementById('root')!).render(
   <BrowserRouter>
