@@ -3,7 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import Landing          from './components/landing';
 import AboutUs          from './components/aboutus';
 import Home             from './components/Home';
-import Dashboard        from './components/dashbboard';
+import Dashboard        from './components/dashbboard'; // Recuerda la doble b
 import MemoriaPracticas from './components/dashboardsComponents/memoriaPracticas';
 import FichaSemanal     from './components/dashboardsComponents/fichaSemanal';
 import Chats            from './components/dashboardsComponents/chats';
