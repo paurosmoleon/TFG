@@ -1,4 +1,3 @@
-// src/components/Chats.tsx
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import RoleIcon from './RoleIcon';

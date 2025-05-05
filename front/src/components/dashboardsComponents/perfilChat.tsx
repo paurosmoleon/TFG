@@ -1,7 +1,7 @@
-const perfilChat = () => {
+const PerfilChat = () => {
   return (
-    <div>perfilChat</div>
+    <div>Esto es solo una ruta template</div>
   )
 }
 
-export default perfilChat
+export default PerfilChat

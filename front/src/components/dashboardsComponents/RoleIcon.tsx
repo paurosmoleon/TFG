@@ -1,4 +1,3 @@
-// src/components/RoleIcon.tsx
 import React from 'react';
 import { Role } from '../../types/chat';
 

@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const { pathname } = useLocation();
 
   const navItems = [
     { name: 'Inicio', to: '/home' },
@@ -10,42 +11,37 @@ export default function Header() {
     { name: 'Sobre nosotros', to: '/about-us' },
   ];
 
+  const isActive = (to: string) =>
+    pathname === to || pathname.startsWith(`${to}/`);
+
   return (
-    <header className="flex shadow-lg py-4 px-4 sm:px-10 bg-white min-h-[70px] tracking-wide relative z-50"> 
+    <header className="flex shadow-lg py-4 px-4 sm:px-10 bg-white min-h-[70px] tracking-wide relative z-50">
       <div className="flex flex-wrap items-center justify-between gap-4 w-full">
+        {/* Logo desktop */}
         <Link
           to="/home"
           className="lg:absolute max-lg:left-10 lg:top-2/4 lg:left-2/4 lg:-translate-x-1/2 lg:-translate-y-1/2 max-sm:hidden"
         >
-          <img
-            src="/whale-no-background.png"
-            alt="logo"
-            className="w-36"
-          />
+          <img src="/whale-no-background.png" alt="logo" className="w-36" />
         </Link>
 
-        {/* Logo reducido (móvil) */}
+        {/* Logo móvil */}
         <Link to="/home" className="hidden max-sm:block">
-          <img
-            src="/whale-no-background.png"
-            alt="logo"
-            className="w-9"
-          />
+          <img src="/whale-no-background.png" alt="logo" className="w-9" />
         </Link>
 
-        {/* Menú */}
+        {/* Menú móvil */}
         {isOpen && (
           <>
             <div
               className="fixed inset-0 bg-black opacity-50 z-40"
               onClick={() => setIsOpen(false)}
-            ></div>
+            />
             <div className="fixed z-50 top-0 left-0 bg-white shadow-md w-2/3 max-w-[300px] h-full p-6 overflow-auto space-y-3">
               <button
                 onClick={() => setIsOpen(false)}
-                className="fixed top-2 right-4 z-[100] rounded-full bg-white w-9 h-9 flex items-center justify-center border"
+                className="fixed top-2 right-4 z-[100] rounded-full bg-white w-9 h-9 flex items-center justify-center border cursor-pointer"
               >
-                {/* ícono de cerrar */}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="w-3.5 h-3.5 fill-black"
@@ -59,20 +55,17 @@ export default function Header() {
               <ul className="space-y-3">
                 <li>
                   <Link to="/" className="block w-36 mb-6">
-                    <img
-                      src="/whale-no-background.png"
-                      alt="logo"
-                    />
+                    <img src="/whale-no-background.png" alt="logo" />
                   </Link>
                 </li>
                 {navItems.map((item, i) => (
                   <li key={i} className="border-b py-3 px-3">
                     <Link
                       to={item.to}
-                      className={`block font-medium text-[15px] ${
-                        item.name === 'Inicio' ? 'text-blue-700' : 'text-slate-900'
-                      } hover:text-blue-700`}
                       onClick={() => setIsOpen(false)}
+                      className={`block font-medium text-[15px] ${
+                        isActive(item.to) ? 'text-blue-700' : 'text-slate-900'
+                      } hover:text-blue-700`}
                     >
                       {item.name}
                     </Link>
@@ -83,14 +76,14 @@ export default function Header() {
           </>
         )}
 
-        {/* Navegación en escritorio */}
-        <div className="hidden lg:flex gap-x-5">
+        {/* Navegación desktop */}
+        <div className="hidden lg:flex gap-x-5 cursor">
           {navItems.map((item, i) => (
             <Link
               key={i}
               to={item.to}
               className={`text-sm font-medium ${
-                item.name === 'Inicio' ? 'text-blue-700' : 'text-slate-900'
+                isActive(item.to) ? 'text-blue-700' : 'text-slate-900'
               } hover:text-blue-700`}
             >
               {item.name}
@@ -98,7 +91,7 @@ export default function Header() {
           ))}
         </div>
 
-        {/* Acciones (Login / Sign up / hamburguesa) */}
+        {/* Acciones */}
         <div className="flex items-center ml-auto space-x-6">
           <Link
             to="/login"
@@ -109,14 +102,11 @@ export default function Header() {
           <button className="px-4 py-2 text-sm rounded-sm font-medium cursor-pointer text-white border border-blue-600 bg-blue-600 hover:bg-blue-700">
             Sign up
           </button>
-          {/* Botón hamburguesa móvil */}
-          <button className="lg:hidden" onClick={() => setIsOpen(true)}>
-            <svg
-              className="w-7 h-7"
-              fill="#333"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
+          <button
+            className="lg:hidden cursor-pointer"
+            onClick={() => setIsOpen(true)}
+          >
+            <svg className="w-7 h-7" fill="#333" viewBox="0 0 20 20">
               <path
                 fillRule="evenodd"
                 d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"

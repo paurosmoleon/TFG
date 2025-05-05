@@ -1,4 +1,3 @@
-// App.tsx
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Landing          from './components/landing';
 import AboutUs          from './components/aboutus';
