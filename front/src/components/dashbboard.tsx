@@ -23,7 +23,8 @@ export default function Dashboard() {
           </li>
           <li>
             <NavLink
-              to="chats"            >
+              to="chats"  
+            >
               Chats
             </NavLink>
           </li>
