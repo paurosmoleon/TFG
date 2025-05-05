@@ -1,20 +1,46 @@
-import { Routes, Route } from 'react-router-dom';
-import Landing from './components/landing';
-import AboutUs from './components/aboutus';
-import Dashboard from './components/dashbboard';
-import Home from './components/Home';
+// App.tsx
+import { Routes, Route, Navigate } from 'react-router-dom';
+import Landing          from './components/landing';
+import AboutUs          from './components/aboutus';
+import Home             from './components/Home';
+import Dashboard        from './components/dashbboard';
+import MemoriaPracticas from './components/dashboardsComponents/memoriaPracticas';
+import FichaSemanal     from './components/dashboardsComponents/fichaSemanal';
+import Chats            from './components/dashboardsComponents/chats';
 import './index.css';
 
 function App() {
   return (
-    <>
-      <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/about-us" element={<AboutUs />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/home" element={<Home />} />
-      </Routes>
-    </>
+    <Routes>
+      {/* Rutas públicas */}
+      <Route path="/"         element={<Landing />} />
+      <Route path="/about-us" element={<AboutUs />} />
+      <Route path="/home"     element={<Home />} />
+
+      {/* Dashboard con rutas hijas */}
+      <Route path="/dashboard" element={<Dashboard />}>
+        {/* Al visitar /dashboard → redirige a /dashboard/memoria-practicas */}
+        <Route
+          index
+          element={<Navigate to="memoria-practicas" replace />}
+        />
+        <Route
+          path="memoria-practicas"
+          element={<MemoriaPracticas />}
+        />
+        <Route
+          path="ficha-semanal"
+          element={<FichaSemanal />}
+        />
+        <Route
+          path="chats"
+          element={<Chats />}
+        />
+      </Route>
+
+      {/* Catch-all */}
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   );
 }
 
