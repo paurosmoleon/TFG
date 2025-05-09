@@ -2,11 +2,19 @@ from fastapi import APIRouter
 from fastapi.encoders import jsonable_encoder
 from models.calendar_model import *
 from services.calendar_services import *
-import json
+
 
 router = APIRouter()
 
-@router.post('/add/date')
+@router.post('/add/')
 async def addDates(date: addNewDateModel):
     data_encode = jsonable_encoder(date)
     return addNewDateServices(data_encode)
+
+@router.get('/find/{id}')
+async def findDate(id):
+    return findDateServices(id)
+
+@router.put('/update/{id}')
+async def updateDate(id:int , data:updateDateModel):
+    return  updateDateServices(id, jsonable_encoder(data))

@@ -6,3 +6,6 @@ class addNewDateModel(BaseModel):
 
     user_id: int
     marked_dates: Dict[str, date]
+
+class updateDateModel(BaseModel):
+    marked_dates: Dict[str, date]
