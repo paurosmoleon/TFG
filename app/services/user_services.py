@@ -21,7 +21,6 @@ def insertNewUserService(data):
     ph = PasswordHasher()
     data["password"] = ph.hash(data["password"])
     try:
-       
         response = supabase.table('users').insert(data).execute()
         return response.data
     except Exception as err:
@@ -32,8 +31,6 @@ def loginUserService(data):
     email = data["email"]
     try:
         response = supabase.table('users').select('*').eq('email',email).execute()
-
-        
 
         return ph.verify(response.data[0]['password'],data['password'])
 
