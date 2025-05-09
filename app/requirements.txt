@@ -1,0 +1,5 @@
+fastapi[standard]
+uvicorn
+supabase
+argon2-cffi
+dotenv
