@@ -2,7 +2,7 @@ from pydantic import BaseModel
 from typing import Optional,Literal
 from enums.user_enums import account_types,account_status
 
-class getUsers(BaseModel):
+class getUsersModel(BaseModel):
     id: Optional[int] 
     name:str
     dni: str
@@ -14,7 +14,7 @@ class getUsers(BaseModel):
     updated_at: Optional[str] = None
 
 
-class insertUsers(BaseModel):
+class insertUsersModel(BaseModel):
  
     name:str
     password: str
@@ -24,3 +24,7 @@ class insertUsers(BaseModel):
     account_type: Optional[str] = account_types.student.value
     account_status:Optional[str] = account_status.active.value
 
+
+class loginUserModel(BaseModel):
+    email: str
+    password: str

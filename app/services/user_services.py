@@ -1,6 +1,6 @@
 from database.database_sup import supabase
 from supabase import SupabaseException
-from argon2 import PasswordHasher
+from argon2 import PasswordHasher,exceptions
 
 def getAllUserServices():
     response = supabase.table('users').select('*').execute()
@@ -13,6 +13,9 @@ def getUserService(id):
         return response.data
     except Exception as err:
         return {'Error': err}
+
+    
+
     
 def insertNewUserService(data):  
     ph = PasswordHasher()
@@ -24,8 +27,21 @@ def insertNewUserService(data):
     except Exception as err:
         return{'Error': err}
 
+def loginUserService(data):
+    ph = PasswordHasher()
+    email = data["email"]
+    try:
+        response = supabase.table('users').select('*').eq('email',email).execute()
 
+        
 
+        return ph.verify(response.data[0]['password'],data['password'])
+
+    except exceptions.VerificationError as err:
+        return {"Error": "La contraseña no coincide "}
+    except Exception as err:
+         return {"Error": err}
+    
 def  updateUserDataService(id,data):
     try:
         response = supabase.table('users').update(data).eq('id',id).execute()
