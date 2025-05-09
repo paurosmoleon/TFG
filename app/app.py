@@ -13,7 +13,7 @@ app.include_router(calendar_routes.router,prefix='/calendar',tags=['Calendar'])
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=['88.30.81.205:0'],  
+    allow_origins=['*'],  
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
