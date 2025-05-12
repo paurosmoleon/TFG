@@ -1,10 +1,11 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from fastapi.encoders import jsonable_encoder
+from auth.auth import verify_token
 from models.calendar_model import *
 from services.calendar_services import *
 
 
-router = APIRouter()
+router = APIRouter(dependencies=[Depends(verify_token)] )
 
 @router.post('/add/')
 async def addDates(date: addNewDateModel):

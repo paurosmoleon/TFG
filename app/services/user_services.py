@@ -1,6 +1,7 @@
 from database.database_sup import supabase
 from supabase import SupabaseException
 from argon2 import PasswordHasher,exceptions
+from auth.auth import create_acces_token
 
 def getAllUserServices():
     response = supabase.table('users').select('*').execute()
@@ -22,9 +23,15 @@ def insertNewUserService(data):
     data["password"] = ph.hash(data["password"])
     try:
         response = supabase.table('users').insert(data).execute()
-        return response.data
+        
+        
+        token = create_acces_token({"sub": response.data[0]['email'],"role": response.data[0]['account_type']})
+        return{'access_token': token,"token_type":"bearer"}
+    
     except Exception as err:
         return{'Error': err}
+
+
 
 def loginUserService(data):
     ph = PasswordHasher()
@@ -32,7 +39,12 @@ def loginUserService(data):
     try:
         response = supabase.table('users').select('*').eq('email',email).execute()
 
-        return ph.verify(response.data[0]['password'],data['password'])
+        if ph.verify(response.data[0]['password'],data['password']):
+        
+            token = create_acces_token({"sub": response.data[0]['email'],"role": response.data[0]['account_type']})
+            return{'access_token': token,"token_type":"bearer"}
+        else:
+            return 'La contraseña no coincide' 
 
     except exceptions.VerificationError as err:
         return {"Error": "La contraseña no coincide "}
@@ -75,3 +87,12 @@ def suspendUserService(id,suspend):
         return response.data
     except Exception as err:
         return {'Error':err}
+    
+def currentUserServices(email):
+    try:
+        response = supabase.table('users').select('*').eq('email',email['sub']).execute()
+        return response.data
+    except SupabaseException as supaErr:
+        return{'Err Supabase': supaErr}
+    except Exception as err:
+        return{ 'Error':err}
