@@ -2,7 +2,7 @@ from database.database_sup import supabase
 from supabase import SupabaseException
 from fastapi import status
 from fastapi.responses import JSONResponse
-from weasyprint import  HTML
+#from weasyprint import  HTML
 
 
 def createDiariesServices(data):

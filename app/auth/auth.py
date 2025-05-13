@@ -3,6 +3,7 @@ from jose import JWTError,jwt
 from fastapi.security import OAuth2PasswordBearer
 import dotenv,os
 
+
 dotenv.load_dotenv()
 
 SECRET_KEY = os.getenv('SECRET_KEY')
