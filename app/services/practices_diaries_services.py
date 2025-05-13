@@ -36,13 +36,13 @@ def findDiariesServices(id):
         return {'Error': str(err)}
     
 
-def exportDiarieServices(id):
-    try:
-        response = supabase.table('practice_diaries').select('*').eq('id',id).execute()
+# def exportDiarieServices(id):
+#     try:
+#         response = supabase.table('practice_diaries').select('*').eq('id',id).execute()
 
-        HTML(string=response.data[0]['content']).write_pdf('test.pdf')
-    except Exception as err:
-        return JSONResponse(
-                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                content={'Error':str(err)}
-            )
+#         HTML(string=response.data[0]['content']).write_pdf('test.pdf')
+#     except Exception as err:
+#         return JSONResponse(
+#                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+#                 content={'Error':str(err)}
+#             )
