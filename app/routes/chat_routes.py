@@ -8,7 +8,7 @@ from services.user_services import currentUserServices
 from fastapi.encoders import jsonable_encoder
 router = APIRouter()
 
-router.mount("/static",StaticFiles(directory="app/services/static"), name="static")
+router.mount("/static",StaticFiles(directory="services/static"), name="static")
 
 
 
