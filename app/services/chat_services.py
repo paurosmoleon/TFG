@@ -25,7 +25,7 @@ def createChatServices(data):
         )
 
 def getChatServices():
-    return HTMLResponse(open("app/services/static/index.html").read())
+    return HTMLResponse(open("services/static/index.html").read())
 
 def findChatGroup(uuid):
     try:
