@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat WebSocket</title>
+</head>
+<body>
+    <h1>Chat en vivo</h1>
+    <input id="messageInput" type="text" placeholder="Escribe un mensaje..." />
+    <button onclick="sendMessage()">Enviar</button>
+    <ul id="messages" style="flex-direction: column; display: flex;"></ul>
+
+    <script>
+        const ws = new WebSocket("ws://localhost:8000/chat/ws?key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkNTUyNGU1NC05ZjcwLTQ3NzMtYTNhYS1lZmUzNTFmZWExODIifQ.JSlwmhEwh8fSRO-pixs0jf2X4digBrLNXAiwjgWIG5w");
+        ws.onopen = () => {
+            ws.send(JSON.stringify({token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJqb3NlQGpvc2UuY29tIiwicm9sZSI6InN0dWRlbnQifQ.Sn9jw1yhwoq7M0ZnOcYYOibm8DK9Cz-MHxuExVaO1Lc'}))
+        }
+        
+        ws.onmessage = function(event) {
+            const messages = document.getElementById("messages");
+            const message = document.createElement("span");
+            message.innerText = event.data;
+            messages.appendChild(message);
+        };
+
+    
+        function sendMessage() {
+            const input = document.getElementById("messageInput");
+            ws.send(input.value);
+            input.value = "";
+        }
+    </script>
+</body>
+</html>

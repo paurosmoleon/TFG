@@ -47,7 +47,7 @@ async def  activateUser(id:int):
 async def  suspendUser(id:int):
     return activateUserService(id,account_status.suspended)
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="users/login")
 
 
 @router_protected.get("/me")

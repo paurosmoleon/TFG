@@ -9,7 +9,7 @@ dotenv.load_dotenv()
 SECRET_KEY = os.getenv('SECRET_KEY')
 ALGORITHM = 'HS256'
 
-outh2_scheme = OAuth2PasswordBearer(tokenUrl="login")
+auth2_scheme = OAuth2PasswordBearer(tokenUrl="users/login")
 
 
 
@@ -20,7 +20,7 @@ def create_acces_token(data: dict):
 
 
 
-def verify_token(token: str = Depends(outh2_scheme)):
+def verify_token(token: str = Depends(auth2_scheme)):
     try:
         payload = jwt.decode(token,SECRET_KEY,ALGORITHM)
         return payload
@@ -29,3 +29,9 @@ def verify_token(token: str = Depends(outh2_scheme)):
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Token no válido o expirado",
         )
+    
+
+def create_access_chat_token(data: dict):
+    to_encode = data.copy()
+
+    return jwt.encode(to_encode,SECRET_KEY,ALGORITHM)
