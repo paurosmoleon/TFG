@@ -1,8 +1,9 @@
 from database.database_sup import supabase
 from supabase import SupabaseException
 from fastapi import status
-from fastapi.responses import JSONResponse
-#from weasyprint import  HTML
+from fastapi.responses import JSONResponse,StreamingResponse
+from xhtml2pdf import pisa
+from io import BytesIO
 
 
 def createDiariesServices(data):
@@ -36,13 +37,21 @@ def findDiariesServices(id):
         return {'Error': str(err)}
     
 
-# def exportDiarieServices(id):
-#     try:
-#         response = supabase.table('practice_diaries').select('*').eq('id',id).execute()
+def exportDiarieServices(id):
+    try:
+        response = supabase.table('practice_diaries').select('*').eq('id',id).execute()
 
-#         HTML(string=response.data[0]['content']).write_pdf('test.pdf')
-#     except Exception as err:
-#         return JSONResponse(
-#                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-#                 content={'Error':str(err)}
-#             )
+        pdf_bytes = BytesIO()
+        pisa.CreatePDF(src=response.data[0]['content'], dest=pdf_bytes)
+        pdf_bytes.seek(0)
+
+        return StreamingResponse(
+            pdf_bytes,
+            media_type="application/pdf",
+            headers={"Content-Disposition": "attachment; filename=report.pdf"}
+        )
+    except Exception as err:
+        return JSONResponse(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                content={'Error':str(err)}
+            )

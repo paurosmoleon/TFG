@@ -19,6 +19,6 @@ async def createDiaries(pd_data: createDiariesModel ):
 async def findDiaries(id: int):
     return findDiariesServices(id)
 
-# @router.get('/pdf/{id}')
-# async def createDiariesPDF(id):
-#     return exportDiarieServices(id)
+@router.get('/pdf/{id}')
+async def createDiariesPDF(id):
+    return exportDiarieServices(id)

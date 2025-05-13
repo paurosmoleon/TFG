@@ -4,3 +4,4 @@ supabase
 argon2-cffi
 dotenv
 python-jose[cryptography]
+xhtml2pdf
