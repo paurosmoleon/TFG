@@ -15,6 +15,7 @@ import NewPassword from './components/loginComponents/NewPassword';
 import './index.css';
 
 function App() {
+  
   return (
     <Routes>
       {/* Rutas públicas */}
@@ -29,11 +30,26 @@ function App() {
       {/* Dashboard con rutas hijas */}
       <Route path="/dashboard" element={<Dashboard />}>
         {/* Al visitar /dashboard → redirige a /dashboard/memoria-practicas */}
-        <Route index element={<Navigate to="memoria-practicas" replace />} />
-        <Route path="memoria-practicas" element={<MemoriaPracticas />} />
-        <Route path="ficha-semanal" element={<FichaSemanal />} />
-        <Route path="chats" element={<Chats />} />
-        <Route path="perfil-chat" element={<PerfilChat />} />
+        <Route
+          index
+          element={<Navigate to="memoria-practicas" replace />}
+        />
+        <Route
+          path="memoria-practicas"
+          element={<MemoriaPracticas />}
+        />
+        <Route
+          path="ficha-semanal"
+          element={<FichaSemanal  />}
+        />
+        <Route
+          path="chats"
+          element={<Chats />}
+        />
+          <Route
+          path="perfil-chat"
+          element={<PerfilChat />}
+        />
       </Route>
 
       {/* Si no encuentra ninguna ruta, redirige a error 404 */}
