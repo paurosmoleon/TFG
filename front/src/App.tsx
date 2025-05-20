@@ -31,7 +31,7 @@ function App() {
         {/* Al visitar /dashboard → redirige a /dashboard/memoria-practicas */}
         <Route index element={<Navigate to="memoria-practicas" replace />} />
         <Route path="memoria-practicas" element={<MemoriaPracticas />} />
-        <Route path="ficha-semanal" element={<FichaSemanal />} />
+        <Route path="ficha-semanal" element={<FichaSemanal userRole="alumno"/>} />
         <Route path="chats" element={<Chats />} />
         <Route path="perfil-chat" element={<PerfilChat />} />
       </Route>
