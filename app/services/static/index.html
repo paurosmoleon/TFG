@@ -10,7 +10,7 @@
     <ul id="messages" style="flex-direction: column; display: flex;"></ul>
 
     <script lang="ts">
-        const ws = new WebSocket("ws://tfg-production-f839.up.railway.app/ws?id=8224dd32-e493-4f22-98d3-3a96f50a7504");
+        const ws = new WebSocket("wss://tfg-production-f839.up.railway.app/ws?id=8224dd32-e493-4f22-98d3-3a96f50a7504");
         ws.onopen = (event) => {
             ws.send(JSON.stringify({token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJqb3NlQGpvc2UuY29tIiwicm9sZSI6InN0dWRlbnQifQ.Sn9jw1yhwoq7M0ZnOcYYOibm8DK9Cz-MHxuExVaO1Lc'}))
         
