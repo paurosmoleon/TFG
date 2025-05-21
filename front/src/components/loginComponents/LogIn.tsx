@@ -2,22 +2,33 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 const LogIn = () => {
-
-
+  interface LoginResponse {
+    access_token: string;
+  }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    try {
-      const res = await axios.post('https://tfg-production-f839.up.railway.app/users/login',{
-        email: e.target.email.value,
-        password: e.target.password.value
-      })
+    e.preventDefault();
 
-      localStorage.setItem('tokenUser','Bearer '+res.data['access_token'])
-    }catch(err){
-      console.log(err)
+    const target = e.target as typeof e.target & {
+      email: { value: string };
+      password: { value: string };
+    };
+
+    try {
+      const res = await axios.post<LoginResponse>(
+        'https://tfg-production-f839.up.railway.app/users/login',
+        {
+          email: target.email.value,
+          password: target.password.value,
+        }
+      );
+
+      localStorage.setItem('tokenUser', 'Bearer ' + res.data.access_token);
+    } catch (err) {
+      console.log(err);
     }
-  }
+  };
+
   return (
     <div className="h-screen md:flex">
       {/* Sección izquierda con fondo de gradiente y contenido promocional */}
@@ -96,7 +107,7 @@ const LogIn = () => {
             <input
               className="pl-2 outline-none border-none w-full"
               type="email"
-              name='email'
+              name="email"
               placeholder="Dirección de correo electrónico"
             />
           </div>
@@ -118,7 +129,7 @@ const LogIn = () => {
             <input
               className="pl-2 outline-none border-none w-full"
               type="password"
-              name='password'
+              name="password"
               placeholder="Contraseña"
             />
           </div>
