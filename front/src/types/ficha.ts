@@ -3,7 +3,7 @@ export type UserRole = "alumno" | "profesor" | "tutor" | "otro";
 
 export interface DiaData {
   actividad: string;
-  horas: number | "";       // Permitimos "" mientras no se introduzca número
+  horas: number | ""; // Permitimos "" mientras no se introduzca número
   observaciones: string;
 }
 
@@ -25,7 +25,7 @@ export interface FichaSemanalData {
     | "DOMINGO",
     DiaData
   >;
-  firmaAlumno: string;    // base64 de la imagen de la firma o ""
+  firmaAlumno: string; // base64 de la imagen de la firma o ""
   firmaProfesor: string;
   firmaTutor: string;
 }

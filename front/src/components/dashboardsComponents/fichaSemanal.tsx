@@ -2,6 +2,7 @@
 import { useState, useRef, ChangeEvent, FormEvent, FC } from "react";
 import SignatureCanvas from "react-signature-canvas";
 import { DiaData, FichaSemanalData, UserRole } from "../../types/ficha";
+import axios from "axios";
 
 const diasSemana: Array<keyof FichaSemanalData["dias"]> = [
   "LUNES",
@@ -155,28 +156,26 @@ const FichaSemanal: FC<Props> = ({ userRole }) => {
     }
 
     try {
-      const respuesta = await fetch("/api/fichas/", {
-        method: "POST",
+      await axios.post("/api/fichas/", formData, {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
       });
-
-      if (!respuesta.ok) {
-        const errorJson = await respuesta.json();
-        console.error("Error guardando ficha:", errorJson);
-        alert("Ha ocurrido un error al guardar la ficha. Revisa la consola.");
-        return;
-      }
 
       alert("¡Ficha guardada con éxito!");
       // Aquí podrías limpiar el formulario o redirigir según tu flujo
-    } catch (err) {
-      console.error("Error de red o inesperado:", err);
-      alert("Error de conexión. Intenta nuevamente más tarde.");
+    } catch (err: any) {
+      if (err.response) {
+        console.error("Error guardando ficha:", err.response.data);
+        alert("Ha ocurrido un error al guardar la ficha. Revisa la consola.");
+      } else {
+        console.error("Error de red o inesperado:", err);
+        alert("Error de conexión. Intenta nuevamente más tarde.");
+      }
     }
   };
+
+
 
   return (
     <form onSubmit={handleSubmit} className="max-w-4xl mx-auto p-4">
@@ -254,21 +253,7 @@ const FichaSemanal: FC<Props> = ({ userRole }) => {
             required
           />
         </div>
-        <div>
-          <label className="block mb-1 font-medium" htmlFor="cicloFormativo">
-            Ciclo Formativo
-          </label>
-          <input
-            type="text"
-            id="cicloFormativo"
-            name="cicloFormativo"
-            value={formData.cicloFormativo}
-            onChange={handleHeaderChange}
-            className="w-full border rounded px-2 py-1"
-            required
-          />
-        </div>
-        <div className="col-span-2">
+        <div className="block mb-1 font-medium ">
           <label className="block mb-1 font-medium" htmlFor="grado">
             Grado
           </label>
@@ -282,6 +267,21 @@ const FichaSemanal: FC<Props> = ({ userRole }) => {
             required
           />
         </div>
+        <div className="col-span-2">
+          <label className="block mb-1 font-medium" htmlFor="cicloFormativo">
+            Ciclo Formativo
+          </label>
+          <input
+            type="text"
+            id="cicloFormativo"
+            name="cicloFormativo"
+            value={formData.cicloFormativo}
+            onChange={handleHeaderChange}
+            className="w-full border rounded px-2 py-1"
+            required
+          />
+        </div>
+
       </div>
 
       {/* ─── Tabla de actividades por día ─── */}
