@@ -7,7 +7,10 @@ import json,datetime,locale
 
 connected_clients = []
 
-locale.setlocale(locale.LC_TIME,'es_ES.UTF-8')
+try:
+    locale.setlocale(locale.LC_TIME,'es_ES.UTF-8')
+except locale.Error:
+    locale.setlocale(locale.LC_TIME, 'C')
 
 def createChatServices(data):
     try:
