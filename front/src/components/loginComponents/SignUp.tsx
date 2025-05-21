@@ -1,38 +1,45 @@
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { Alert } from 'flowbite-react';
-
-
 
 const SignUp = () => {
-
-
-
-
-  const handleSubmit = async  (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    try{
-      const res =  await axios.post('https://tfg-production-f839.up.railway.app/users/register',{
-        name: e.target.name.value,
-        password: e.target.password.value,
-        dni: e.target.dni.value,
-        email: e.target.email.value,
-        phone: e.target.phone.value
-      })
-
-      if (res.status === 200){
-        localStorage.setItem('tokenUser','Bearer '+res.data['access_token'])
-        alert('Usuario creado con exito')
-      }
-
-    } catch (err){
-      console.log(err)
-    }
+  interface RegisterResponse {
+    access_token: string;
   }
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const target = e.target as typeof e.target & {
+      name: { value: string };
+      password: { value: string };
+      dni: { value: string };
+      email: { value: string };
+      phone: { value: string };
+    };
+
+    try {
+      const res = await axios.post<RegisterResponse>(
+        'https://tfg-production-f839.up.railway.app/users/register',
+        {
+          name: target.name.value,
+          password: target.password.value,
+          dni: target.dni.value,
+          email: target.email.value,
+          phone: target.phone.value,
+        }
+      );
+
+      if (res.status === 200) {
+        localStorage.setItem('tokenUser', 'Bearer ' + res.data.access_token);
+        alert('Usuario creado con éxito');
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div className="h-screen md:flex">
-     
       {/* Formulario con logo */}
       <div className="flex md:w-1/2 flex-col justify-center py-10 items-center bg-white">
         <form className="bg-white w-full max-w-md px-8" onSubmit={handleSubmit}>
@@ -53,7 +60,7 @@ const SignUp = () => {
             <input
               className="pl-2 outline-none border-none w-full"
               type="text"
-              name='name'
+              name="name"
               placeholder="Nombre completo"
             />
           </div>
@@ -77,12 +84,12 @@ const SignUp = () => {
             <input
               className="pl-2 outline-none border-none w-full"
               type="text"
-              name='dni'
+              name="dni"
               placeholder="DNI"
             />
           </div>
 
-           {/* Telefono */}
+          {/* Telefono */}
           <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -101,7 +108,7 @@ const SignUp = () => {
             <input
               className="pl-2 outline-none border-none w-full"
               type="text"
-              name='phone'
+              name="phone"
               placeholder="Nº telefono"
             />
           </div>
@@ -125,7 +132,7 @@ const SignUp = () => {
             <input
               className="pl-2 outline-none border-none w-full"
               type="text"
-              name='email'
+              name="email"
               placeholder="Correo electrónico"
             />
           </div>
@@ -147,7 +154,7 @@ const SignUp = () => {
             <input
               className="pl-2 outline-none border-none w-full"
               type="password"
-              name='password'
+              name="password"
               placeholder="Contraseña"
             />
           </div>
@@ -189,7 +196,6 @@ const SignUp = () => {
             </Link>
           </span>
         </form>
-
       </div>
       {/* Fondo degradado con círculos a la derecha */}
       <div className="relative overflow-hidden md:flex w-1/2 bg-gradient-to-tr from-blue-800 to-purple-700 justify-center items-center hidden">

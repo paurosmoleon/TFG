@@ -2,10 +2,14 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
+interface User {
+  name: string;
+}
+
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const { pathname } = useLocation();
-  const [name,setName] = useState('')
+  const [name, setName] = useState('');
 
   const navItems = [
     { name: 'Inicio', to: '/home' },
@@ -15,24 +19,27 @@ export default function Header() {
 
   const isActive = (to: string) =>
     pathname === to || pathname.startsWith(`${to}/`);
-useEffect(() =>{
- const currentUser = async () => {
-    try { 
-    const  res = await axios.get('https://tfg-production-f839.up.railway.app/users/me',{
-        headers:{
-          'Authorization':  localStorage.getItem('tokenUser')
-        }
-      })
-      setName(res.data[0]['name'])
-    } catch (err){
-      console.log(err)
-    }
 
-  }
+  useEffect(() => {
+    const currentUser = async () => {
+      try {
+        const res = await axios.get<User[]>(
+          'https://tfg-production-f839.up.railway.app/users/me',
+          {
+            headers: {
+              Authorization: localStorage.getItem('tokenUser') || '',
+            },
+          }
+        );
+        setName(res.data[0].name);
+      } catch (err) {
+        console.log('Error al obtener el usuario:', err);
+      }
+    };
 
-  if (localStorage.getItem('tokenUser')) currentUser()
-},[])
- 
+    if (localStorage.getItem('tokenUser')) currentUser();
+  }, []);
+
   return (
     <header className="flex shadow-lg py-4 px-4 sm:px-10 bg-white min-h-[70px] tracking-wide relative z-50">
       <div className="flex flex-wrap items-center justify-between gap-4 w-full">
@@ -113,34 +120,38 @@ useEffect(() =>{
         {/* Acciones */}
         {localStorage.getItem('tokenUser') ? (
           <div>
-            <h1>{name}</h1> 
-            <button type='button' onClick={() => localStorage.removeItem('tokenUser')}>Cerrar sesion</button>
+            <h1>{name}</h1>
+            <button
+              type="button"
+              onClick={() => localStorage.removeItem('tokenUser')}
+            >
+              Cerrar sesion
+            </button>
           </div>
-        
-        ): (
-           <div className="flex items-center ml-auto space-x-6">
-          <Link
-            to="/log-in"
-            className="font-medium text-[15px] text-blue-700 hover:underline"
-          >
-            Iniciar sesión
-          </Link>
-          <button className="px-4 py-2 text-sm rounded-sm font-medium cursor-pointer text-white border border-blue-600 bg-blue-600 hover:bg-blue-700">
-            <Link to="/sign-up">Registrarse</Link>
-          </button>
-          <button
-            className="lg:hidden cursor-pointer"
-            onClick={() => setIsOpen(true)}
-          >
-            <svg className="w-7 h-7" fill="#333" viewBox="0 0 20 20">
-              <path
-                fillRule="evenodd"
-                d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </button>
-        </div>
+        ) : (
+          <div className="flex items-center ml-auto space-x-6">
+            <Link
+              to="/log-in"
+              className="font-medium text-[15px] text-blue-700 hover:underline"
+            >
+              Iniciar sesión
+            </Link>
+            <button className="px-4 py-2 text-sm rounded-sm font-medium cursor-pointer text-white border border-blue-600 bg-blue-600 hover:bg-blue-700">
+              <Link to="/sign-up">Registrarse</Link>
+            </button>
+            <button
+              className="lg:hidden cursor-pointer"
+              onClick={() => setIsOpen(true)}
+            >
+              <svg className="w-7 h-7" fill="#333" viewBox="0 0 20 20">
+                <path
+                  fillRule="evenodd"
+                  d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </button>
+          </div>
         )}
       </div>
     </header>
