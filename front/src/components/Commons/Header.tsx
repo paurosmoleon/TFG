@@ -95,11 +95,11 @@ export default function Header() {
         <div className="flex items-center ml-auto space-x-6">
           <Link
             to="/log-in"
-            className="font-medium text-[15px] text-blue-700 hover:underline"
+            className="font-medium text-[15px] text-blue-700 transition-all duration-400 hover:underline text-blue-500"
           >
             Iniciar sesión
           </Link>
-          <button className="px-4 py-2 text-sm rounded-sm font-medium cursor-pointer text-white border border-blue-600 bg-blue-600 hover:bg-blue-700">
+          <button className="px-4 py-2 text-sm rounded-sm font-medium cursor-pointer text-white border border-blue-600 bg-blue-600 transition-all duration-400 hover:bg-blue-500">
             <Link to="/sign-up">Registrarse</Link>
           </button>
           <button

@@ -4,32 +4,32 @@ const LogIn = () => {
   return (
     <div className="h-screen md:flex">
       {/* Sección izquierda con fondo de gradiente y contenido promocional */}
-      <div className="relative overflow-hidden md:flex w-1/2 bg-gradient-to-tr from-blue-800 to-purple-700 justify-around items-center hidden">
+      <div className="relative overflow-hidden md:flex w-1/2 bg-gradient-to-t from-blue-700 to-blue-500 justify-around items-center hidden">
         <div>
           <h1 className="text-white font-bold text-4xl font-sans">eFCT</h1>
           <p className="text-white mt-1 italic">
-            "Tus prácticas de empresa no tienen que ser un dolor de cabeza para
+            "Las prácticas de empresa no tienen que ser un dolor de cabeza para
             nadie"
           </p>
           <button
             type="button"
-            className="block w-28 bg-white text-indigo-800 mt-4 py-2 rounded-2xl font-bold mb-2 cursor-pointer"
+            className="block w-28 bg-white text-blue-600 mt-4 py-2 rounded-2xl font-bold mb-2 cursor-pointer transition-all duration-500 hover:w-30 hover:bg-blue-500 hover:text-white "
           >
-            <Link to="/home"> Saber más →</Link>
+            <Link to="/home"> Mas info</Link>
           </button>
         </div>
         {/* Círculos decorativos */}
-        <div className="absolute -bottom-32 -left-40 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
-        <div className="absolute -bottom-40 -left-20 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
-        <div className="absolute -top-40 -right-0 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
-        <div className="absolute -top-20 -right-20 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
+        <div className="absolute border-white -bottom-32 -left-40 w-80 h-80 border-4 border rounded-full border-opacity-30 border-t-8"></div>
+        <div className="absolute border-white -bottom-40 -left-20 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
+        <div className="absolute border-white -top-40 -right-0 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
+        <div className="absolute border-white -top-20 -right-20 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
       </div>
 
       {/* Formulario de login */}
       <div className="flex md:w-1/2 justify-center py-10 items-center bg-white">
         <form className="bg-white">
           {/* Username */}
-          <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
+          <div className="flex items-center border-1 py-2 px-3 rounded-2xl mb-4">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5 text-gray-400"
@@ -61,7 +61,7 @@ const LogIn = () => {
           </div>
 
           {/* Email */}
-          <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
+          <div className="flex items-center border-1 py-2 px-3 rounded-2xl mb-4">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5 text-gray-400"
@@ -84,7 +84,7 @@ const LogIn = () => {
           </div>
 
           {/* Password */}
-          <div className="flex items-center border-2 py-2 px-3 rounded-2xl">
+          <div className="flex items-center border-1 py-2 px-3 rounded-2xl">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5 text-gray-400"
@@ -106,16 +106,16 @@ const LogIn = () => {
 
           <button
             type="submit"
-            className="block w-full bg-indigo-600 mt-4 py-2 rounded-2xl text-white font-semibold mb-2 cursor-pointer hover:bg-indigo-700 transition duration-200"
+            className="block w-full bg-blue-600 mt-4 py-2 rounded-2xl text-white font-semibold mb-2 cursor-pointer hover:bg-blue-500 transition duration-200"
           >
             Login
           </button>
-          <span className="text-sm ml-2 hover:text-blue-500 cursor-pointer">
+          <span className="text-sm ml-2 text-blue-600 hover:text-blue-500 cursor-pointer">
             <Link to="/forgotten-password"> ¿Olvidaste tu contraseña? </Link>
           </span>
           <span className="text-sm  ml-2">
             ¿Aún no tienes cuenta?{' '}
-            <Link to="/sign-up" className="hover:text-blue-500 cursor-pointer">
+            <Link to="/sign-up" className=" text-blue-600 hover:text-blue-500 cursor-pointer">
               Regístrate
             </Link>
           </span>

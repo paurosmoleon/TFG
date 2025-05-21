@@ -7,7 +7,7 @@ const ForgottenPassword = () => {
       <div className="flex md:w-1/2 justify-center py-10 items-center bg-white">
         <form className="bg-white">
           {/* Username */}
-          <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
+          <div className="flex items-center border-1 py-2 px-3 rounded-2xl mb-4">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5 text-gray-400"
@@ -39,7 +39,7 @@ const ForgottenPassword = () => {
           </div>
 
           {/* Email */}
-          <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
+          <div className="flex items-center border-1 py-2 px-3 rounded-2xl mb-4">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5 text-gray-400"
@@ -57,21 +57,21 @@ const ForgottenPassword = () => {
             <input
               className="pl-2 outline-none border-none w-full"
               type="email"
-              placeholder="Dirección de correo electrónico"
+              placeholder="Correo electrónico"
             />
           </div>
           <button
             type="submit"
-            className="block w-full bg-indigo-600 mt-4 py-2 rounded-2xl text-white font-semibold mb-2 cursor-pointer hover:bg-indigo-700 transition duration-200"
+            className="block w-full bg-blue-600 mt-4 py-2 rounded-2xl text-white font-semibold mb-2 cursor-pointer hover:bg-blue-500 transition duration-200"
           >
-            Login
+            Buscar
           </button>
           <div className="flex flex-col items-center text-center mt-4 mb-4 space-y-4">
             <div>
               <span className="text-sm block">¿Recordaste tu contraseña?</span>
               <Link
                 to="/log-in"
-                className="text-sm text-blue-600 hover:underline"
+                className="text-sm text-blue-600 hover:underline hover:text-blue-500"
               >
                 Inicia sesión
               </Link>
@@ -80,7 +80,7 @@ const ForgottenPassword = () => {
               <span className="text-sm block">¿Aún no tienes cuenta?</span>
               <Link
                 to="/sign-up"
-                className="text-sm text-blue-600 hover:underline"
+                className="text-sm text-blue-600 hover:underline hover:text-blue-500"
               >
                 Regístrate
               </Link>

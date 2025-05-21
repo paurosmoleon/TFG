@@ -1,7 +1,7 @@
 const AboutUs = () => {
   return (
     <>
-      <div className="flex flex-col lg:flex-row gap-10 px-8 py-10">
+      <div className="flex flex-col lg:flex-row gap-10 px-15 py-10">
         {/* Left column */}
         <div className="lg:w-1/2 space-y-6">
           <h2 className="text-3xl font-bold">About Us</h2>
@@ -19,7 +19,7 @@ const AboutUs = () => {
 
         {/* Right column */}
         <div className="lg:w-1/2 flex items-center justify-center">
-          <div className="bg-black w-full h-[400px] rounded-lg flex items-center justify-center text-white text-sm">
+          <div className="bg-black w-full  h-[400px]  rounded-lg flex items-center justify-center text-white text-sm">
             Foto de los 4
           </div>
         </div>
