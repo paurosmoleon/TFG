@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const { pathname } = useLocation();
+  const [name,setName] = useState('')
 
   const navItems = [
     { name: 'Inicio', to: '/home' },
@@ -13,7 +15,24 @@ export default function Header() {
 
   const isActive = (to: string) =>
     pathname === to || pathname.startsWith(`${to}/`);
+useEffect(() =>{
+ const currentUser = async () => {
+    try { 
+    const  res = await axios.get('https://tfg-production-f839.up.railway.app/users/me',{
+        headers:{
+          'Authorization':  localStorage.getItem('tokenUser')
+        }
+      })
+      setName(res.data[0]['name'])
+    } catch (err){
+      console.log(err)
+    }
 
+  }
+
+  if (localStorage.getItem('tokenUser')) currentUser()
+},[])
+ 
   return (
     <header className="flex shadow-lg py-4 px-4 sm:px-10 bg-white min-h-[70px] tracking-wide relative z-50">
       <div className="flex flex-wrap items-center justify-between gap-4 w-full">
@@ -92,7 +111,14 @@ export default function Header() {
         </div>
 
         {/* Acciones */}
-        <div className="flex items-center ml-auto space-x-6">
+        {localStorage.getItem('tokenUser') ? (
+          <div>
+            <h1>{name}</h1> 
+            <button type='button' onClick={() => localStorage.removeItem('tokenUser')}>Cerrar sesion</button>
+          </div>
+        
+        ): (
+           <div className="flex items-center ml-auto space-x-6">
           <Link
             to="/log-in"
             className="font-medium text-[15px] text-blue-700 hover:underline"
@@ -115,6 +141,7 @@ export default function Header() {
             </svg>
           </button>
         </div>
+        )}
       </div>
     </header>
   );

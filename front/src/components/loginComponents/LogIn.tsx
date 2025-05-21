@@ -1,6 +1,23 @@
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 const LogIn = () => {
+
+
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    try {
+      const res = await axios.post('https://tfg-production-f839.up.railway.app/users/login',{
+        email: e.target.email.value,
+        password: e.target.password.value
+      })
+
+      localStorage.setItem('tokenUser','Bearer '+res.data['access_token'])
+    }catch(err){
+      console.log(err)
+    }
+  }
   return (
     <div className="h-screen md:flex">
       {/* Sección izquierda con fondo de gradiente y contenido promocional */}
@@ -27,7 +44,7 @@ const LogIn = () => {
 
       {/* Formulario de login */}
       <div className="flex md:w-1/2 justify-center py-10 items-center bg-white">
-        <form className="bg-white">
+        <form className="bg-white" onSubmit={handleSubmit}>
           {/* Username */}
           <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
             <svg
@@ -79,6 +96,7 @@ const LogIn = () => {
             <input
               className="pl-2 outline-none border-none w-full"
               type="email"
+              name='email'
               placeholder="Dirección de correo electrónico"
             />
           </div>
@@ -100,6 +118,7 @@ const LogIn = () => {
             <input
               className="pl-2 outline-none border-none w-full"
               type="password"
+              name='password'
               placeholder="Contraseña"
             />
           </div>
