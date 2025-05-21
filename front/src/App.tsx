@@ -3,15 +3,15 @@ import Landing from './components/Landing';
 import AboutUs from './components/AboutUs';
 import Home from './components/Home';
 import Dashboard from './components/Dashboard';
-import MemoriaPracticas from './components/dashboardsComponents/MemoriaPracticas';
-import FichaSemanal from './components/dashboardsComponents/FichaSemanal';
-import Chats from './components/dashboardsComponents/Chats';
-import PerfilChat from './components/dashboardsComponents/PerfilChat';
+import MemoriaPracticas from './components/DashboardsComponents/MemoriaPracticas';
+import FichaSemanal from './components/DashboardsComponents/FichaSemanal';
+import Chats from './components/DashboardsComponents/Chats';
+import PerfilChat from './components/DashboardsComponents/PerfilChat';
 import PageNotFound from './components/PageNotFound';
-import LogIn from './components/loginComponents/LogIn';
-import SignUp from './components/loginComponents/SignUp';
-import ForgottenPassword from './components/loginComponents/ForgottenPassword';
-import NewPassword from './components/loginComponents/NewPassword';
+import LogIn from './components/LoginComponents/LogIn';
+import SignUp from './components/LoginComponents/SignUp';
+import ForgottenPassword from './components/LoginComponents/ForgottenPassword';
+import NewPassword from './components/LoginComponents/NewPassword';
 import './index.css';
 
 function App() {
@@ -31,7 +31,7 @@ function App() {
         {/* Al visitar /dashboard → redirige a /dashboard/memoria-practicas */}
         <Route index element={<Navigate to="memoria-practicas" replace />} />
         <Route path="memoria-practicas" element={<MemoriaPracticas />} />
-        <Route path="ficha-semanal" element={<FichaSemanal />} />
+        <Route path="ficha-semanal" element={<FichaSemanal userRole="alumno"/>} />
         <Route path="chats" element={<Chats />} />
         <Route path="perfil-chat" element={<PerfilChat />} />
       </Route>
