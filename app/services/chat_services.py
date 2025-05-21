@@ -29,10 +29,10 @@ def createChatServices(data):
         )
 
 def getChatServices():
-    return HTMLResponse(open("app/services/static/index.html").read())
+    return HTMLResponse(open("services/static/index.html").read())
 
 def getChatServices2():
-    return HTMLResponse(open("app/services/static/index2.html").read())
+    return HTMLResponse(open("services/static/index2.html").read())
 
 
 def findChatGroup(uuid):
