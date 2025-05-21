@@ -48,7 +48,7 @@ def exportDiarieServices(id):
         return StreamingResponse(
             pdf_bytes,
             media_type="application/pdf",
-            headers={"Content-Disposition": "attachment; filename=report.pdf"}
+            headers={"Content-Disposition": "attachment; filename=diario_de_practicas.pdf"}
         )
     except Exception as err:
         return JSONResponse(

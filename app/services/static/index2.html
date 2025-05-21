@@ -10,8 +10,9 @@
     <ul id="messages" style="flex-direction: column; display: flex;"></ul>
 
     <script lang="ts">
-        const ws = new WebSocket("ws://localhost:8000/ws?id=8224dd32-e493-4f22-98d3-3a96f50a7504");
+        const ws = new WebSocket("ws://localhost:8000/ws?id=d5524e54-9f70-4773-a3aa-efe351fea182");
         ws.onopen = (event) => {
+            <!--? Token usuario -->
             ws.send(JSON.stringify({token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJqb3NlQGpvc2UuY29tIiwicm9sZSI6InN0dWRlbnQifQ.Sn9jw1yhwoq7M0ZnOcYYOibm8DK9Cz-MHxuExVaO1Lc'}))
         
             const messages = document.getElementById("messages");
