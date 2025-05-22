@@ -40,9 +40,21 @@ const Chats: React.FC = () => {
   useEffect(() => {
     const chats = async () => {
       try {
-        const res = await axios.get
+        const currentUser = await axios.get('https://tfg-production-f839.up.railway.app/users/me',{
+          headers:{
+             Authorization: localStorage.getItem('tokenUser')
+          }
+        })
+        const res = await axios.post('https://tfg-production-f839.up.railway.app/findGroup',{
+          id: currentUser.data[0].id
+        })
+        console.log(res)
+      }catch(err){
+        console.log(err)
       }
     }
+
+    chats()
   },[])
 
 
