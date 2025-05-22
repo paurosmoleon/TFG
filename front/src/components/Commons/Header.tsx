@@ -11,6 +11,7 @@ export default function Header() {
     { name: 'Inicio', to: '/home' },
     { name: 'Dashboard', to: '/dashboard' },
     { name: 'Sobre nosotros', to: '/about-us' },
+    {name: 'chat', to: '/chat'}
   ];
 
   const isActive = (to: string) =>

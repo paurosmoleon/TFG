@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import RoleIcon from './RoleIcon';
 import { Chat } from '../../types/chat';
+import axios from 'axios';
+
+
+
 
 const truncate = (text: string, max = 30) =>
   text.length > max ? text.slice(0, max) + '...' : text;
@@ -32,6 +36,15 @@ const dummyChats: Chat[] = [
 
 const Chats: React.FC = () => {
   const [selectedChat, setSelectedChat] = useState<Chat | null>(null);
+
+  useEffect(() => {
+    const chats = async () => {
+      try {
+        const res = await axios.get
+      }
+    }
+  },[])
+
 
   if (!selectedChat) {
     return (
