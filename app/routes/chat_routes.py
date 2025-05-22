@@ -27,6 +27,10 @@ async def chat():
 async def chat2():
     return getChatServices2()
 
+@router.post("/findGroup")
+async def findGroup(data):
+    return data #findChatGroupsServices(student_id,company_tutor_id,school_tutor_id)
+
 @router.websocket("/ws")
 def websocket(websocket: WebSocket):
     return websocketEndpointServices(websocket)

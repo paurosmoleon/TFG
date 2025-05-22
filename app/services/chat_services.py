@@ -1,16 +1,13 @@
+import json
 from fastapi import  WebSocket,WebSocketDisconnect,status
 from database.database_sup import supabase
 from fastapi.responses import HTMLResponse,JSONResponse
 from auth.auth import verify_token,create_access_chat_token
 from services.user_services import currentUserServices
-import json,datetime,locale
+
 
 connected_clients = []
 
-try:
-    locale.setlocale(locale.LC_TIME,'es_ES.UTF-8')
-except locale.Error:
-    locale.setlocale(locale.LC_TIME, 'C')
 
 def createChatServices(data):
     try:
@@ -35,9 +32,9 @@ def getChatServices2():
     return HTMLResponse(open("services/static/index2.html").read())
 
 
-def findChatGroup(uuid):
+def findChatGroupsServices(student_id,company_tutor_id,school_tutor_id):
     try:
-        res = supabase.table('chats').select('*').eq('IdChat',uuid).execute()
+        res = supabase.table('chats').select('*').or_(f"student_id.eq.{student_id},company_tutor_id.eq.{company_tutor_id},school_tutor_id.eq.{school_tutor_id}").execute()
         return res
     except Exception as err:
         return {'Err': str(err)}
@@ -75,10 +72,10 @@ async def websocketEndpointServices(websocket: WebSocket):
             for client in connected_clients:
                     
                 if uuid_chat ==  client.query_params.get('id'):
-                    await client.send_text(str(user[0].get('name')+": "+data+'\t-\t'+datetime.datetime.now().strftime("%d %b, %H:%M")))
+                    await client.send_text(str(user[0].get('name')+": "+data))
 
 
-            chatContent.append({user[0].get('name'): data,'Date': datetime.datetime.now().strftime("%d %b, %H:%M") })
+            chatContent.append({user[0].get('name'): data })
             supabase.table('chats').update({'messages': json.dumps(chatContent) }).eq('IdChat',uuid_chat).execute()
               
     except WebSocketDisconnect:
