@@ -45,9 +45,7 @@ const Chats: React.FC = () => {
              Authorization: localStorage.getItem('tokenUser')
           }
         })
-        const res = await axios.post('https://tfg-production-f839.up.railway.app/findGroup',{
-          id: currentUser.data[0].id
-        })
+        const res = await axios.get('https://tfg-production-f839.up.railway.app/findGroup/'+currentUser.data[0].id)
         console.log(res)
       }catch(err){
         console.log(err)
