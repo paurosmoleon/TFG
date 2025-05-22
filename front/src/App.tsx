@@ -12,6 +12,10 @@ import LogIn from './components/loginComponents/LogIn';
 import SignUp from './components/loginComponents/SignUp';
 import ForgottenPassword from './components/loginComponents/ForgottenPassword';
 import NewPassword from './components/loginComponents/NewPassword';
+import LogIn from './components/loginComponents/LogIn';
+import SignUp from './components/loginComponents/SignUp';
+import ForgottenPassword from './components/loginComponents/ForgottenPassword';
+import NewPassword from './components/loginComponents/NewPassword';
 import './index.css';
 
 function App() {
