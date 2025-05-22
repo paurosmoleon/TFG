@@ -64,7 +64,7 @@ async def websocketEndpointServices(websocket: WebSocket):
         if content_decode:
             for message in  json.loads(content_decode):
                 chatContent.append(message)
-                await websocket.send_text(str(user[0].get('name')+": "+message[user[0].get('name')]+"-"+message['Date']))
+                await websocket.send_text(str(user[0].get('name')+": "+message[user[0].get('name')]))
 
         while True:
             data = await websocket.receive_text()
