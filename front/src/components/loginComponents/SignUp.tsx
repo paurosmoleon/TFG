@@ -1,5 +1,13 @@
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import UserSVG from '../../assets/icons/UserSVG';
+import DNISVG from '../../assets/icons/DNISVG';
+import PhoneSVG from '../../assets/icons/PhoneSVG';
+import EmailSVG from '../../assets/icons/EmailSVG';
+import PasswordSVG from '../../assets/icons/PasswordSVG';
+import AlumnSVG from '../../assets/icons/AlumnSVG';
+import ProfesorSVG from '../../assets/icons/ProfesorSVG';
+import TutorSVG from '../../assets/icons/TutorSVG';
 
 const SignUp = () => {
   interface RegisterResponse {
@@ -45,18 +53,7 @@ const SignUp = () => {
         <form className="bg-white w-full max-w-md px-8" onSubmit={handleSubmit}>
           {/* Full Name */}
           <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5 text-gray-400"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fillRule="evenodd"
-                d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                clipRule="evenodd"
-              />
-            </svg>
+            <UserSVG className="h-5 w-5 mx-auto my-auto text-gray-400" />
             <input
               className="pl-2 outline-none border-none w-full"
               type="text"
@@ -67,20 +64,8 @@ const SignUp = () => {
 
           {/* DNI */}
           <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5 text-gray-400"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4"
-              />
-            </svg>
+            <DNISVG className="h-5 w-5 mx-auto my-auto text-gray-400" />
+
             <input
               className="pl-2 outline-none border-none w-full"
               type="text"
@@ -91,20 +76,8 @@ const SignUp = () => {
 
           {/* Telefono */}
           <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5 text-gray-400"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4"
-              />
-            </svg>
+            <PhoneSVG className="h-5 w-5 mx-auto my-auto text-gray-400" />
+
             <input
               className="pl-2 outline-none border-none w-full"
               type="text"
@@ -115,20 +88,7 @@ const SignUp = () => {
 
           {/* Email */}
           <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5 text-gray-400"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
-              />
-            </svg>
+            <EmailSVG className="h-5 w-5 mx-auto my-auto text-gray-400" />
             <input
               className="pl-2 outline-none border-none w-full"
               type="text"
@@ -139,18 +99,7 @@ const SignUp = () => {
 
           {/* Password */}
           <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5 text-gray-400"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fillRule="evenodd"
-                d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
-                clipRule="evenodd"
-              />
-            </svg>
+            <PasswordSVG className="h-5 w-5 mx-auto my-auto text-gray-400" />
             <input
               className="pl-2 outline-none border-none w-full"
               type="password"
@@ -161,25 +110,63 @@ const SignUp = () => {
 
           {/*Confirm Password. No validation logic implemented */}
           <div className="flex items-center border-2 py-2 px-3 rounded-2xl">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5 text-gray-400"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fillRule="evenodd"
-                d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
-                clipRule="evenodd"
-              />
-            </svg>
+            <PasswordSVG className="h-5 w-5 mx-auto my-auto text-gray-400" />
+
             <input
               className="pl-2 outline-none border-none w-full"
               type="password"
               placeholder="Repetir contraseña"
             />
           </div>
+          <div className="my-4">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Selecciona tu rol:
+            </label>
+            <div className="flex gap-4">
+              <label className="inline-flex items-center gap-2 cursor-pointer">
+                <input
+                  type="radio"
+                  name="role"
+                  value="alumno"
+                  className="form-radio text-indigo-600"
+                />
+                <span className="flex items-center gap-1 text-gray-700">
+                  <AlumnSVG className="h-5 w-5 text-gray-400" />
+                  Alumno
+                </span>
+              </label>
 
+              <label className="inline-flex items-center gap-2 cursor-pointer">
+                <input
+                  type="radio"
+                  name="role"
+                  value="tutor_laboral"
+                  className="form-radio text-indigo-600"
+                />
+                <span className="flex items-center gap-1 text-gray-700">
+                  <TutorSVG className="h-5 w-5 text-gray-400" />
+                  Tutor laboral
+                </span>
+              </label>
+
+              <label className="inline-flex items-center gap-2 cursor-pointer">
+                <input
+                  type="radio"
+                  name="role"
+                  value="tutor_practicas"
+                  className="form-radio text-indigo-600"
+                />
+                <span className="flex items-center gap-1 text-gray-700">
+                  <ProfesorSVG className="h-5 w-5 text-gray-400" />
+                  Tutor de prácticas
+                </span>
+              </label>
+            </div>
+          </div>
+          <button className="cursor-pointer border-2 p-3 rounded-2xl hover:border-indigo-600 hover:text-indigo transition duration-200">
+            Hola
+          </button>
+          {/* Botón de registro */}
           <button
             type="submit"
             className="block w-full bg-indigo-600 mt-4 py-2 rounded-2xl text-white font-semibold mb-2 cursor-pointer hover:bg-indigo-700 transition duration-200"
