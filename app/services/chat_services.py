@@ -32,10 +32,10 @@ def getChatServices2():
     return HTMLResponse(open("services/static/index2.html").read())
 
 
-def findChatGroupsServices(student_id,company_tutor_id,school_tutor_id):
+def findChatGroupsServices(id):
     try:
-        res = supabase.table('chats').select('*').or_(f"student_id.eq.{student_id},company_tutor_id.eq.{company_tutor_id},school_tutor_id.eq.{school_tutor_id}").execute()
-        return res
+        res = supabase.table('chats').select('*').or_(f"student_id.eq.{id},company_tutor_id.eq.{id},school_tutor_id.eq.{id}").execute()
+        return  res.data
     except Exception as err:
         return {'Err': str(err)}
 
