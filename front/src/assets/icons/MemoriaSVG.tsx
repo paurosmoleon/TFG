@@ -1,5 +1,6 @@
 import type { SVGProps } from 'react';
-const TutorSVG = (props: SVGProps<SVGSVGElement>) => (
+
+const AlumnSVG = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -10,10 +11,13 @@ const TutorSVG = (props: SVGProps<SVGSVGElement>) => (
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
-    {...props}>
+    {...props}
+  >
     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-    <path d="M12 22l4 -4l-2.5 -11l.993 -2.649a1 1 0 0 0 -.936 -1.351h-3.114a1 1 0 0 0 -.936 1.351l.993 2.649l-2.5 11l4 4z" />
-    <path d="M10.5 7h3l5 5.5" />
+    <path d="M5 3m0 2a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2z" />
+    <path d="M9 7l6 0" />
+    <path d="M9 11l6 0" />
+    <path d="M9 15l4 0" />
   </svg>
 );
-export default TutorSVG;
+export default AlumnSVG;

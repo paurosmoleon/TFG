@@ -1,4 +1,8 @@
 import { NavLink, Outlet } from 'react-router-dom';
+import MemoriaSVG from '../assets/icons/MemoriaSVG';
+import FichaSemanalSVG from '../assets/icons/FichaSemanalSVG';
+import ChatsSVG from '../assets/icons/ChatsSVG';
+import PerfilSVG from '../assets/icons/PerfilSVG';
 
 export default function Dashboard() {
   return (
@@ -26,27 +30,21 @@ export default function Dashboard() {
           {/* 1 */}
           <li className="md:mb-6">
             <NavLink to="memoria-practicas" end>
-              <svg className="w-6 h-6" viewBox="0 0 24 24">
-                <rect width="24" height="24" fill="#ccc" />
-              </svg>
+              <MemoriaSVG className="w-6 h-6" />
             </NavLink>
           </li>
 
           {/* 2 */}
           <li className="md:mb-6">
             <NavLink to="ficha-semanal">
-              <svg className="w-6 h-6" viewBox="0 0 24 24">
-                <circle cx="12" cy="12" r="10" fill="#ccc" />
-              </svg>
+              <FichaSemanalSVG className="w-6 h-6" />
             </NavLink>
           </li>
 
           {/* 3 */}
           <li>
             <NavLink to="chats">
-              <svg className="w-6 h-6" viewBox="0 0 24 24">
-                <polygon points="12,2 22,22 2,22" fill="#ccc" />
-              </svg>
+              <ChatsSVG className="w-6 h-6" />
             </NavLink>
           </li>
 
@@ -56,9 +54,7 @@ export default function Dashboard() {
           {/* 4 */}
           <li>
             <NavLink to="perfil-chat">
-              <svg className="w-6 h-6" viewBox="0 0 24 24">
-                <polygon points="12,2 22,22 2,22" fill="#ccc" />
-              </svg>
+              <PerfilSVG className="w-6 h-6" />
             </NavLink>
           </li>
         </ul>
