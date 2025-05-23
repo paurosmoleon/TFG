@@ -44,7 +44,7 @@ def loginUserService(data):
             token = create_acces_token({"sub": response.data[0]['email'],"role": response.data[0]['account_type']})
             return{'access_token': token,"token_type":"bearer"}
         else:
-            return 'La contraseña no coincide' 
+            raise Exception('La contraseña no coincide')
 
     except exceptions.VerificationError as err:
         return {"Error": "La contraseña no coincide "}

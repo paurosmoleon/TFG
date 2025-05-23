@@ -14,7 +14,7 @@ app.include_router(chat_routes.router,tags=['chat'])
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=['*'],  
+    allow_origins=['https://profound-cuchufli-c5aa82.netlify.app/'],  
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
