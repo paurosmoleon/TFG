@@ -7,7 +7,7 @@ const Chats: React.FC = () => {
   const [input, setInput] = useState('');
   const ws = useRef<WebSocket | null>(null);
 
-  // Obtener el ID del chat del usuario actual
+
   useEffect(() => {
     const fetchChats = async () => {
       try {
@@ -30,7 +30,7 @@ const Chats: React.FC = () => {
     fetchChats();
   }, []);
 
-  // Conexión WebSocket cuando el uuidChat esté listo
+
   useEffect(() => {
     if (uuidChat.length === 0) return;
 
@@ -55,7 +55,6 @@ const Chats: React.FC = () => {
 
   const sendMensage = () => {
     if (ws.current && input.trim() !== '') {
-      alert(input)
       ws.current.send(input);
       setInput('');
     }
