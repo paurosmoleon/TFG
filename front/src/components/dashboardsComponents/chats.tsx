@@ -11,13 +11,13 @@ const Chats: React.FC = () => {
   useEffect(() => {
     const fetchChats = async () => {
       try {
-        const currentUser = await axios.get('https://tfg-production-f839.up.railway.app/users/me', {
+        const currentUser: any = await axios.get('https://tfg-production-f839.up.railway.app/users/me', {
           headers: {
             Authorization: localStorage.getItem('tokenUser') || '',
           },
         });
 
-        const res = await axios.get(
+        const res: any = await axios.get(
           `https://tfg-production-f839.up.railway.app/findGroup/${currentUser.data[0].id}`
         );
 
