@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
-
+import '../../assets/styles/animacion.css';
 const SignUp = () => {
   return (
     <div className="h-screen md:flex">
       {/* Formulario con logo */}
-      <div className="flex md:w-1/2 flex-col justify-center py-10 items-center bg-white">
+      <div className="flex md:w-1/2 flex-col justify-center  py-10 items-center  bg-white">
         <form className="bg-white w-full max-w-md px-8">
           {/* Full Name */}
           <div className="flex items-center border-1 py-2 px-3 rounded-2xl mb-4">
@@ -114,6 +114,36 @@ const SignUp = () => {
               placeholder="Repetir contraseña"
             />
           </div>
+          {/*Confirm Password. No validation logic implemented*/}
+
+          <div className="my-4  py-2 px-3">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Selecciona tu rol:
+            </label>
+            <div className="flex flex-col gap-4 ">
+              {[
+                { label: 'Alumno', value: 'alumno' },
+                { label: 'Tutor laboral', value: 'tutor_laboral' },
+                { label: 'Tutor de prácticas', value: 'tutor_practicas' },
+              ].map((option) => (
+                <label
+                  key={option.value}
+                  className="cursor-pointer border-1 p-1 rounded-2xl hover:border-blue-600 hover:text-blue-600 hover:border-blue-800 transition duration-200 flex*
+                   justify-center w-40 gap-2"
+                >
+                  <input
+                    type="radio"
+                    name="role"
+                    value={option.value}
+                    className="hidden peer"
+                  />
+                  <span className="justify-center peer-checked:text-blue-600 peer-checked:border-blue-600">
+                    {option.label}
+                  </span>
+                </label>
+              ))}
+            </div>
+          </div>
 
           <button
             type="submit"
@@ -126,7 +156,10 @@ const SignUp = () => {
           </span>
           <span className="text-sm  ml-2">
             ¿Ya tienes cuenta?{' '}
-            <Link to="/log-in" className="text-blue-600 hover:text-blue-500 cursor-pointer">
+            <Link
+              to="/log-in"
+              className="text-blue-600 hover:text-blue-500 cursor-pointer"
+            >
               Inicia sesión
             </Link>
           </span>
@@ -134,7 +167,7 @@ const SignUp = () => {
       </div>
 
       {/* Fondo degradado con círculos a la derecha */}
-      <div className="relative overflow-hidden md:flex w-1/2 bg-gradient-to-b from-blue-700 to-blue-500 justify-center items-center hidden">
+      <div className="animated-body relative overflow-hidden md:flex w-1/2 bg-gradient-to-b from-blue-700 to-blue-500 justify-center items-center hidden">
         <div>
           <h1 className="text-white font-bold text-4xl font-sans">eFCT</h1>
           <p className="text-white mt-1 italic">

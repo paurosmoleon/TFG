@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
-
+import '../../assets/styles/animacion.css';
 const LogIn = () => {
   return (
     <div className="h-screen md:flex">
       {/* Sección izquierda con fondo de gradiente y contenido promocional */}
-      <div className="relative overflow-hidden md:flex w-1/2 bg-gradient-to-t from-blue-700 to-blue-500 justify-around items-center hidden">
+      <div className="relative overflow-hidden md:flex w-1/2  animated-body justify-around items-center hidden">
         <div>
           <h1 className="text-white font-bold text-4xl font-sans">eFCT</h1>
           <p className="text-white mt-1 italic">
@@ -115,7 +115,10 @@ const LogIn = () => {
           </span>
           <span className="text-sm  ml-2">
             ¿Aún no tienes cuenta?{' '}
-            <Link to="/sign-up" className=" text-blue-600 hover:text-blue-500 cursor-pointer">
+            <Link
+              to="/sign-up"
+              className=" text-blue-600 hover:text-blue-500 cursor-pointer"
+            >
               Regístrate
             </Link>
           </span>

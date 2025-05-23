@@ -8,7 +8,7 @@ const ProfilesGrid = () => {
           <div className="relative mx-auto pb-2 w-36 rounded-full">
             <img
               className="mx-auto h-auto w-full rounded-full"
-              src="https://placehold.co/400x400"
+              src="../../../public/foto-alex.jpg"
               alt="Alejandro Castillo Ramos"
             />
           </div>
@@ -18,10 +18,15 @@ const ProfilesGrid = () => {
           <h3 className="my-2 mb-4 font-lg text-semibold text-center leading-6 text-gray-600">
             Desarrollador Frontend en
             <br />
-            <a className="text-[#1C64F2] transition-all duration-400 hover:text-[#6595F6]" href="https://acuabit.es/">Acuabit</a>
+            <a
+              className="text-[#1C64F2] transition-all duration-400 hover:text-[#6595F6]"
+              href="https://acuabit.es/"
+            >
+              Acuabit
+            </a>
           </h3>
           <p className="text-center text-sm leading-6 text-gray-500 hover:text-gray-600 italic">
-            "Poned lo que sea"
+            "Tal vez no sea el más brillante, pero siempre estoy dispuesto a sumar."
           </p>
           <a href="https://www.linkedin.com/in/alejandrocastilloramos/">
             <LinkedIn className="mx-auto mt-4 h-6 w-6 cursor-pointer" />
@@ -43,7 +48,12 @@ const ProfilesGrid = () => {
           <h3 className="my-2 mb-4 font-lg text-semibold text-center leading-6 text-gray-600">
             Desarrollador Backend en
             <br />
-            <a className="text-[#1C64F2] transition-all duration-400 hover:text-[#6595F6]" href="https://upmarket.cloud/es">UpMarket</a>
+            <a
+              className="text-[#1C64F2] transition-all duration-400 hover:text-[#6595F6]"
+              href="https://upmarket.cloud/es"
+            >
+              UpMarket
+            </a>
           </h3>
           <p className="text-center text-sm leading-6 text-gray-500 hover:text-gray-600 italic">
             "Poned lo que sea"
@@ -68,13 +78,18 @@ const ProfilesGrid = () => {
           <h3 className="my-2 mb-4 font-lg text-semibold text-center leading-6 text-gray-600">
             Desarrollador Backend en
             <br />
-            <a className="text-[#1C64F2] transition-all duration-400 hover:text-[#6595F6]" href="https://www.nazaries.com/es">nazaríes intelligenia</a>
+            <a
+              className="text-[#1C64F2] transition-all duration-400 hover:text-[#6595F6]"
+              href="https://www.nazaries.com/es"
+            >
+              nazaríes intelligenia
+            </a>
           </h3>
           <p className="text-center text-sm leading-6 text-gray-500 hover:text-gray-600 italic">
             "Poned lo que sea"
           </p>
           <a href="https://www.linkedin.com/in/cbh01/">
-            <LinkedIn className="mx-auto mt-4 h-6 w-6 cursor-pointer"/>
+            <LinkedIn className="mx-auto mt-4 h-6 w-6 cursor-pointer" />
           </a>
         </div>
       </div>{' '}
@@ -93,7 +108,12 @@ const ProfilesGrid = () => {
           <h3 className="my-2 mb-4 font-lg text-semibold text-center leading-6 text-gray-600">
             Desarrollador Fullstack en
             <br />
-            <a className="text-[#1C64F2] transition-all duration-400 hover:text-[#6595F6]" href="https://www.megasur.es/">Megasur</a>
+            <a
+              className="text-[#1C64F2] transition-all duration-400 hover:text-[#6595F6]"
+              href="https://www.megasur.es/"
+            >
+              Megasur
+            </a>
           </h3>
           <p className="text-center text-sm leading-6 text-gray-500 hover:text-gray-600 italic">
             "Poned lo que sea"

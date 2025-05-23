@@ -83,7 +83,7 @@ const ContactUsComponent = () => {
               className="w-full h-12 text-gray-600 placeholder-gray-400 bg-transparent text-lg shadow-sm font-normal leading-7 rounded-full border border-gray-200 focus:outline-none pl-4 mb-10"
               placeholder="Escriba su mensaje aquí..."
             />
-            <button className="w-full h-12 text-white text-base font-semibold leading-6 rounded-full transition-all duration-400 hover:bg-[#6595F6] bg-blue-600 shadow-sm">
+            <button className="w-full h-12 text-white text-base font-semibold leading-6 rounded-full cursor-pointer transition-all duration-400 hover:bg-[#6595F6] bg-blue-600 shadow-sm">
               Enviar
             </button>
           </div>
