@@ -10,7 +10,7 @@ export default function Home() {
           className="absolute inset-0 w-full h-full object-cover"
         />
         {/* Overlay con tarjeta alineada a la izquierda */}
-        <div className="absolute inset-0 bg-opacity-30 flex items-center justify-start px-50 mx-auto">
+        <div className="absolute inset-30 lg:inset-0 md:inset-0 xl:inset-0 bg-opacity-30 flex items-center justify-start px-50 mx-auto">
           <div className="bg-white bg-opacity-90 p-6 rounded-lg w-70">
             <h2 className="text-2xl font-bold mb-2 text-gray-800">
               Gestión de FCT eficiente y colaborativa
@@ -141,7 +141,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="px-4 pb-12 bg-gray-50">
+      <section className="px-4 py-12 bg-gray-50">
         <h2 className="text-3xl font-semibold mb-6 text-center">Valores</h2>
         <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <div className="p-6 bg-white rounded-lg shadow hover:shadow-lg transition">
