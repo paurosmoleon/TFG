@@ -1,4 +1,3 @@
-// components/Profile.jsx
 import React, { useState } from 'react';
 import Alumno from '../ProfileComponents/Alumno';
 import TutorLaboral from '../ProfileComponents/TutorLaboral';

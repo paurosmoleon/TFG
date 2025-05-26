@@ -119,13 +119,19 @@ export default function Header() {
 
         {/* Acciones */}
         {localStorage.getItem('tokenUser') ? (
-          <div>
-            <h1>{name}</h1>
+          <div className="flex items-center ml-auto space-x-6">
+            <Link
+              to="/dashboard/perfil-chat"
+              className="tex-gray-200 cursor-pointer hover:text-blue-700 hover:underline font-medium text-[15px] text-slate-900"
+            >
+              {name}
+            </Link>
             <button
               type="button"
               onClick={() => localStorage.removeItem('tokenUser')}
+              className="font-medium text-[15px] text-white bg-red-700 border rounded-full border-red-700 px-4 py-2 transition-all duration-400 hover:bg-white hover:text-red-700 cursor-pointer"
             >
-              Cerrar sesion
+              Cerrar sesión
             </button>
           </div>
         ) : (
