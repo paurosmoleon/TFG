@@ -3,6 +3,7 @@ from supabase import SupabaseException
 from argon2 import PasswordHasher,exceptions
 from auth.auth import create_acces_token
 from fastapi import status,HTTPException
+from fastapi.responses import JSONResponse
 
 
 def getAllUserServices():
@@ -40,25 +41,39 @@ def loginUserService(data):
     email = data["email"]
     try:
         response = supabase.table('users').select('*').eq('email',email).execute()
-
-        if ph.verify(response.data[0]['password'],data['password']):
-        
-            token = create_acces_token({"sub": response.data[0]['email'],"role": response.data[0]['account_type']})
-            return{'access_token': token,"token_type":"bearer"}
+        if data['email'] and data['password']:
+            
+            if ph.verify(response.data[0]['password'],data['password']):
+               
+                token = create_acces_token({"sub": response.data[0]['email'],"role": response.data[0]['account_type']})
+                return{'access_token': token,"token_type":"bearer"}
+            else:
+                return JSONResponse(
+                    status_code=status.HTTP_404_NOT_FOUND,
+                    content='Email o contraseña incorrecta'
+                )
         else:
-            raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND,
-                detail="Usuario no encontrado"
-            )
+            return JSONResponse(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    content="Email o contraseña vacio"
+                )
 
     except exceptions.VerificationError as err:
-         raise HTTPException(
+         return JSONResponse(
                 status_code=status.HTTP_404_NOT_FOUND,
-                detail="Usuario no encontrado"
+                content='Email o contraseña incorrecta'
             )
+    except exceptions.InvalidHash as err:
+        return JSONResponse(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            content='Error comparando hash'
+        )
 
     except Exception as err:
-         return {"Error": err}
+         return JSONResponse(
+             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+             content=f'{err}'
+         )
     
 def  updateUserDataService(id,data):
     try:
