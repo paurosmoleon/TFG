@@ -18,15 +18,6 @@ router.mount("/static",StaticFiles(directory="services/static"), name="static")
 async def create(data:chatSchemaModel):
     return createChatServices(jsonable_encoder(data))
 
-@router.get("/chat")
-async def chat():
-    return getChatServices()
-
-
-@router.get("/chat2")
-async def chat2():
-    return getChatServices2()
-
 @router.get("/findGroup/{id}")
 async def findGroup(id):
     return findChatGroupsServices(id)

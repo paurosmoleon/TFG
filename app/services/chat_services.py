@@ -25,11 +25,6 @@ def createChatServices(data):
             content={'Error': str(err)}
         )
 
-def getChatServices():
-    return HTMLResponse(open("services/static/index.html").read())
-
-def getChatServices2():
-    return HTMLResponse(open("services/static/index2.html").read())
 
 
 def findChatGroupsServices(id):

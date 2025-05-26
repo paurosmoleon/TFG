@@ -2,6 +2,8 @@ from database.database_sup import supabase
 from supabase import SupabaseException
 from argon2 import PasswordHasher,exceptions
 from auth.auth import create_acces_token
+from fastapi import status,HTTPException
+
 
 def getAllUserServices():
     response = supabase.table('users').select('*').execute()
@@ -44,10 +46,17 @@ def loginUserService(data):
             token = create_acces_token({"sub": response.data[0]['email'],"role": response.data[0]['account_type']})
             return{'access_token': token,"token_type":"bearer"}
         else:
-            raise Exception('La contraseña no coincide')
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Usuario no encontrado"
+            )
 
     except exceptions.VerificationError as err:
-        return {"Error": "La contraseña no coincide "}
+         raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Usuario no encontrado"
+            )
+
     except Exception as err:
          return {"Error": err}
     
