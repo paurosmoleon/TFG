@@ -1,5 +1,6 @@
 from fastapi import FastAPI 
 from fastapi.responses import RedirectResponse
+from app.routes import email_routes
 from routes import user_routes,calendar_routes,practices_diaries_routes,chat_routes,email_routes
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -15,7 +16,7 @@ app.include_router(email_routes.router,prefix='/email',tags=['email'])
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=['https://profound-cuchufli-c5aa82.netlify.app'],  
+    allow_origins=['*'],#'https://profound-cuchufli-c5aa82.netlify.app'  
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
