@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import UserSVG from '../../assets/icons/UserSVG';
 import EmailSVG from '../../assets/icons/EmailSVG';
 import PasswordSVG from '../../assets/icons/PasswordSVG';
+import DNISVG from '../../assets/icons/DNISVG';
 
 const LogIn = () => {
   interface LoginResponse {
@@ -59,13 +59,15 @@ const LogIn = () => {
       {/* Formulario de login */}
       <div className="flex md:w-1/2 justify-center py-10 items-center bg-white">
         <form className="bg-white" onSubmit={handleSubmit}>
-          {/* Username */}
+          {/* DNI */}
           <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
-          <UserSVG className='h-5 w-5 mx-auto my-auto text-gray-400'/>
+            <DNISVG className="h-5 w-5 mx-auto my-auto text-gray-400" />
+
             <input
               className="pl-2 outline-none border-none w-full"
               type="text"
-              placeholder="Nombre de usuario"
+              name="dni"
+              placeholder="DNI"
             />
           </div>
           <div className="flex items-center mt-4 mb-4">
@@ -80,7 +82,7 @@ const LogIn = () => {
 
           {/* Email */}
           <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
-          <EmailSVG className='h-5 w-5 mx-auto my-auto text-gray-400'/>
+            <EmailSVG className="h-5 w-5 mx-auto my-auto text-gray-400" />
             <input
               className="pl-2 outline-none border-none w-full"
               type="email"
@@ -91,7 +93,7 @@ const LogIn = () => {
 
           {/* Password */}
           <div className="flex items-center border-2 py-2 px-3 rounded-2xl">
-            <PasswordSVG className='h-5 w-5 mx-auto my-auto text-gray-400'/>
+            <PasswordSVG className="h-5 w-5 mx-auto my-auto text-gray-400" />
             <input
               className="pl-2 outline-none border-none w-full"
               type="password"

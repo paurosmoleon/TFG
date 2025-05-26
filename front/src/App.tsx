@@ -5,7 +5,7 @@ import Home from './components/Home';
 import Dashboard from './components/Dashboard';
 import MemoriaPracticas from './components/DashboardsComponents/MemoriaPracticas';
 import FichaSemanal from './components/DashboardsComponents/FichaSemanal';
-import Chats from './components/DashboardsComponents/Chats';
+import Chats from './components/DashboardsComponents/chats';
 import PerfilChat from './components/DashboardsComponents/PerfilChat';
 import PageNotFound from './components/PageNotFound';
 import LogIn from './components/LoginComponents/LogIn';
