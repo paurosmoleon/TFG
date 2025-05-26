@@ -1,6 +1,6 @@
 from enum import Enum
 
-class account_types(Enum):
+class account_types(str,Enum):
     student = 'student'
     tutor = 'practices_tutor'
     teacher = 'teacher_class'
