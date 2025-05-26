@@ -55,7 +55,7 @@ const TutorLaboral: React.FC<TutorLaboralProps> = ({
             disabled
             className="text-lg font-medium text-gray-900 w-full border border-gray-300 rounded bg-gray-100 px-2 py-1"
             name="role"
-            value={form.role}
+            value={form.role === 'practice_tutor' ? 'Tutor laboral' : form.role}
           />
         </div>
         <div>
@@ -85,6 +85,7 @@ const TutorLaboral: React.FC<TutorLaboralProps> = ({
         <thead className="bg-gray-100">
           <tr>
             <th className="border px-4 py-2 text-left">Becario</th>
+            <th className="border px-4 py-2 text-left">Enviar Mensaje</th>
             <th className="border px-4 py-2 text-left">Tutor de prácticas</th>
             <th className="border px-4 py-2 text-left">Enviar Mensaje</th>
           </tr>
@@ -92,6 +93,11 @@ const TutorLaboral: React.FC<TutorLaboralProps> = ({
         <tbody>
           <tr className="hover:bg-gray-50">
             <td className="border px-4 py-2">Lucía Gómez</td>
+            <td className="border px-4 py-2">
+              <Link to="/dashboard/chats">
+                <ChatsSVG className="w-6 h-6 ml-2 cursor-pointer" />
+              </Link>
+            </td>
             <td className="border px-4 py-2">Jorge Martínez</td>
             <td className="border px-4 py-2">
               <Link to="/dashboard/chats">
@@ -101,6 +107,11 @@ const TutorLaboral: React.FC<TutorLaboralProps> = ({
           </tr>
           <tr className="hover:bg-gray-50">
             <td className="border px-4 py-2">David López</td>
+            <td className="border px-4 py-2">
+              <Link to="/dashboard/chats">
+                <ChatsSVG className="w-6 h-6 ml-2 cursor-pointer" />
+              </Link>
+            </td>
             <td className="border px-4 py-2">Ana Torres</td>
             <td className="border px-4 py-2">
               <Link to="/dashboard/chats">

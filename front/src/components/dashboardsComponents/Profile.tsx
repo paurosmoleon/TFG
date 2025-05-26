@@ -37,21 +37,21 @@ const Profile: React.FC<ProfileProps> = ({
   return (
     (
       <div className="mt-6">
-        {form.role === 'Alumno' && (
+        {form.role === 'student' && (
           <Alumno
             form={form}
             handleChange={handleChange}
             handleSave={handleSave}
           />
         )}
-        {form.role === 'Tutor laboral' && (
+        {form.role === 'practice_tutor' && (
           <TutorLaboral
             form={form}
             handleChange={handleChange}
             handleSave={handleSave}
           />
         )}
-        {form.role === 'Tutor de prácticas' && (
+        {form.role === 'teacher_class' && (
           <TutorDePrácticas
             form={form}
             handleChange={handleChange}

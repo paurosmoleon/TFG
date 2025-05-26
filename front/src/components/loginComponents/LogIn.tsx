@@ -1,9 +1,19 @@
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import EmailSVG from '../../assets/icons/EmailSVG';
 import PasswordSVG from '../../assets/icons/PasswordSVG';
 
 const LogIn = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('tokenUser');
+    if (token) {
+      navigate('/Dashboard');
+    }
+  });
+
   interface LoginResponse {
     access_token: string;
   }
@@ -26,6 +36,7 @@ const LogIn = () => {
       );
 
       localStorage.setItem('tokenUser', 'Bearer ' + res.data.access_token);
+      navigate('/home');
     } catch (err) {
       console.log(err);
     }
@@ -33,7 +44,7 @@ const LogIn = () => {
 
   return (
     <div className="h-screen md:flex">
-      {/* Sección izquierda con fondo de gradiente y contenido promocional */}
+      {/* Sección izquierda */}
       <div className="relative overflow-hidden md:flex w-1/2  animated-body justify-around items-center hidden">
         <div>
           <h1 className="text-white font-bold text-4xl font-sans">eFCT</h1>
@@ -58,11 +69,10 @@ const LogIn = () => {
       {/* Formulario de login */}
       <div className="flex md:w-1/2 justify-center py-10 items-center bg-white">
         <form className="bg-white" onSubmit={handleSubmit}>
-          {/* Email */}
           <div className="flex items-center border-1 py-2 px-3 rounded-2xl mb-4">
             <EmailSVG className="h-5 w-5 text-gray-400" />
             <input
-              name="email" 
+              name="email"
               required
               className="pl-2 outline-none border-none w-full"
               type="email"
@@ -70,11 +80,10 @@ const LogIn = () => {
             />
           </div>
 
-          {/* Password */}
           <div className="flex items-center border-1 py-2 px-3 rounded-2xl">
             <PasswordSVG className="h-5 w-5 text-gray-400" />
             <input
-              name="password" 
+              name="password"
               required
               className="pl-2 outline-none border-none w-full"
               type="password"
@@ -88,14 +97,16 @@ const LogIn = () => {
           >
             Inicio de sesión
           </button>
+
           <span className="text-sm ml-2 text-blue-600 hover:text-blue-500 cursor-pointer">
-            <Link to="/forgotten-password"> ¿Olvidaste tu contraseña? </Link>
+            <Link to="/forgotten-password">¿Olvidaste tu contraseña?</Link>
           </span>
-          <span className="text-sm  ml-2">
+
+          <span className="text-sm ml-2">
             ¿Aún no tienes cuenta?{' '}
             <Link
               to="/sign-up"
-              className=" text-blue-600 hover:text-blue-500 cursor-pointer"
+              className="text-blue-600 hover:text-blue-500 cursor-pointer"
             >
               Regístrate
             </Link>
