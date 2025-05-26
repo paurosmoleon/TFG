@@ -1,17 +1,17 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-import Landing from './components/Landing';
-import AboutUs from './components/AboutUs';
+import Landing from './components/landing';
+import AboutUs from './components/aboutus';
 import Home from './components/Home';
 import Dashboard from './components/Dashboard';
-import MemoriaPracticas from './components/DashboardsComponents/MemoriaPracticas';
-import FichaSemanal from './components/DashboardsComponents/FichaSemanal';
-import Chats from './components/DashboardsComponents/Chats';
-import PerfilChat from './components/DashboardsComponents/PerfilChat';
+import MemoriaPracticas from './components/dashboardsComponents/memoriaPracticas';
+import FichaSemanal from './components/dashboardsComponents/fichaSemanal';
+import Chats from './components/dashboardsComponents/chats';
+import PerfilChat from './components/dashboardsComponents/perfilChat';
 import PageNotFound from './components/PageNotFound';
-import LogIn from './components/LoginComponents/LogIn';
-import SignUp from './components/LoginComponents/SignUp';
-import ForgottenPassword from './components/LoginComponents/ForgottenPassword';
-import NewPassword from './components/LoginComponents/NewPassword';
+import LogIn from './components/loginComponents/LogIn';
+import SignUp from './components/loginComponents/SignUp';
+import ForgottenPassword from './components/loginComponents/ForgottenPassword';
+import NewPassword from './components/loginComponents/NewPassword';
 import './index.css';
 
 function App() {
