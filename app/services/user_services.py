@@ -105,3 +105,7 @@ def currentUserServices(email):
         return{'Err Supabase': supaErr}
     except Exception as err:
         return{ 'Error':err}
+    
+
+def forgotPassword(pasword):
+    pass
