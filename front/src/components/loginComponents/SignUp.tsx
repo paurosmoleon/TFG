@@ -23,6 +23,7 @@ const SignUp = () => {
       dni: { value: string };
       email: { value: string };
       phone: { value: string };
+      role: { value: string };
     };
 
     try {
@@ -34,6 +35,7 @@ const SignUp = () => {
           dni: target.dni.value,
           email: target.email.value,
           phone: target.phone.value,
+          account_type: target.role.value
         }
       );
 
@@ -127,7 +129,7 @@ const SignUp = () => {
                 <input
                   type="radio"
                   name="role"
-                  value="alumno"
+                  value="student"
                   className="form-radio text-indigo-600"
                 />
                 <span className="flex items-center gap-1 text-gray-700">
@@ -140,7 +142,7 @@ const SignUp = () => {
                 <input
                   type="radio"
                   name="role"
-                  value="tutor_laboral"
+                  value="practices_tutor"
                   className="form-radio text-indigo-600"
                 />
                 <span className="flex items-center gap-1 text-gray-700">
@@ -149,11 +151,11 @@ const SignUp = () => {
                 </span>
               </label>
 
-              <label className="inline-flex items-center gap-2 cursor-pointer">
+              <label className="inline-flex items-center gap-2 cursor-pointer" >
                 <input
                   type="radio"
                   name="role"
-                  value="tutor_practicas"
+                  value="teacher_class"
                   className="form-radio text-indigo-600"
                 />
                 <span className="flex items-center gap-1 text-gray-700">
