@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
-
+import '../assets/styles/animacion.css';
 export default function Landing() {
   return (
-    <main className="flex flex-col min-h-screen bg-gradient-to-br from-indigo-500 to-purple-700 text-white text-center">
+    <main className="flex flex-col min-h-screen animated-landing bg-gradient-to-br from-indigo-500 to-purple-700 text-white text-center">
       <div className="flex flex-col items-center px-4">
         <div className="flex justify-center items-center">
           <img
@@ -12,8 +12,8 @@ export default function Landing() {
           />
         </div>
 
-        <section className="flex flex-wrap justify-center items-center gap-4 p-8 text-gray-500">
-          <div className="bg-white bg-opacity-10 p-6 rounded-lg flex-1 max-w-[300px]">
+        <section className="flex flex-wrap justify-center items-stretch items-center gap-10 p-8 text-gray-500">
+          <div className="bg-white bg-opacity-8 p-6 rounded-lg flex-1 max-w-[300px]">
             <h2 className="text-2xl mb-2">Optimización y sencillez</h2>
             <p>
               Al desarrollar la aplicación una de los objetivos principales es
@@ -43,9 +43,9 @@ export default function Landing() {
         <div className="flex justify-center gap-4 mb-6">
           <Link
             to="/home"
-            className="bg-white text-purple-700 px-6 py-2 rounded-full hover:bg-gray-200 transition"
+            className="bg-white text-blue-600 px-6 py-2 rounded-full hover:py-2 hover:px-7 hover:shadow hover:shadow-xl hover:bg-blue-500 hover:text-white transition duration-200 "
           >
-            Saber más →
+            Saber más
           </Link>
         </div>
       </div>
