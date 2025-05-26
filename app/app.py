@@ -1,6 +1,5 @@
 from fastapi import FastAPI 
 from fastapi.responses import RedirectResponse
-from app.routes import email_routes
 from routes import user_routes,calendar_routes,practices_diaries_routes,chat_routes,email_routes
 from fastapi.middleware.cors import CORSMiddleware
 

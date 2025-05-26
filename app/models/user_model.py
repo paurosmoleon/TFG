@@ -21,7 +21,7 @@ class insertUsersModel(BaseModel):
     dni: str
     email:Optional[str] = None
     phone: Optional[int]= None
-    account_type: Optional[str] = account_types.student.value
+    account_type: account_types.value
     account_status:Optional[str] = account_status.active.value
 
 
