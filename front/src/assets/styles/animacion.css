@@ -5,7 +5,7 @@
   height: 100vh;
 }
 .animated-landing {
-  background: linear-gradient(-45deg, #6595f6, #5188f5, #3e7bf4, #1c64f2);
+  background: linear-gradient(-45deg, #547ed1, #75a3ff, #3e7bf4, #1860F2);
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
   height: 100vh;

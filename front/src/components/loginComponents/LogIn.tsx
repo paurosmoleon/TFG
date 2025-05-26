@@ -54,9 +54,9 @@ const LogIn = () => {
           </p>
           <button
             type="button"
-            className="block w-28 bg-white text-blue-600 mt-4 py-2 rounded-2xl font-bold mb-2 cursor-pointer transition-all duration-500 hover:w-30 hover:bg-blue-500 hover:text-white "
+            className="block w-28 bg-none text-white mt-4 py-2 rounded-2xl font-bold mb-2 cursor-pointer transition-all duration-500 hover:w-30 hover:bg-white hover:text-blue-500 hover:border-none"
           >
-            <Link to="/home"> Mas info</Link>
+            <Link to="/home"> Saber mas →</Link>
           </button>
         </div>
         {/* Círculos decorativos */}

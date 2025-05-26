@@ -43,9 +43,9 @@ export default function Landing() {
         <div className="flex justify-center gap-4 mb-6">
           <Link
             to="/home"
-            className="bg-white text-blue-600 px-6 py-2 rounded-full hover:py-2 hover:px-7 hover:shadow hover:shadow-xl hover:bg-blue-500 hover:text-white transition duration-200 "
+             className="block w-28 bg-none text-white mt-4 py-2 rounded-2xl font-bold mb-2 cursor-pointer transition-all duration-500 hover:w-30 hover:bg-white hover:text-blue-500 hover:border-none"
           >
-            Saber más
+            Saber más →
           </Link>
         </div>
       </div>
