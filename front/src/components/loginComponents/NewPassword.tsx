@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
-
+import '../../assets/styles/animacion.css';
 const NewPassword = () => {
   return (
-    <div className="h-screen flex justify-center items-center">
+    <div className="h-screen animated-body flex justify-center items-center">
       {/* Formulario de login */}
-      <div className="flex md:w-1/2 justify-center py-10 items-center bg-white">
-        <form className="bg-white">
+      <div className="flex md:w-1/2 justify-center py-10 items-center">
+        <form className="bg-white px-4 py-4 rounded-xl">
           {/* Password */}
           <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
             <svg

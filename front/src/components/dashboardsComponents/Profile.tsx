@@ -36,7 +36,7 @@ const Profile: React.FC<ProfileProps> = ({
 
   return (
     (
-      <div className="mt-6">
+      <div className="">
         {form.role === 'Alumno' && (
           <Alumno
             form={form}

@@ -43,9 +43,9 @@ const LogIn = () => {
           </p>
           <button
             type="button"
-            className="block w-28 bg-white text-blue-600 mt-4 py-2 rounded-2xl font-bold mb-2 cursor-pointer transition-all duration-500 hover:w-30 hover:bg-blue-500 hover:text-white "
+            className="block w-28 bg-none text-white mt-4 py-2 rounded-2xl font-bold mb-2 cursor-pointer transition-all duration-500 hover:w-30 hover:bg-white hover:text-blue-500 hover:border-none"
           >
-            <Link to="/home"> Mas info</Link>
+            <Link to="/home"> Saber mas →</Link>
           </button>
         </div>
         {/* Círculos decorativos */}
@@ -62,7 +62,7 @@ const LogIn = () => {
           <div className="flex items-center border-1 py-2 px-3 rounded-2xl mb-4">
             <EmailSVG className="h-5 w-5 text-gray-400" />
             <input
-              name="email" 
+              name="email"
               required
               className="pl-2 outline-none border-none w-full"
               type="email"
@@ -74,7 +74,7 @@ const LogIn = () => {
           <div className="flex items-center border-1 py-2 px-3 rounded-2xl">
             <PasswordSVG className="h-5 w-5 text-gray-400" />
             <input
-              name="password" 
+              name="password"
               required
               className="pl-2 outline-none border-none w-full"
               type="password"
