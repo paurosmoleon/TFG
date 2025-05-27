@@ -6,7 +6,7 @@ interface TutorDePrácticasProps {
     name: string;
     phone: string;
     dni: string;
-    role: string;
+    account_type: string;
     empresa: string;
   };
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -54,9 +54,9 @@ const TutorDePrácticas: React.FC<TutorDePrácticasProps> = ({
           <input
             disabled
             className="text-lg font-medium text-gray-900 w-full border border-gray-300 rounded bg-gray-100 px-2 py-1"
-            name="role"
+            name=" account_type"
             value={
-              form.role === 'teacher_class' ? 'Tutor de prácticas' : form.role
+              form.account_type === 'teacher_class' ? 'Tutor de prácticas' : form.account_type
             }
           />
         </div>
