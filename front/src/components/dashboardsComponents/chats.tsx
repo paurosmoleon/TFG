@@ -39,6 +39,7 @@ const Chats: React.FC = () => {
 
         setChats(mappedChats);
         setSelectedChat(mappedChats[0] || null);
+
       } catch (err) {
         console.error(err);
       }
@@ -70,6 +71,7 @@ const Chats: React.FC = () => {
   }, [selectedChat]);
 
   const sendMessage = () => {
+
     if (ws.current && input.trim() !== '') {
       ws.current.send(input);
       setInput('');
@@ -154,8 +156,9 @@ const Chats: React.FC = () => {
             Enviar
           </button>
         </div>
+
       </div>
-    </div>
+    </>
   );
 };
 

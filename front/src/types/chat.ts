@@ -1,4 +1,4 @@
-export type Role = 'teacher_class' | 'student' | 'practice_tutor';
+export type Role = 'teacher_class' | 'student' | 'practices_tutor';
 
 export interface Chat {
   id: number;
