@@ -10,11 +10,12 @@ interface RoleIconProps {
 
 const RoleIcon: React.FC<RoleIconProps> = ({ role }) => {
   switch (role) {
-    case 'tutor':
+
+    case 'practices_tutor':
       return <TutorSVG className="h-20 w-20" />;
-    case 'estudiante':
+    case 'student':
       return <AlumnSVG className="h-20 w-20" />;
-    case 'profesor':
+    case 'teacher_class':
       return <ProfesorSVG className="h-20 w-20" />;
     default:
       return null;

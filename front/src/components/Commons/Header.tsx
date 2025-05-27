@@ -89,9 +89,8 @@ export default function Header() {
                     <Link
                       to={item.to}
                       onClick={() => setIsOpen(false)}
-                      className={`block font-medium text-[15px] ${
-                        isActive(item.to) ? 'text-blue-700' : 'text-slate-900'
-                      } hover:text-blue-700`}
+                      className={`block font-medium text-[15px] ${isActive(item.to) ? 'text-blue-700' : 'text-slate-900'
+                        } hover:text-blue-700`}
                     >
                       {item.name}
                     </Link>
@@ -108,9 +107,8 @@ export default function Header() {
             <Link
               key={i}
               to={item.to}
-              className={`text-sm font-medium ${
-                isActive(item.to) ? 'text-blue-700' : 'text-slate-900'
-              } hover:text-blue-700`}
+              className={`text-sm font-medium ${isActive(item.to) ? 'text-blue-700' : 'text-slate-900'
+                } hover:text-blue-700`}
             >
               {item.name}
             </Link>
