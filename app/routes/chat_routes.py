@@ -10,7 +10,6 @@ from fastapi.encoders import jsonable_encoder
 
 router = APIRouter()
 
-router.mount("/static",StaticFiles(directory="services/static"), name="static")
 
 
 
