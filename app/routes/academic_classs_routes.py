@@ -1,12 +1,13 @@
 from fastapi import APIRouter, Depends
 from auth.auth import verify_token
 from services.academic_class_services import *
+from models.academic_class_model import *
 
-router = APIRouter(dependencies=Depends(verify_token))
+router = APIRouter(dependencies=[Depends(verify_token)])
 
 
 @router.post('/create')
-async def create(data):
+async def create(data:academicClassModel):
     return createAcademicClassServices(data)
 
 @router.get('/find/{id}')
