@@ -1,15 +1,16 @@
 import { Link } from 'react-router-dom';
-import UserSVG from '../../assets/icons/UserSVG';
+import '../../assets/styles/animacion.css';
+import PasswordSVG from '../../assets/icons/PasswordSVG';
 import EmailSVG from '../../assets/icons/EmailSVG';
 const ForgottenPassword = () => {
   return (
-    <div className="h-screen flex justify-center items-center">
+    <div className="h-screen animated-body flex justify-center items-center">
       {/* Formulario de login */}
-      <div className="flex md:w-1/2 justify-center py-10 items-center bg-white">
-        <form className="bg-white">
+      <div className="flex md:w-1/2 justify-center py-10 items-center ">
+        <form className="bg-white px-4 py-4 rounded-xl">
           {/* Username */}
-          <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
-            <UserSVG className="h-5 w-5 mx-auto my-auto text-gray-400" />
+          <div className="flex items-center border-1 py-2 px-3 rounded-2xl mb-4">
+            <PasswordSVG className="h-5 w-5 text-gray-400" />
             <input
               className="pl-2 outline-none border-none w-full"
               type="text"
@@ -27,26 +28,26 @@ const ForgottenPassword = () => {
           </div>
 
           {/* Email */}
-          <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
-            <EmailSVG className="h-5 w-5 mx-auto my-auto text-gray-400" />
+          <div className="flex items-center border-1 py-2 px-3 rounded-2xl mb-4">
+            <EmailSVG className="h-5 w-5 text-gray-400" />
             <input
               className="pl-2 outline-none border-none w-full"
               type="email"
-              placeholder="Dirección de correo electrónico"
+              placeholder="Correo electrónico"
             />
           </div>
           <button
             type="submit"
-            className="block w-full bg-indigo-600 mt-4 py-2 rounded-2xl text-white font-semibold mb-2 cursor-pointer hover:bg-indigo-700 transition duration-200"
+            className="block w-full bg-blue-600 mt-4 py-2 rounded-2xl text-white font-semibold mb-2 cursor-pointer hover:bg-blue-500 transition duration-200"
           >
-            Login
+            Buscar
           </button>
           <div className="flex flex-col items-center text-center mt-4 mb-4 space-y-4">
             <div>
               <span className="text-sm block">¿Recordaste tu contraseña?</span>
               <Link
                 to="/log-in"
-                className="text-sm text-blue-600 hover:underline"
+                className="text-sm text-blue-600 hover:underline hover:text-blue-500"
               >
                 Inicia sesión
               </Link>
@@ -55,7 +56,7 @@ const ForgottenPassword = () => {
               <span className="text-sm block">¿Aún no tienes cuenta?</span>
               <Link
                 to="/sign-up"
-                className="text-sm text-blue-600 hover:underline"
+                className="text-sm text-blue-600 hover:underline hover:text-blue-500"
               >
                 Regístrate
               </Link>

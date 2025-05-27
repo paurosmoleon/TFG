@@ -1,15 +1,25 @@
 import { Link } from 'react-router-dom';
-import PasswordSVG from '../../assets/icons/PasswordSVG';
-
+import '../../assets/styles/animacion.css';
 const NewPassword = () => {
   return (
-    <div className="h-screen flex justify-center items-center">
+    <div className="h-screen animated-body flex justify-center items-center">
       {/* Formulario de login */}
-      <div className="flex md:w-1/2 justify-center py-10 items-center bg-white">
-        <form className="bg-white">
+      <div className="flex md:w-1/2 justify-center py-10 items-center">
+        <form className="bg-white px-4 py-4 rounded-xl">
           {/* Password */}
           <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
-            <PasswordSVG className="h-5 w-5 mx-auto my-auto text-gray-400" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5 text-gray-400"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fillRule="evenodd"
+                d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
+                clipRule="evenodd"
+              />
+            </svg>
             <input
               className="pl-2 outline-none border-none w-full"
               type="password"
@@ -19,8 +29,18 @@ const NewPassword = () => {
 
           {/*Confirm Password. No validation logic implemented */}
           <div className="flex items-center border-2 py-2 px-3 rounded-2xl">
-            <PasswordSVG className="h-5 w-5 mx-auto my-auto text-gray-400" />
-
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5 text-gray-400"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fillRule="evenodd"
+                d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
+                clipRule="evenodd"
+              />
+            </svg>
             <input
               className="pl-2 outline-none border-none w-full"
               type="password"

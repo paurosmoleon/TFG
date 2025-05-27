@@ -1,4 +1,3 @@
-// components/Profile.jsx
 import React, { useState } from 'react';
 import Alumno from '../ProfileComponents/Alumno';
 import TutorLaboral from '../ProfileComponents/TutorLaboral';
@@ -36,29 +35,31 @@ const Profile: React.FC<ProfileProps> = ({
   };
 
   return (
-    <div className="mt-6">
-      {form.role === 'Alumno' && (
-        <Alumno
-          form={form}
-          handleChange={handleChange}
-          handleSave={handleSave}
-        />
-      )}
-      {form.role === 'Tutor laboral' && (
-        <TutorLaboral
-          form={form}
-          handleChange={handleChange}
-          handleSave={handleSave}
-        />
-      )}
-      {form.role === 'Tutor de prácticas' && (
-        <TutorDePrácticas
-          form={form}
-          handleChange={handleChange}
-          handleSave={handleSave}
-        />
-      )}
-    </div>
+    (
+      <div className="mt-6">
+        {form.role === 'student' && (
+          <Alumno
+            form={form}
+            handleChange={handleChange}
+            handleSave={handleSave}
+          />
+        )}
+        {form.role === 'practice_tutor' && (
+          <TutorLaboral
+            form={form}
+            handleChange={handleChange}
+            handleSave={handleSave}
+          />
+        )}
+        {form.role === 'teacher_class' && (
+          <TutorDePrácticas
+            form={form}
+            handleChange={handleChange}
+            handleSave={handleSave}
+          />
+        )}
+      </div>
+    )
   );
 };
 

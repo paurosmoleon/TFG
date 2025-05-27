@@ -1,0 +1,24 @@
+.animated-body {
+  background: linear-gradient(-45deg, #caeffa, #b8d0d9, #23a6d5, #1c64f2);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+  height: 100vh;
+}
+.animated-landing {
+  background: linear-gradient(-45deg, #547ed1, #75a3ff, #3e7bf4, #1860F2);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+  height: 100vh;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}

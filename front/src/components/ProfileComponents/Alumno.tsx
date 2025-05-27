@@ -50,7 +50,7 @@ const Alumno: React.FC<AlumnoProps> = ({ form, handleChange, handleSave }) => (
             disabled
             className="text-lg font-medium text-gray-900 w-full border border-gray-300 rounded bg-gray-100 px-2 py-1"
             name="role"
-            value={form.role}
+            value={form.role === 'student' ? 'Alumno' : form.role}
           />
         </div>
         <div>
