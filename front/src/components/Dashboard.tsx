@@ -1,5 +1,4 @@
 import { NavLink, Outlet } from 'react-router-dom';
-
 export default function Dashboard() {
   return (
     <div className="relative min-h-screen">
