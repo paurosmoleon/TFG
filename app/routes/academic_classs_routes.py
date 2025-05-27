@@ -22,3 +22,6 @@ async def update(id,data):
 async def delete(id):
     return deleteAcademicClassServices(id)
 
+@router.get('/find_by_student/{student_id}')
+async def findByStudent(student_id):
+    return findDiariesServicesByStudent(student_id)
