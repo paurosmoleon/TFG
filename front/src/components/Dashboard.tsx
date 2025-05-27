@@ -1,10 +1,19 @@
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import MemoriaSVG from '../assets/icons/MemoriaSVG';
 import FichaSemanalSVG from '../assets/icons/FichaSemanalSVG';
 import ChatsSVG from '../assets/icons/ChatsSVG';
 import PerfilSVG from '../assets/icons/PerfilSVG';
+import { useEffect } from 'react';
 
 export default function Dashboard() {
+  const navigate = useNavigate();
+  // Redirigir si ya está logueado
+  useEffect(() => {
+    const token = localStorage.getItem('tokenUser');
+    if (!token) {
+      navigate('/log-in');
+    }
+  });
   return (
     <div className="relative min-h-screen">
       <aside
