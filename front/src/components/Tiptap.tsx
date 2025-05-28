@@ -12,8 +12,9 @@ const TiptapEditor = ({ onSave }: { onSave: (content: string) => void }) => {
     content: '<p>Escribe aquí...</p>',
   })
 
+
   useEffect(() => {
-    const fetch = async () => {
+    const currentusers = async () => {
       try {
         const student = await axios.get('https://tfg-production-f839.up.railway.app/users/me', {
           headers: {
@@ -21,58 +22,68 @@ const TiptapEditor = ({ onSave }: { onSave: (content: string) => void }) => {
           }
         })
         const current = student.data[0]
+
         setCurrentUser(current)
-
-        const teacher = await axios.get(`https://tfg-production-f839.up.railway.app/AC/find_by_student/${currentUser['id']}`, {
-          headers: {
-            Authorization: localStorage.getItem('tokenUser')
-          }
-        })
-        const current2 = teacher.data['Message'][0]['id']
-        setTeacher(current2)
-
       } catch (err) {
         console.log(err)
       }
     }
-
-    fetch()
+    currentusers()
   }, [])
+
+
+  const fetch = async () => {
+    try {
+
+      const teacherr = await axios.get(`https://tfg-production-f839.up.railway.app/AC/find_by_student/${currentUser['id']}`, {
+        headers: {
+          Authorization: localStorage.getItem('tokenUser')
+        }
+
+      })
+      const current2 = teacherr.data['Message'][0]
+
+
+      return current2['teacher_id']
+
+
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+
+
+
 
 
 
   const handleSave = async () => {
-    const obj = {
-      "student_id": currentUser['id'],
-      "school_tutor_id": teacherS,
-      "content": editor?.getHTML().toString()
+
+    try {
+      const obj = {
+        "student_id": currentUser['id'],
+        "school_tutor_id": await fetch(),
+        "content": editor?.getHTML().toString()
+      }
+
+      await axios.post('https://tfg-production-f839.up.railway.app/PD/create', obj, {
+        headers: {
+          Authorization: localStorage.getItem('tokenUser')
+        }
+      })
+
+    } catch (err) {
+      console.log(err)
     }
-    console.log(obj)
-    // if (!currentUser || !teacherS) {
-    //   console.error('Datos no cargados aún')
-    //   return
-    // }
-
-    // try {
-
-
-    //   await axios.post('https://tfg-production-f839.up.railway.app/PD/create', obj, {
-    //     headers: {
-    //       Authorization: localStorage.getItem('tokenUser')
-    //     }
-    //   })
-
-    // } catch (err) {
-    //   console.log(err)
-    // }
   }
 
-  //useCallback(() => {
-  //   if (editor) {
-  //     const html = editor.getHTML() // También puedes usar editor.getJSON() o editor.getText()
-  //     onSave(html) // Lo pasas al componente padre o haces algo con él
-  //   }
-  // }, [editor, onSave])
+  useCallback(() => {
+    if (editor) {
+      const html = editor.getHTML() // También puedes usar editor.getJSON() o editor.getText()
+      onSave(html) // Lo pasas al componente padre o haces algo con él
+    }
+  }, [editor, onSave])
 
   return (
     <div>
