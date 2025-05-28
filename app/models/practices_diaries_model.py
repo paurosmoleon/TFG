@@ -3,7 +3,6 @@ from typing import Text,Optional
 
 class createDiariesModel(BaseModel):
     student_id: int 
-    company_tutor_id: int
     school_tutor_id: int
     content: str
 
