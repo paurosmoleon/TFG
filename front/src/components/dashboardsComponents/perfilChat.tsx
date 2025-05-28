@@ -16,7 +16,7 @@ const PerfilChat: React.FC = () => {
   useEffect(() => {
     const fetchCurrentUser = async () => {
       try {
-        const response = await axios.get('https://tfg-production-f839.up.railway.app/users/me', {
+        const response: any = await axios.get('https://tfg-production-f839.up.railway.app/users/me', {
           headers: {
             Authorization: localStorage.getItem('tokenUser') || '',
           }
@@ -47,7 +47,7 @@ const PerfilChat: React.FC = () => {
       phone={currentUser.phone || ''}
       dni={currentUser.dni || ''}
       account_type={currentUser.account_type || ''}
-      empresa={currentUser.empresa || undefined} 
+      empresa={currentUser.empresa || undefined}
     />
   );
 };

@@ -1,9 +1,9 @@
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback } from 'react'
 import axios from 'axios'
 
-const TiptapEditor = ({ onSave, id_student }: { onSave: (content: string) => void, id_student: number }) => {
+const TiptapEditor = ({ onSave, id_student }: { onSave: (content: string) => void, id_student: any }) => {
 
 
   const editor = useEditor({
@@ -16,7 +16,7 @@ const TiptapEditor = ({ onSave, id_student }: { onSave: (content: string) => voi
   const fetch = async () => {
     try {
 
-      const teacherr = await axios.get(`https://tfg-production-f839.up.railway.app/AC/find_by_student/${id_student}`, {
+      const teacherr: any = await axios.get(`https://tfg-production-f839.up.railway.app/AC/find_by_student/${id_student}`, {
         headers: {
           Authorization: localStorage.getItem('tokenUser')
         }

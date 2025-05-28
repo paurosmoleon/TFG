@@ -12,7 +12,7 @@ const memoriaPracticas = () => {
   useEffect(() => {
     const currentusers = async () => {
       try {
-        const student = await axios.get('https://tfg-production-f839.up.railway.app/users/me', {
+        const student: any = await axios.get('https://tfg-production-f839.up.railway.app/users/me', {
           headers: {
             Authorization: localStorage.getItem('tokenUser')
           }
@@ -35,7 +35,7 @@ const memoriaPracticas = () => {
         Authorization: localStorage.getItem('tokenUser')
       }
     })
-      .then((response) => {
+      .then((response: any) => {
         const blob = new Blob([response.data], { type: 'application/pdf' });
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
