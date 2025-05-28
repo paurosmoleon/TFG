@@ -37,9 +37,9 @@ def findDiariesServices(id):
         return {'Error': str(err)}
     
 
-def exportDiarieServices(id):
+def exportDiarieServices(student_id):
     try:
-        response = supabase.table('practice_diaries').select('*').eq('id',id).execute()
+        response = supabase.table('practice_diaries').select('*').eq('student_id',student_id).execute()
 
         pdf_bytes = BytesIO()
         pisa.CreatePDF(src=response.data[0]['content'], dest=pdf_bytes)
