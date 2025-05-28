@@ -1,14 +1,35 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import TiptapEditor from '../Tiptap';
 import axios from 'axios';
 const memoriaPracticas = () => {
+  const [currentUser, setCurrentUser] = useState()
+
   const handleSaveContent = (content: string) => {
     console.log('Contenido guardado:', content);
   };
 
 
+  useEffect(() => {
+    const currentusers = async () => {
+      try {
+        const student = await axios.get('https://tfg-production-f839.up.railway.app/users/me', {
+          headers: {
+            Authorization: localStorage.getItem('tokenUser')
+          }
+        })
+        const current = student.data[0]['id']
+
+        setCurrentUser(current)
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    currentusers()
+  }, [])
+
+
   function downloadPDF() {
-    axios.get('https://tfg-production-f839.up.railway.app/PD/pdf/2', {
+    axios.get(`https://tfg-production-f839.up.railway.app/PD/pdf/${currentUser}`, {
       responseType: 'blob',  // ¡Importante!
       headers: {
         Authorization: localStorage.getItem('tokenUser')
@@ -35,8 +56,8 @@ const memoriaPracticas = () => {
   return (
     <div>
       <h1>Memoria Practicas</h1>
-      <TiptapEditor onSave={handleSaveContent} />
-      <button onClick={downloadPDF} className='cursor-pointer'>asdasd </button>
+      <TiptapEditor onSave={handleSaveContent} id_student={currentUser} />
+      <button onClick={downloadPDF} className='cursor-pointer mx-auto w-full' >asdasd </button>
     </div>
   );
 };

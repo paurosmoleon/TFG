@@ -3,9 +3,8 @@ import StarterKit from '@tiptap/starter-kit'
 import { useCallback, useEffect, useState } from 'react'
 import axios from 'axios'
 
-const TiptapEditor = ({ onSave }: { onSave: (content: string) => void }) => {
-  const [currentUser, setCurrentUser] = useState()
-  const [teacherS, setTeacher] = useState()
+const TiptapEditor = ({ onSave, id_student }: { onSave: (content: string) => void, id_student: number }) => {
+
 
   const editor = useEditor({
     extensions: [StarterKit],
@@ -13,29 +12,11 @@ const TiptapEditor = ({ onSave }: { onSave: (content: string) => void }) => {
   })
 
 
-  useEffect(() => {
-    const currentusers = async () => {
-      try {
-        const student = await axios.get('https://tfg-production-f839.up.railway.app/users/me', {
-          headers: {
-            Authorization: localStorage.getItem('tokenUser')
-          }
-        })
-        const current = student.data[0]
-
-        setCurrentUser(current)
-      } catch (err) {
-        console.log(err)
-      }
-    }
-    currentusers()
-  }, [])
-
 
   const fetch = async () => {
     try {
 
-      const teacherr = await axios.get(`https://tfg-production-f839.up.railway.app/AC/find_by_student/${currentUser['id']}`, {
+      const teacherr = await axios.get(`https://tfg-production-f839.up.railway.app/AC/find_by_student/${id_student}`, {
         headers: {
           Authorization: localStorage.getItem('tokenUser')
         }
@@ -62,7 +43,7 @@ const TiptapEditor = ({ onSave }: { onSave: (content: string) => void }) => {
 
     try {
       const obj = {
-        "student_id": currentUser['id'],
+        "student_id": id_student,
         "school_tutor_id": await fetch(),
         "content": editor?.getHTML().toString()
       }
