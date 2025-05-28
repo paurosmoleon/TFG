@@ -6,7 +6,7 @@ interface TutorLaboralProps {
     name: string;
     phone: string;
     dni: string;
-    role: string;
+    account_type: string;
     empresa: string;
   };
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -54,8 +54,8 @@ const TutorLaboral: React.FC<TutorLaboralProps> = ({
           <input
             disabled
             className="text-lg font-medium text-gray-900 w-full border border-gray-300 rounded bg-gray-100 px-2 py-1"
-            name="role"
-            value={form.role === 'practice_tutor' ? 'Tutor laboral' : form.role}
+            name="account_type"
+            value={form.account_type === 'practice_tutor' ? 'Tutor laboral' : form.account_type}
           />
         </div>
         <div>

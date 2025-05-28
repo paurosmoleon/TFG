@@ -7,7 +7,7 @@ type ProfileProps = {
   name: string;
   phone: string;
   dni: string;
-  role: string;
+  account_type: string;
   empresa?: string;
 };
 
@@ -15,14 +15,14 @@ const Profile: React.FC<ProfileProps> = ({
   name,
   phone,
   dni,
-  role,
+  account_type,
   empresa,
 }) => {
   const [form, setForm] = useState({
     name,
     phone,
     dni,
-    role,
+    account_type,
     empresa: empresa || '',
   });
 
@@ -37,21 +37,21 @@ const Profile: React.FC<ProfileProps> = ({
   return (
     (
       <div className="mt-6">
-        {form.role === 'student' && (
+        {form.account_type === 'student' && (
           <Alumno
             form={form}
             handleChange={handleChange}
             handleSave={handleSave}
           />
         )}
-        {form.role === 'practice_tutor' && (
+        {form.account_type === 'practices_tutor' && (
           <TutorLaboral
             form={form}
             handleChange={handleChange}
             handleSave={handleSave}
           />
         )}
-        {form.role === 'teacher_class' && (
+        {form.account_type === 'teacher_class' && (
           <TutorDePrácticas
             form={form}
             handleChange={handleChange}

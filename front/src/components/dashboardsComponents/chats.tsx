@@ -158,7 +158,7 @@ const Chats: React.FC = () => {
         </div>
 
       </div>
-    </>
+    </div>
   );
 };
 
