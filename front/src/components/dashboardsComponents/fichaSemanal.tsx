@@ -370,7 +370,7 @@ const FichaSemanal: FC<Props> = ({
   return (
     <div className="max-w-5xl mx-auto p-6 space-y-10 bg-gray-50">
       <h1 className="text-3xl font-extrabold text-gray-800 text-center">
-        Múltiples Fichas Semanales
+        Fichas Semanales
       </h1>
 
       {/* ─── ENCABEZADO COMÚN: solo encima de la primera ficha ─── */}

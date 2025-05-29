@@ -40,7 +40,7 @@ function App() {
         />
         <Route
           path="ficha-semanal"
-          element={<FichaSemanal  />}
+          element={<FichaSemanal/>}
         />
         <Route
           path="chats"
