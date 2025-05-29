@@ -8,11 +8,11 @@ const ContactUsComponent = () => {
               <div className="relative h-full">
                 <img
                   src="https://pagedone.io/asset/uploads/1696488602.png"
-                  alt="ContactUs tailwind section"
+                  alt="Contact Us"
                   className="w-full h-full lg:rounded-l-2xl rounded-2xl bg-blend-multiply bg-blue-700 object-cover"
                 />
-                <h1 className="font-manrope text-blue-600 text-4xl font-bold leading-10 absolute top-11 left-11">
-                  Contáctanos
+                <h1 className=" text-blue-700 font-manrope text-4xl leading-10 absolute top-11 left-11 text-center ">
+                  Solicita una demo
                 </h1>
                 <div className="absolute bottom-0 lg:p-11 p-5 flex flex-col w-full">
                   <div className="bg-white rounded-lg p-6 block">
@@ -33,7 +33,7 @@ const ContactUsComponent = () => {
                         />
                       </svg>
                       <h5 className="text-black text-base font-normal leading-6 ml-5">
-                        +34 WIP
+                        +34 633 08 13 16
                       </h5>
                     </div>
                     <a
@@ -65,22 +65,22 @@ const ContactUsComponent = () => {
           </div>
 
           <div className="bg-gray-50 p-5 lg:p-11 lg:rounded-r-2xl rounded-2xl">
-            <h2 className="text-blue-600 font-manrope text-4xl font-semibold leading-10 mb-11">
+            <h2 className="text-blue-600 font-manrope text-4xl leading-10 mb-11">
               Envíanos un mensaje
             </h2>
             <input
               type="text"
-              className="w-full h-12 text-gray-600 placeholder-gray-400  shadow-sm bg-transparent text-lg font-normal leading-7 rounded-full border border-gray-200 focus:outline-none pl-4 mb-10"
+              className="w-full h-12 text-gray-600 placeholder-gray-400  shadow-sm bg-transparent font-normal leading-7 rounded-full border border-gray-200 focus:outline-none pl-4 mb-10"
               placeholder="Nombre"
             />
             <input
               type="text"
-              className="w-full h-12 text-gray-600 placeholder-gray-400 shadow-sm bg-transparent text-lg font-normal leading-7 rounded-full border border-gray-200 focus:outline-none pl-4 mb-10"
+              className="w-full h-12 text-gray-600 placeholder-gray-400 shadow-sm bg-transparent font-normal leading-7 rounded-full border border-gray-200 focus:outline-none pl-4 mb-10"
               placeholder="Email"
             />
             <input
               type="text"
-              className="w-full h-12 text-gray-600 placeholder-gray-400 bg-transparent text-lg shadow-sm font-normal leading-7 rounded-full border border-gray-200 focus:outline-none pl-4 mb-10"
+              className="w-full h-12 text-gray-600 placeholder-gray-400 bg-transparent  shadow-sm font-normal leading-7 rounded-full border border-gray-200 focus:outline-none pl-4 mb-10"
               placeholder="Escriba su mensaje aquí..."
             />
             <button className="w-full h-12 text-white text-base font-semibold leading-6 rounded-full cursor-pointer transition-all duration-400 hover:bg-[#6595F6] bg-blue-600 shadow-sm">

@@ -5,7 +5,7 @@ export default function Home() {
       <div className="relative h-120 overflow-hidden">
         {/* Imagen apaisada */}
         <img
-          src="../../public/banner inicio.png"
+          src="/banner inicio.png"
           alt="Banner FCT"
           className="absolute inset-0 w-full h-full object-cover"
         />

@@ -8,7 +8,7 @@ const TiptapEditor = ({ onSave, id_student }: { onSave: (content: string) => voi
 
   const editor = useEditor({
     extensions: [StarterKit],
-    content: '<p class="text-center">Escribe aquí...</p>',
+    content: '<p className="text-center">Escribe aquí...</p>',
   })
 
 
@@ -70,11 +70,11 @@ const TiptapEditor = ({ onSave, id_student }: { onSave: (content: string) => voi
     <div>
       <EditorContent editor={editor} />
       <div className="flex justify-center space-x-4 mt-4">
-      <button onClick={() => handleSave()} className="mt-4 px-4 py-2 bg-blue-600 text-white rounded">
-        Guardar contenido
-      </button>
+        <button onClick={() => handleSave()} className='mt-4 px-4 mb-3 py-2 rounded border text-block border-black bg-white hover:bg-black hover:border-white hover:text-white transition-all duration-200 cursor-pointer'>
+          Guardar
+        </button>
       </div>
-    </div>
+    </div >
   )
 }
 

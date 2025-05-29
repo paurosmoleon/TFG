@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import TiptapEditor from '../Tiptap';
 import axios from 'axios';
-const memoriaPracticas = () => {
+const MemoriaPracticas = () => {
   const [currentUser, setCurrentUser] = useState()
 
   const handleSaveContent = (content: string) => {
@@ -40,7 +40,7 @@ const memoriaPracticas = () => {
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'reporte.pdf';
+        a.download = 'Memoria de prácticas.pdf';
         document.body.appendChild(a);
         a.click();
         a.remove();
@@ -54,15 +54,15 @@ const memoriaPracticas = () => {
 
 
   return (
-    <div className="w-1/3 mx-auto mt-4 border border-gray-300">
-      <h1 className="text-xl text-center">Memoria Practicas</h1>
-      
+    <div className="w-1/2 mx-auto mt-4 border border-gray-300 bg-white p-6 rounded-lg shadow-lg">
+      <h1 className="text-xl text-center py-2 border-b w-full ">Memoria Practicas</h1>
+
       <TiptapEditor onSave={handleSaveContent} id_student={currentUser} />
       <div className="flex justify-center space-x-4 mt-4">
-        <button onClick={downloadPDF} className='mt-4 px-4 mb-3 py-2 bg-red-600 text-white rounded hover:bg-red-800' >descargar </button>
+        <button onClick={downloadPDF} className='mt-4 px-4 mb-3 py-2 rounded border text-block border-black bg-white hover:bg-black hover:border-white hover:text-white transition-all duration-200   cursor-pointer' >Descargar como PDF</button>
       </div>
     </div>
   );
 };
 
-export default memoriaPracticas;
+export default MemoriaPracticas;
