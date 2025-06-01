@@ -2,7 +2,7 @@ import LinkedIn from '../../assets/icons/LinkedIn';
 // Hacer responsive y tamaño de las fotos todas iguales
 const ProfilesGrid = () => {
   return (
-    <div className="flex flex-wrap justify-center ">
+    <div className="flex flex-wrap justify-center bg-gray-100">
       <div className="m-10 w-60">
         <div className="rounded-lg border bg-white px-5 pt-8 pb-10 shadow-lg">
           <div className="relative mx-auto pb-2 w-36 rounded-full">
