@@ -113,7 +113,7 @@ export default function Home() {
             </p>
           </div>
           <img
-            src="https://placehold.co/600x400?text=Mision&bg=aaf&fc=225"
+            src="/mission.jpg"
             alt="Misión"
             className="w-full h-auto rounded-lg shadow-lg md:w-1/2"
           />
@@ -134,7 +134,7 @@ export default function Home() {
             </p>
           </div>
           <img
-            src="https://placehold.co/600x400?text=Vision&bg=afa&fc=243"
+            src="/vision.jpg"
             alt="Visión"
             className="w-full h-auto rounded-lg shadow-lg md:w-1/2"
           />
