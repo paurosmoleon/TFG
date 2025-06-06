@@ -22,7 +22,7 @@ def createDiariesServices(data):
     
 def findDiariesServices(id):
     try:
-        response = supabase.table('practice_diaries').select('*').eq('id',id).execute()
+        response = supabase.table('practice_diaries').select('*').eq('student_id',id).execute()
             
         return JSONResponse(
             status_code=status.HTTP_200_OK,
