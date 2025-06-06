@@ -12,9 +12,9 @@ const Chats: React.FC = () => {
   const [messages, setMessages] = useState<string[]>([]);
   const [input, setInput] = useState('');
   const [selectedChat, setSelectedChat] = useState<Chat | null>(null);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const ws = useRef<WebSocket | null>(null);
 
-  // Carga los chats del usuario y los guarda
   useEffect(() => {
     const fetchChats = async () => {
       try {
@@ -28,7 +28,6 @@ const Chats: React.FC = () => {
           `https://tfg-production-f839.up.railway.app/findGroup/${currentUser.data[0].id}`
         );
 
-        // Mapear la respuesta a estructura Chat
         const mappedChats = res.data.map((chat: any) => ({
           id: chat.IdChat,
           name: chat.nombre || 'Chat sin nombre',
@@ -39,7 +38,6 @@ const Chats: React.FC = () => {
 
         setChats(mappedChats);
         setSelectedChat(mappedChats[0] || null);
-
       } catch (err) {
         console.error(err);
       }
@@ -48,7 +46,6 @@ const Chats: React.FC = () => {
     fetchChats();
   }, []);
 
-  // Conectar WS cuando cambia el chat seleccionado
   useEffect(() => {
     if (!selectedChat) return;
 
@@ -66,31 +63,50 @@ const Chats: React.FC = () => {
 
     return () => {
       socket.close();
-      setMessages([]); 
+      setMessages([]);
     };
   }, [selectedChat]);
 
   const sendMessage = () => {
-
     if (ws.current && input.trim() !== '') {
       ws.current.send(input);
       setInput('');
     }
   };
 
+  // Cuando seleccionamos chat en móvil, cerramos sidebar
+  const handleSelectChat = (chat: Chat) => {
+    setSelectedChat(chat);
+    setSidebarOpen(false);
+  };
+
   return (
     <div className="flex h-[calc(100vh-4rem)]">
+      {/* Sidebar overlay para móvil */}
+      <div
+        className={`fixed inset-0 bg-black bg-opacity-50 z-30 transition-opacity md:hidden ${sidebarOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+          }`}
+        onClick={() => setSidebarOpen(false)}
+      />
+
       {/* Sidebar */}
-      <aside className="w-2/3 lg:w-1/4 bg-white border-r border-gray-200 overflow-y-auto p-4">
+      <aside
+        className={`
+          fixed top-16 bottom-0 left-0 z-40 w-2/3 max-w-xs bg-white border-r border-gray-200 p-4
+          overflow-y-auto
+          transform transition-transform duration-300 ease-in-out
+          md:relative md:top-0 md:left-0 md:w-1/4 md:max-w-none md:translate-x-0
+          ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
+        `}
+      >
         {chats.map((chat) => {
           const isActive = selectedChat?.id === chat.id;
           return (
             <div
               key={chat.id}
-              onClick={() => setSelectedChat(chat)}
-              className={`flex items-center p-4 mb-4 rounded-lg cursor-pointer transition ${
-                isActive ? 'bg-gray-100' : 'hover:bg-gray-50'
-              }`}
+              onClick={() => handleSelectChat(chat)}
+              className={`flex items-center p-4 mb-4 rounded-lg cursor-pointer transition ${isActive ? 'bg-gray-100' : 'hover:bg-gray-50'
+                }`}
             >
               <Link to="/dashboard/perfil-chat" className="flex-shrink-0 mr-3">
                 <img
@@ -111,8 +127,29 @@ const Chats: React.FC = () => {
       </aside>
 
       {/* Chat window */}
-      <div className="flex-1 flex flex-col bg-gray-100">
+      <div className="flex-1 flex flex-col bg-gray-100 h-[calc(100vh-4rem)] md:ml-0">
+        {/* Header con botón para abrir sidebar en móvil */}
         <header className="flex items-center p-4 bg-white border-b border-gray-200">
+          <button
+            onClick={() => setSidebarOpen(true)}
+            className="mr-4 p-2 rounded-md hover:bg-gray-200 focus:outline-none md:hidden"
+            aria-label="Abrir chats"
+          >
+            <svg
+              className="w-6 h-6 text-gray-700"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              viewBox="0 0 24 24"
+            >
+              <line x1="3" y1="12" x2="21" y2="12" />
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <line x1="3" y1="18" x2="21" y2="18" />
+            </svg>
+          </button>
+
           <Link to="/dashboard/perfil-chat" className="flex-shrink-0 mr-3">
             <img
               src={selectedChat?.avatar}
@@ -123,16 +160,16 @@ const Chats: React.FC = () => {
           <h2 className="text-xl font-semibold text-gray-800">{selectedChat?.name}</h2>
         </header>
 
-        <div className="flex-1 p-4 overflow-y-auto flex flex-col">
+        {/* Contenedor mensajes */}
+        <div className="flex-1 p-4 overflow-y-auto flex flex-col justify-center">
           {messages.length === 0 ? (
-            <div className="text-gray-400">No hay mensajes aún.</div>
+            <div className="text-gray-400 text-center mt-auto mb-auto">No hay mensajes aún.</div>
           ) : (
             messages.map((msg, i) => (
               <div
                 key={i}
-                className={`max-w-[80%] mb-4 p-3 rounded-xl ${
-                  i % 2 === 0 ? 'bg-white self-start' : 'bg-green-100 self-end'
-                }`}
+                className={`max-w-[80%] mb-4 p-3 rounded-xl ${i % 2 === 0 ? 'bg-white self-start' : 'bg-green-100 self-end'
+                  }`}
               >
                 {msg}
               </div>
@@ -140,6 +177,7 @@ const Chats: React.FC = () => {
           )}
         </div>
 
+        {/* Barra input */}
         <div className="flex items-center p-4 bg-white border-t border-gray-200">
           <input
             type="text"
@@ -156,7 +194,6 @@ const Chats: React.FC = () => {
             Enviar
           </button>
         </div>
-
       </div>
     </div>
   );

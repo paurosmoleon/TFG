@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 
 interface User {
   name: string;
+  account_type: string;
 }
 
 export default function Header() {
@@ -31,10 +32,12 @@ export default function Header() {
             },
           }
         );
+        console.log('Usuario actual:', res.data[0].account_type);
         setName(res.data[0].name);
       } catch (err) {
         console.log('Error al obtener el usuario:', err);
       }
+      
     };
 
     if (localStorage.getItem('tokenUser')) currentUser();
