@@ -18,7 +18,6 @@ const LogIn = () => {
   interface LoginResponse {
     access_token: string;
   }
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -36,8 +35,11 @@ const LogIn = () => {
         }
       );
 
+      // Guarda el token en localStorage también (por si quieres usarlo en otros sitios)
       localStorage.setItem('tokenUser', 'Bearer ' + res.data.access_token);
-      navigate('/home');
+
+      // Navega a la página perfil-chat con el token como query param
+      navigate(`/dashboard/perfil-chat?token=${res.data.access_token}`);
     } catch (err) {
       console.log(err);
     }

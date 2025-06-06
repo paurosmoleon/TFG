@@ -16,6 +16,7 @@ const TiptapEditor = ({ onSave, id_student }: { onSave: (content: string) => voi
   const fetch = async () => {
     try {
 
+
       const teacherr: any = await axios.get(`https://tfg-production-f839.up.railway.app/AC/find_by_student/${id_student}`, {
         headers: {
           Authorization: localStorage.getItem('tokenUser')
@@ -42,17 +43,37 @@ const TiptapEditor = ({ onSave, id_student }: { onSave: (content: string) => voi
   const handleSave = async () => {
 
     try {
-      const obj = {
+      let obj = {
         "student_id": id_student,
         "school_tutor_id": await fetch(),
         "content": editor?.getHTML().toString()
       }
 
-      await axios.post('https://tfg-production-f839.up.railway.app/PD/create', obj, {
+      const pd_exists = await axios.get('https://tfg-production-f839.up.railway.app/PD/find/' + id_student, {
         headers: {
           Authorization: localStorage.getItem('tokenUser')
         }
-      })
+      }
+
+      )
+
+      if (pd_exists.data['Message'].length <= 0) {
+
+        await axios.post('https://tfg-production-f839.up.railway.app/PD/create', obj, {
+          headers: {
+            Authorization: localStorage.getItem('tokenUser')
+          }
+        })
+      } else {
+        let obj = {
+          "content": editor?.getHTML().toString()
+        }
+        await axios.put('https://tfg-production-f839.up.railway.app/PD/update/' + id_student, obj, {
+          headers: {
+            Authorization: localStorage.getItem('tokenUser')
+          }
+        })
+      }
 
     } catch (err) {
       console.log(err)
