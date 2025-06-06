@@ -1,3 +1,40 @@
+import json
+from fastapi import  WebSocket,WebSocketDisconnect,status
+from database.database_sup import supabase
+from fastapi.responses import HTMLResponse,JSONResponse
+from auth.auth import verify_token,create_access_chat_token
+from services.user_services import currentUserServices
+
+
+connected_clients = []
+
+
+def createChatServices(data):
+    try:
+        res = supabase.table('chats').insert(data).execute()
+
+        uuid_chat = res.data[0].get('IdChat')
+
+        return JSONResponse(
+            status_code=status.HTTP_201_CREATED,
+            content={'Chat token': uuid_chat}
+        )
+    except Exception as err:
+        return JSONResponse(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            content={'Error': str(err)}
+        )
+
+
+
+def findChatGroupsServices(id):
+    try:
+        res = supabase.table('chats').select('*').or_(f"student_id.eq.{id},company_tutor_id.eq.{id},school_tutor_id.eq.{id}").execute()
+        return  res.data
+    except Exception as err:
+        return {'Err': str(err)}
+
+
 async def websocketEndpointServices(websocket: WebSocket):
     chatContent = []
     await websocket.accept()
