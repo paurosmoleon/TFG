@@ -29,7 +29,7 @@ const PerfilChat: React.FC = () => {
   useEffect(() => {
     const fetchCurrentUser = async () => {
       try {
-        const response = await axios.get('https://tfg-production-f839.up.railway.app/users/me', {
+        const response: any = await axios.get('https://tfg-production-f839.up.railway.app/users/me', {
           headers: {
             Authorization: localStorage.getItem('tokenUser') || '',
           },

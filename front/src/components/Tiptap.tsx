@@ -49,7 +49,7 @@ const TiptapEditor = ({ onSave, id_student }: { onSave: (content: string) => voi
         "content": editor?.getHTML().toString()
       }
 
-      const pd_exists = await axios.get('https://tfg-production-f839.up.railway.app/PD/find/' + id_student, {
+      const pd_exists: any = await axios.get('https://tfg-production-f839.up.railway.app/PD/find/' + id_student, {
         headers: {
           Authorization: localStorage.getItem('tokenUser')
         }
