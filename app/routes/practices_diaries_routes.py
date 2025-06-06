@@ -1,6 +1,6 @@
 
 from typing import Union
-from fastapi import Depends
+from fastapi import Depends,Body
 from auth.auth import verify_token
 from fastapi.routing import APIRouter
 from services.practices_diaries_services import *
@@ -22,3 +22,7 @@ async def findDiaries(id: int):
 @router.get('/pdf/{student_id}')
 async def createDiariesPDF(student_id):
     return exportDiarieServices(student_id)
+
+@router.put('/update/{student_id}')
+async def update(student_id,data =Body(...) ):
+    return updateDiariesServices(student_id,jsonable_encoder(data))

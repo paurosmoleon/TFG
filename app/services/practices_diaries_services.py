@@ -35,7 +35,20 @@ def findDiariesServices(id):
         )
     except Exception as err:
         return {'Error': str(err)}
-    
+
+def updateDiariesServices(id, data):
+    try:
+        response = supabase.table('practice_diaries').update(data).eq('student_id',id).execute()
+
+        return JSONResponse(
+            status_code=status.HTTP_201_CREATED,
+            content={'Created': response.data}
+        )
+    except Exception as err:
+        return JSONResponse(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            content={'Message': str(err)}
+        )
 
 def exportDiarieServices(student_id):
     try:
