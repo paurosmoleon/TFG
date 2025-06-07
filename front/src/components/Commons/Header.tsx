@@ -1,6 +1,10 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import ProfesorSVG from '../../assets/icons/ProfesorSVG';
+import AlumnSVG from '../../assets/icons/AlumnSVG';
+import TutorSVG from '../../assets/icons/TutorSVG';
+import LogOutSVG from '../../assets/icons/LogOutSVG';
 
 interface User {
   name: string;
@@ -10,13 +14,20 @@ interface User {
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const { pathname } = useLocation();
-  const [name, setName] = useState('');
+  const [accountType, setAccountType] = useState<string | null>(null);
 
   const navItems = [
     { name: 'Inicio', to: '/home' },
     { name: 'Dashboard', to: '/dashboard' },
     { name: 'Sobre nosotros', to: '/about-us' },
   ];
+
+  const extendedNavItems =
+    accountType === 'practices_tutor'
+      ? [...navItems, { name: 'Becarios', to: '/becarios' }]
+      : accountType === 'teacher_class'
+      ? [...navItems, { name: 'Clases', to: '/clases' }]
+        : navItems;
 
   const isActive = (to: string) =>
     pathname === to || pathname.startsWith(`${to}/`);
@@ -32,12 +43,10 @@ export default function Header() {
             },
           }
         );
-        console.log('Usuario actual:', res.data[0].account_type);
-        setName(res.data[0].name);
+        setAccountType(res.data[0].account_type);
       } catch (err) {
         console.log('Error al obtener el usuario:', err);
       }
-      
     };
 
     if (localStorage.getItem('tokenUser')) currentUser();
@@ -87,7 +96,7 @@ export default function Header() {
                     <img src="/whale-no-background.png" alt="logo" />
                   </Link>
                 </li>
-                {navItems.map((item, i) => (
+                {extendedNavItems.map((item, i) => (
                   <li key={i} className="border-b py-3 px-3">
                     <Link
                       to={item.to}
@@ -106,7 +115,7 @@ export default function Header() {
 
         {/* Navegación desktop */}
         <div className="hidden lg:flex gap-x-5 cursor">
-          {navItems.map((item, i) => (
+          {extendedNavItems.map((item, i) => (
             <Link
               key={i}
               to={item.to}
@@ -125,14 +134,31 @@ export default function Header() {
               to="/dashboard/perfil-chat"
               className="tex-gray-200 cursor-pointer hover:text-blue-700 hover:underline font-medium text-[15px] text-slate-900"
             >
-              {name}
+              {accountType === 'teacher_class' && <ProfesorSVG />}
+              {accountType === 'student' && <AlumnSVG />}
+              {accountType === 'practices_tutor' && <TutorSVG />}
             </Link>
+
+            {/* --- AÑADIDO: botón hamburguesa SIEMPRE visible en móvil --- */}
+            <button
+              className="lg:hidden cursor-pointer"
+              onClick={() => setIsOpen(true)}
+            >
+              <svg className="w-7 h-7" fill="#333" viewBox="0 0 20 20">
+                <path
+                  fillRule="evenodd"
+                  d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </button>
+
             <button
               type="button"
               onClick={() => localStorage.removeItem('tokenUser')}
-              className="font-medium text-[15px] text-white bg-red-700 border rounded-full border-red-700 px-4 py-2 transition-all duration-400 hover:bg-white hover:text-red-700 cursor-pointer"
+              className="cursor-pointer border border-red-600 text-red-600 rounded-lg p-1.5 transition-all duration-300 hover:bg-red-600 hover:text-white"
             >
-              Cerrar sesión
+              <LogOutSVG className="w-5 h-5" />
             </button>
           </div>
         ) : (
@@ -144,8 +170,9 @@ export default function Header() {
               Iniciar sesión
             </Link>
             <button className="px-4 py-2 text-sm rounded-sm font-medium cursor-pointer text-white border border-blue-600 bg-blue-600 transition-all duration-400 hover:bg-blue-500">
-              <Link to="/sign-up">Registrarse</Link>
+              <Link to="/teacher-register">Registrarse</Link>
             </button>
+
             <button
               className="lg:hidden cursor-pointer"
               onClick={() => setIsOpen(true)}

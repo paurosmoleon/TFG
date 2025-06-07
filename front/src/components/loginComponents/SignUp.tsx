@@ -6,7 +6,6 @@ import PhoneSVG from '../../assets/icons/PhoneSVG';
 import EmailSVG from '../../assets/icons/EmailSVG';
 import PasswordSVG from '../../assets/icons/PasswordSVG';
 import AlumnSVG from '../../assets/icons/AlumnSVG';
-import ProfesorSVG from '../../assets/icons/ProfesorSVG';
 import TutorSVG from '../../assets/icons/TutorSVG';
 import '../../assets/styles/animacion.css';
 import { useEffect } from 'react';
@@ -17,13 +16,7 @@ const SignUp = () => {
   }
 
   const navigate = useNavigate();
-  // Redirigir si ya está logueado
-  useEffect(() => {
-    const token = localStorage.getItem('tokenUser');
-    if (token) {
-      navigate('/Dashboard'); 
-    }
-  });
+
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -73,9 +66,7 @@ const SignUp = () => {
       );
 
       if (res.status === 200) {
-        localStorage.setItem('tokenUser', 'Bearer ' + res.data.access_token);
         alert('Usuario creado con éxito');
-        navigate('/dashboard');
       }
     } catch (err: any) {
       if (err.response?.data?.message) {
@@ -157,11 +148,21 @@ const SignUp = () => {
               placeholder="Repetir contraseña"
             />
           </div>
+          {/* Empresa/ Centro educativo */}
+          <div className="flex items-center border-1 py-2 px-3 rounded-2xl mb-4">
+            <PasswordSVG className="h-5 w-5 mx-auto my-auto text-gray-400" />
+            <input
+              className="pl-2 outline-none border-none w-full"
+              type="text"
+              name="company"
+              placeholder="Empresa / Centro educativo"
+            />
+          </div>
 
           {/* Roles */}
           <div className="my-4">
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Selecciona tu rol:
+              Selecciona su rol:
             </label>
             <div className="flex gap-4">
               <label className="inline-flex items-center gap-2 cursor-pointer">
@@ -188,18 +189,7 @@ const SignUp = () => {
                   Tutor laboral
                 </span>
               </label>
-              <label className="inline-flex items-center gap-2 cursor-pointer">
-                <input
-                  type="radio"
-                  name="role"
-                  value="teacher_class"
-                  className="form-radio text-indigo-600"
-                />
-                <span className="flex items-center gap-1 text-gray-700">
-                  <ProfesorSVG className="h-5 w-5 text-gray-400" />
-                  Tutor de prácticas
-                </span>
-              </label>
+
             </div>
           </div>
 
@@ -208,23 +198,9 @@ const SignUp = () => {
             type="submit"
             className="block w-full bg-blue-600 mt-4 py-2 rounded-2xl text-white font-semibold mb-2 cursor-pointer hover:bg-blue-500 transition duration-300"
           >
-            Registrarse
+            Registrar
           </button>
 
-          {/* Enlaces */}
-          <span className="text-sm ml-2 text-blue-600 hover:text-blue-500 cursor-pointer">
-            <Link to="/forgotten-password">¿Olvidaste tu contraseña?</Link>
-          </span>
-          <br />
-          <span className="text-sm ml-2">
-            ¿Ya tienes cuenta?{' '}
-            <Link
-              to="/log-in"
-              className="text-blue-600 hover:text-blue-500 cursor-pointer"
-            >
-              Inicia sesión
-            </Link>
-          </span>
         </form>
       </div>
 
