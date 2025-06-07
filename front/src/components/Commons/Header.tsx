@@ -1,6 +1,10 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import ProfesorSVG from '../../assets/icons/ProfesorSVG';
+import AlumnSVG from '../../assets/icons/AlumnSVG';
+import TutorSVG from '../../assets/icons/TutorSVG';
+import LogOutSVG from '../../assets/icons/LogOutSVG';
 
 interface User {
   name: string;
@@ -132,14 +136,16 @@ export default function Header() {
               to="/dashboard/perfil-chat"
               className="tex-gray-200 cursor-pointer hover:text-blue-700 hover:underline font-medium text-[15px] text-slate-900"
             >
-              {name}
+              {accountType === 'teacher_class' && <ProfesorSVG />}
+              {accountType === 'student' && <AlumnSVG />}
+              {accountType === 'practices_tutor' && <TutorSVG />}
             </Link>
             <button
               type="button"
               onClick={() => localStorage.removeItem('tokenUser')}
-              className="font-medium text-[15px] text-white bg-red-700 border rounded-full border-red-700 px-4 py-2 transition-all duration-400 hover:bg-white hover:text-red-700 cursor-pointer"
+              className="cursor-pointer border border-red-600 text-red-600 rounded-lg p-1.5 transition-all duration-300 hover:bg-red-600 hover:text-white"
             >
-              Cerrar sesión
+              <LogOutSVG className="w-5 h-5" />
             </button>
           </div>
         ) : (
