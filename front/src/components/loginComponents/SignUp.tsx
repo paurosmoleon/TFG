@@ -21,7 +21,7 @@ const SignUp = () => {
   useEffect(() => {
     const token = localStorage.getItem('tokenUser');
     if (token) {
-      navigate('/Dashboard'); 
+      navigate('/Dashboard');
     }
   });
 
@@ -157,6 +157,16 @@ const SignUp = () => {
               placeholder="Repetir contraseña"
             />
           </div>
+          {/* Empresa/ Centro educativo */}
+          <div className="flex items-center border-1 py-2 px-3 rounded-2xl mb-4">
+            <PasswordSVG className="h-5 w-5 mx-auto my-auto text-gray-400" />
+            <input
+              className="pl-2 outline-none border-none w-full"
+              type="text"
+              name="company"
+              placeholder="Empresa / Centro educativo"
+            />
+          </div>
 
           {/* Roles */}
           <div className="my-4">
@@ -188,18 +198,7 @@ const SignUp = () => {
                   Tutor laboral
                 </span>
               </label>
-              <label className="inline-flex items-center gap-2 cursor-pointer">
-                <input
-                  type="radio"
-                  name="role"
-                  value="teacher_class"
-                  className="form-radio text-indigo-600"
-                />
-                <span className="flex items-center gap-1 text-gray-700">
-                  <ProfesorSVG className="h-5 w-5 text-gray-400" />
-                  Tutor de prácticas
-                </span>
-              </label>
+
             </div>
           </div>
 

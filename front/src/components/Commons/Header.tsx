@@ -11,12 +11,20 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const { pathname } = useLocation();
   const [name, setName] = useState('');
+  const [accountType, setAccountType] = useState<string | null>(null);
 
   const navItems = [
     { name: 'Inicio', to: '/home' },
     { name: 'Dashboard', to: '/dashboard' },
     { name: 'Sobre nosotros', to: '/about-us' },
   ];
+
+  const extendedNavItems =
+    accountType === 'practices_tutor'
+      ? [...navItems, { name: 'Becarios', to: '/becarios' }]
+      : accountType === 'teacher_class'
+        ? [...navItems, { name: 'Clases', to: '/clases' }]
+        : navItems;
 
   const isActive = (to: string) =>
     pathname === to || pathname.startsWith(`${to}/`);
@@ -32,12 +40,11 @@ export default function Header() {
             },
           }
         );
-        console.log('Usuario actual:', res.data[0].account_type);
         setName(res.data[0].name);
+        setAccountType(res.data[0].account_type);
       } catch (err) {
         console.log('Error al obtener el usuario:', err);
       }
-      
     };
 
     if (localStorage.getItem('tokenUser')) currentUser();
@@ -87,7 +94,7 @@ export default function Header() {
                     <img src="/whale-no-background.png" alt="logo" />
                   </Link>
                 </li>
-                {navItems.map((item, i) => (
+                {extendedNavItems.map((item, i) => (
                   <li key={i} className="border-b py-3 px-3">
                     <Link
                       to={item.to}
@@ -106,7 +113,7 @@ export default function Header() {
 
         {/* Navegación desktop */}
         <div className="hidden lg:flex gap-x-5 cursor">
-          {navItems.map((item, i) => (
+          {extendedNavItems.map((item, i) => (
             <Link
               key={i}
               to={item.to}
@@ -144,7 +151,7 @@ export default function Header() {
               Iniciar sesión
             </Link>
             <button className="px-4 py-2 text-sm rounded-sm font-medium cursor-pointer text-white border border-blue-600 bg-blue-600 transition-all duration-400 hover:bg-blue-500">
-              <Link to="/sign-up">Registrarse</Link>
+              <Link to="/teacher-register">Registrarse</Link>
             </button>
             <button
               className="lg:hidden cursor-pointer"

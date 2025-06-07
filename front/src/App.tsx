@@ -12,6 +12,9 @@ import LogIn from './components/loginComponents/LogIn';
 import SignUp from './components/loginComponents/SignUp';
 import ForgottenPassword from './components/loginComponents/ForgottenPassword';
 import NewPassword from './components/loginComponents/NewPassword';
+import TeacherRegister from './components/loginComponents/TeacherRegister';
+import Becarios from './components/Clases/Becarios';
+import Clases from './components/Clases/Clases';
 import './index.css';
 
 function App() {
@@ -26,6 +29,9 @@ function App() {
       <Route path="/sign-up" element={<SignUp />} />
       <Route path="/forgotten-password" element={<ForgottenPassword />} />
       <Route path="/new-password" element={<NewPassword />} />
+      <Route path="/teacher-register" element={<TeacherRegister />} />
+      <Route path="/becarios" element={<Becarios />} />
+      <Route path="/clases" element={<Clases />} />
       {/* Dashboard con rutas hijas */}
       <Route path="/dashboard" element={<Dashboard />}>
         <Route index element={<Navigate to="memoria-practicas" replace />} />
