@@ -26,7 +26,7 @@ export default function Header() {
     accountType === 'practices_tutor'
       ? [...navItems, { name: 'Becarios', to: '/becarios' }]
       : accountType === 'teacher_class'
-        ? [...navItems, { name: 'Clases', to: '/clases' }]
+      ? [...navItems, { name: 'Clases', to: '/clases' }]
         : navItems;
 
   const isActive = (to: string) =>
