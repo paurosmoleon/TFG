@@ -35,12 +35,7 @@ interface Props {
 }
 
 const FichaSemanal: FC<Props> = ({
-  userRole,
-  studentId,
-  companyTutorId,
-  academicTutorId,
-  practiceGroupId,
-  academicCenterId,
+  userRole
 }) => {
   // Un objeto “vacío” para inicializar cada ficha
   const initialDias: FichaSemanalData["dias"] = {
