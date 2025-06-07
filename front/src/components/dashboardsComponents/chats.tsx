@@ -9,10 +9,12 @@ const truncate = (text: string, max = 30) =>
 
 const Chats: React.FC = () => {
   const [chats, setChats] = useState<Chat[]>([]);
-  const [messages, setMessages] = useState<string[]>([]);
+  const [messages, setMessages] = useState<{ text: string; userId?: number }[]>([]);
   const [input, setInput] = useState('');
   const [selectedChat, setSelectedChat] = useState<Chat | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [accountType, setAccountType] = useState<'practices_tutor' | 'student' | 'teacher_class' | undefined>(undefined);
+
   const ws = useRef<WebSocket | null>(null);
 
   useEffect(() => {
@@ -24,6 +26,8 @@ const Chats: React.FC = () => {
           },
         });
 
+        setAccountType(currentUser.data[0].account_type);
+
         const res: any = await axios.get(
           `https://tfg-production-f839.up.railway.app/findGroup/${currentUser.data[0].id}`
         );
@@ -31,8 +35,7 @@ const Chats: React.FC = () => {
         const mappedChats = res.data.map((chat: any) => ({
           id: chat.IdChat,
           name: chat.nombre || 'Chat sin nombre',
-          avatar: chat.avatar || 'https://via.placeholder.com/40',
-          role: chat.role || 'estudiante',
+          role: chat.role || 'student', // Aquí el role para iconos en listado
           last: chat.lastMessage || '',
         }));
 
@@ -58,7 +61,16 @@ const Chats: React.FC = () => {
     };
 
     socket.onmessage = (event) => {
-      setMessages((prev) => [...prev, event.data]);
+      try {
+        const data = JSON.parse(event.data);
+        if (typeof data === 'object' && data.text) {
+          setMessages((prev) => [...prev, { text: data.text, userId: data.userId }]);
+        } else {
+          setMessages((prev) => [...prev, { text: event.data }]);
+        }
+      } catch {
+        setMessages((prev) => [...prev, { text: event.data }]);
+      }
     };
 
     return () => {
@@ -81,7 +93,7 @@ const Chats: React.FC = () => {
 
   return (
     <div className="flex justify-center h-[calc(100vh-4rem)] bg-gray-50">
-      <div className="flex w-full md:w-4/5 max-w-7xl rounded-lg shadow-md bg-white overflow-hidden">
+      <div className="flex w-full md:w-3/4 max-w-7xl rounded-lg shadow-md bg-white overflow-hidden">
         {/* Sidebar */}
         <aside
           className={`
@@ -100,19 +112,16 @@ const Chats: React.FC = () => {
               <div
                 key={chat.id}
                 onClick={() => handleSelectChat(chat)}
-                className={`flex items-center p-4 mb-4 rounded-lg cursor-pointer transition ${isActive ? 'bg-gray-100' : 'hover:bg-gray-50'
-                  }`}
+                className={`flex items-center p-4 mb-4 rounded-lg cursor-pointer transition ${
+                  isActive ? 'bg-gray-100' : 'hover:bg-gray-50'
+                }`}
               >
                 <Link to="/dashboard/perfil-chat" className="flex-shrink-0 mr-3">
-                  <img
-                    src={chat.avatar}
-                    alt={chat.name}
-                    className="w-10 h-10 rounded-full transform transition duration-200 hover:scale-110"
+                  <RoleIcon
+                    accountType={chat.role as any}
+                    className="w-10 h-10 text-gray-600 hover:text-blue-600 transition-transform hover:scale-110"
                   />
                 </Link>
-                <div className="w-6 h-6 mr-3 flex items-center justify-center bg-gray-100 rounded">
-                  <RoleIcon role={chat.role} className="w-4 h-4 text-gray-500" />
-                </div>
                 <p className="flex-1 text-gray-800 truncate">
                   <span className="font-semibold">{chat.name}:</span> {truncate(chat.last, 30)}
                 </p>
@@ -161,10 +170,9 @@ const Chats: React.FC = () => {
             </button>
 
             <Link to="/dashboard/perfil-chat" className="flex-shrink-0 mr-3">
-              <img
-                src={selectedChat?.avatar}
-                alt={selectedChat?.name}
-                className="w-10 h-10 rounded-full transform transition duration-200 hover:scale-110"
+              <RoleIcon
+                accountType={accountType}
+                className="w-10 h-10 text-gray-600 hover:text-blue-600 transition-transform hover:scale-110"
               />
             </Link>
             <h2 className="text-xl font-semibold text-gray-800">{selectedChat?.name}</h2>
@@ -178,10 +186,9 @@ const Chats: React.FC = () => {
               messages.map((msg, i) => (
                 <div
                   key={i}
-                  className={`max-w-[80%] mb-4 p-3 rounded-xl ${i % 2 === 0 ? 'bg-white self-start' : 'bg-green-100 self-end'
-                    }`}
+                  className="max-w-[80%] mb-4 p-3 rounded-xl break-words bg-blue-600 text-white self-start text-left"
                 >
-                  {msg}
+                  {msg.text}
                 </div>
               ))
             )}
