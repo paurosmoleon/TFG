@@ -14,9 +14,9 @@ router_public = APIRouter()
 async def getAllUsers():
     return getAllUserServices() 
 
-@router_protected.get("/get/{id}",response_model=List[getUsersModel])
-async def getUser(id: int):
-    return getUserService(id) 
+@router_protected.get("/get/{name}")
+async def getUser(name: str):
+    return getUserService(name) 
 
 @router_public.post("/register")
 async def createUser(usr_data: insertUsersModel):

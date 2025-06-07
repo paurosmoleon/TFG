@@ -10,9 +10,9 @@ def getAllUserServices():
     response = supabase.table('users').select('*').execute()
     return response.data
 
-def getUserService(id):
+def getUserService(name):
     try:
-        response = supabase.table('users').select('*').eq('id',id).execute()
+        response = supabase.table('users').select('*').eq('name',name).execute()
         
         return response.data
     except Exception as err:
