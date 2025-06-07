@@ -1,7 +1,8 @@
 // src/components/dashboardComponents/FichaSemanal.tsx
-import { useState, useRef, ChangeEvent, FormEvent, FC } from "react";
+import { useState, useRef, ChangeEvent, FC } from "react";
 import SignatureCanvas from "react-signature-canvas";
 import { DiaData, FichaSemanalData, UserRole } from "../../types/ficha";
+import jsPDF from "jspdf";
 
 const diasSemana: Array<keyof FichaSemanalData["dias"]> = [
   "LUNES",
@@ -13,83 +14,87 @@ const diasSemana: Array<keyof FichaSemanalData["dias"]> = [
   "DOMINGO",
 ];
 
+// Mapeo de día en español → día en inglés
+const mapDiaToEnglish: Record<string, string> = {
+  LUNES: "monday",
+  MARTES: "tuesday",
+  MIÉRCOLES: "wednesday",
+  JUEVES: "thursday",
+  VIERNES: "friday",
+  SÁBADO: "saturday",
+  DOMINGO: "sunday",
+};
+
 interface Props {
-  userRole: UserRole; // Ej.: "alumno", "profesor" o "tutor"
+  userRole: UserRole; // "alumno", "profesor" o "tutor"
+  studentId: number;
+  companyTutorId: number;
+  academicTutorId: number;
+  practiceGroupId: number;
+  academicCenterId: number;
 }
 
-const FichaSemanal: FC<Props> = ({ userRole }) => {
-  // Estado inicial para los días
+const FichaSemanal: FC<Props> = ({
+  userRole,
+  studentId,
+  companyTutorId,
+  academicTutorId,
+  practiceGroupId,
+  academicCenterId,
+}) => {
+  // Un objeto “vacío” para inicializar cada ficha
   const initialDias: FichaSemanalData["dias"] = {
-    LUNES:     { actividad: "", horas: "", observaciones: "" },
-    MARTES:    { actividad: "", horas: "", observaciones: "" },
+    LUNES: { actividad: "", horas: "", observaciones: "" },
+    MARTES: { actividad: "", horas: "", observaciones: "" },
     MIÉRCOLES: { actividad: "", horas: "", observaciones: "" },
-    JUEVES:    { actividad: "", horas: "", observaciones: "" },
-    VIERNES:   { actividad: "", horas: "", observaciones: "" },
-    SÁBADO:    { actividad: "", horas: "", observaciones: "" },
-    DOMINGO:   { actividad: "", horas: "", observaciones: "" },
+    JUEVES: { actividad: "", horas: "", observaciones: "" },
+    VIERNES: { actividad: "", horas: "", observaciones: "" },
+    SÁBADO: { actividad: "", horas: "", observaciones: "" },
+    DOMINGO: { actividad: "", horas: "", observaciones: "" },
   };
 
-  const [formData, setFormData] = useState<FichaSemanalData>({
-    centroDocente:      "",
-    profesorResponsable: "",
-    centroTrabajo:      "",
-    tutorCentro:        "",
-    alumno:             "",
-    cicloFormativo:     "",
-    grado:              "",
-    dias:               initialDias,
-    firmaAlumno:        "",
-    firmaProfesor:      "",
-    firmaTutor:         "",
-  });
-
-  // Errores de validación por día
-  const [errores, setErrores] = useState<{
-    [K in keyof FichaSemanalData["dias"]]?: { actividad?: string; horas?: string };
-  }>({});
-
-  // Refs para los canvas de firma
-  const sigPadAlumno   = useRef<SignatureCanvas>(null);
-  const sigPadProfesor = useRef<SignatureCanvas>(null);
-  const sigPadTutor    = useRef<SignatureCanvas>(null);
-
-  // Maneja cambios de los inputs de cabecera (sin fechas, ya que las quitamos)
-  const handleHeaderChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  // Maneja cambios en cada día (actividad, horas, observaciones)
-  const handleDiaChange = (
-    dia: keyof FichaSemanalData["dias"],
-    campo: keyof DiaData,
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const rawValue = e.target.value;
-    const valor = campo === "horas" ? (rawValue === "" ? "" : Number(rawValue)) : rawValue;
-
-    setFormData((prev) => ({
-      ...prev,
-      dias: {
-        ...prev.dias,
-        [dia]: {
-          ...prev.dias[dia],
-          [campo]: valor,
-        },
+  // Estado: array de fichas. Cada ficha guarda SOLO días y firmas.
+  // Los campos de encabezado (centroDocente, profesorResponsable, etc.) se almacenan
+  // únicamente en la primera ficha (índice 0).
+  const [fichas, setFichas] = useState<
+    Array<{
+      datos: FichaSemanalData;
+      errores: { [K in keyof FichaSemanalData["dias"]]?: { actividad?: string; horas?: string } };
+    }>
+  >([
+    {
+      datos: {
+        centroDocente: "",
+        profesorResponsable: "",
+        centroTrabajo: "",
+        tutorCentro: "",
+        alumno: "",
+        cicloFormativo: "",
+        grado: "",
+        dias: initialDias,
+        firmaAlumno: "",
+        firmaProfesor: "",
+        firmaTutor: "",
       },
-    }));
-  };
+      errores: {},
+    },
+  ]);
 
-  // Validación: cada día debe tener "actividad" y "horas"
-  const validar = (): boolean => {
-    const nuevosErrores: typeof errores = {};
+  // Refs dinámicos para los canvas de firma, uno por cada ficha y por rol
+  const sigPadsAlumnoRef = useRef<SignatureCanvas[]>([]);
+  const sigPadsProfesorRef = useRef<SignatureCanvas[]>([]);
+  const sigPadsTutorRef = useRef<SignatureCanvas[]>([]);
+
+  // ─── VALIDACIÓN de días para cada ficha (skip SÁBADO y DOMINGO) ───
+  const validarFicha = (datos: FichaSemanalData) => {
+    const nuevosErrores: typeof fichas[0]["errores"] = {};
     let ok = true;
 
     diasSemana.forEach((dia) => {
-      const dataDia = formData.dias[dia];
+      // SÁBADO y DOMINGO no son obligatorios
+      if (dia === "SÁBADO" || dia === "DOMINGO") return;
+
+      const dataDia = datos.dias[dia];
       const errDia: { actividad?: string; horas?: string } = {};
 
       if (!dataDia.actividad.trim()) {
@@ -109,383 +114,643 @@ const FichaSemanal: FC<Props> = ({ userRole }) => {
       }
     });
 
-    setErrores(nuevosErrores);
-    return ok;
+    return { ok, errores: nuevosErrores };
   };
 
-  // Funciones para guardar las firmas (se convierten a base64)
-  const guardarFirmaAlumno = () => {
-    if (sigPadAlumno.current && !sigPadAlumno.current.isEmpty()) {
-      const dataURL = sigPadAlumno.current.getTrimmedCanvas().toDataURL("image/png");
-      setFormData((prev) => ({ ...prev, firmaAlumno: dataURL }));
-    }
-  };
-  const guardarFirmaProfesor = () => {
-    if (sigPadProfesor.current && !sigPadProfesor.current.isEmpty()) {
-      const dataURL = sigPadProfesor.current.getTrimmedCanvas().toDataURL("image/png");
-      setFormData((prev) => ({ ...prev, firmaProfesor: dataURL }));
-    }
-  };
-  const guardarFirmaTutor = () => {
-    if (sigPadTutor.current && !sigPadTutor.current.isEmpty()) {
-      const dataURL = sigPadTutor.current.getTrimmedCanvas().toDataURL("image/png");
-      setFormData((prev) => ({ ...prev, firmaTutor: dataURL }));
-    }
+  // ─── CAMBIOS en los inputs de cabecera (solo para la ficha índice 0) ───
+  const handleHeaderChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFichas((prev) => {
+      const clon = [...prev];
+      const ficha0 = { ...clon[0] };
+      ficha0.datos = { ...ficha0.datos, [name]: value };
+      clon[0] = ficha0;
+      return clon;
+    });
   };
 
-  // Opcional: permitir limpiar el canvas para rehacer la firma
-  const limpiarFirmaAlumno = () => {
-    sigPadAlumno.current?.clear();
-    setFormData((prev) => ({ ...prev, firmaAlumno: "" }));
-  };
-  const limpiarFirmaProfesor = () => {
-    sigPadProfesor.current?.clear();
-    setFormData((prev) => ({ ...prev, firmaProfesor: "" }));
-  };
-  const limpiarFirmaTutor = () => {
-    sigPadTutor.current?.clear();
-    setFormData((prev) => ({ ...prev, firmaTutor: "" }));
-  };
+  // ─── CAMBIOS en cada día para la ficha identificada por “fichaIndex” ───
+  const handleDiaChange = (
+    fichaIndex: number,
+    dia: keyof FichaSemanalData["dias"],
+    campo: keyof DiaData,
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const rawValue = e.target.value;
+    const valor = campo === "horas" ? (rawValue === "" ? "" : Number(rawValue)) : rawValue;
 
-  // Envía el formulario al backend (en Python)
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    if (!validar()) {
-      return;
-    }
-
-    try {
-      const respuesta = await fetch("/api/fichas/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+    setFichas((prev) => {
+      const clon = [...prev];
+      const ficha = { ...clon[fichaIndex] };
+      ficha.datos = {
+        ...ficha.datos,
+        dias: {
+          ...ficha.datos.dias,
+          [dia]: {
+            ...ficha.datos.dias[dia],
+            [campo]: valor,
+          },
         },
-        body: JSON.stringify(formData),
-      });
+      };
+      clon[fichaIndex] = ficha;
+      return clon;
+    });
+  };
 
-      if (!respuesta.ok) {
-        const errorJson = await respuesta.json();
-        console.error("Error guardando ficha:", errorJson);
-        alert("Ha ocurrido un error al guardar la ficha. Revisa la consola.");
+  // ─── GUARDAR firma para una ficha e índice dado ───
+  const guardarFirma = (
+    fichaIndex: number,
+    rol: "alumno" | "profesor" | "tutor"
+  ) => {
+    let refArray: SignatureCanvas[] = [];
+    let keyFirma: "firmaAlumno" | "firmaProfesor" | "firmaTutor" = "firmaAlumno";
+
+    if (rol === "alumno") {
+      refArray = sigPadsAlumnoRef.current;
+      keyFirma = "firmaAlumno";
+    } else if (rol === "profesor") {
+      refArray = sigPadsProfesorRef.current;
+      keyFirma = "firmaProfesor";
+    } else {
+      refArray = sigPadsTutorRef.current;
+      keyFirma = "firmaTutor";
+    }
+
+    const sigPad = refArray[fichaIndex];
+    if (sigPad && !sigPad.isEmpty()) {
+      const dataURL = sigPad.getTrimmedCanvas().toDataURL("image/png");
+      setFichas((prev) => {
+        const clon = [...prev];
+        const ficha = { ...clon[fichaIndex] };
+        ficha.datos = { ...ficha.datos, [keyFirma]: dataURL };
+        clon[fichaIndex] = ficha;
+        return clon;
+      });
+    }
+  };
+
+  // ─── LIMPIAR firma para una ficha e índice dado ───
+  const limpiarFirma = (
+    fichaIndex: number,
+    rol: "alumno" | "profesor" | "tutor"
+  ) => {
+    let refArray: SignatureCanvas[] = [];
+    let keyFirma: "firmaAlumno" | "firmaProfesor" | "firmaTutor" = "firmaAlumno";
+
+    if (rol === "alumno") {
+      refArray = sigPadsAlumnoRef.current;
+      keyFirma = "firmaAlumno";
+    } else if (rol === "profesor") {
+      refArray = sigPadsProfesorRef.current;
+      keyFirma = "firmaProfesor";
+    } else {
+      refArray = sigPadsTutorRef.current;
+      keyFirma = "firmaTutor";
+    }
+
+    const sigPad = refArray[fichaIndex];
+    if (sigPad) {
+      sigPad.clear();
+      setFichas((prev) => {
+        const clon = [...prev];
+        const ficha = { ...clon[fichaIndex] };
+        ficha.datos = { ...ficha.datos, [keyFirma]: "" };
+        clon[fichaIndex] = ficha;
+        return clon;
+      });
+    }
+  };
+
+  // ─── AGREGAR una nueva ficha vacía al array (no resetea encabezado) ───
+  const handleAgregarNuevaFicha = () => {
+    setFichas((prev) => [
+      ...prev,
+      {
+        datos: {
+          // Para las fichas > 0 los campos de cabecera no se usan, pero deben existir
+          centroDocente: "",
+          profesorResponsable: "",
+          centroTrabajo: "",
+          tutorCentro: "",
+          alumno: "",
+          cicloFormativo: "",
+          grado: "",
+          dias: initialDias,
+          firmaAlumno: "",
+          firmaProfesor: "",
+          firmaTutor: "",
+        },
+        errores: {},
+      },
+    ]);
+  };
+
+  // ─── GENERAR PDF con todas las fichas → una página por ficha ───
+  const handleDescargarPDF = () => {
+    // 1. VALIDAMOS todas las fichas (días) y guardamos errores si los hay
+    for (let i = 0; i < fichas.length; i++) {
+      const { ok, errores } = validarFicha(fichas[i].datos);
+      if (!ok) {
+        alert(`La ficha #${i + 1} tiene errores en Actividad/Horas. Revísala antes de descargar.`);
+        setFichas((prev) => {
+          const clon = [...prev];
+          clon[i].errores = errores;
+          return clon;
+        });
         return;
       }
-
-      alert("¡Ficha guardada con éxito!");
-      // Aquí podrías limpiar el formulario o redirigir según tu flujo
-    } catch (err) {
-      console.error("Error de red o inesperado:", err);
-      alert("Error de conexión. Intenta nuevamente más tarde.");
     }
+
+    // 2. TODAS son válidas → generamos el PDF
+    const doc = new jsPDF({ unit: "pt", format: "a4" });
+
+    // Extraemos los campos de encabezado de la primera ficha
+    const {
+      centroDocente,
+      profesorResponsable,
+      centroTrabajo,
+      tutorCentro,
+      alumno,
+      cicloFormativo,
+      grado,
+    } = fichas[0].datos;
+
+    fichas.forEach((fichaObj, index) => {
+      const ficha = fichaObj.datos;
+
+      if (index > 0) doc.addPage();
+
+      // 1) TÍTULO
+      doc.setFontSize(14);
+      doc.text(`Ficha Semanal - Página ${index + 1}`, 40, 40);
+
+      // 2) DATOS GENERALES (siempre tomados de la ficha[0])
+      doc.setFontSize(10);
+      let yOffset = 60;
+      doc.text(`Centro Docente: ${centroDocente}`, 40, yOffset);
+      yOffset += 15;
+      doc.text(`Profesor Responsable: ${profesorResponsable}`, 40, yOffset);
+      yOffset += 15;
+      doc.text(`Centro Trabajo: ${centroTrabajo}`, 40, yOffset);
+      yOffset += 15;
+      doc.text(`Tutor Centro: ${tutorCentro}`, 40, yOffset);
+      yOffset += 15;
+      doc.text(`Alumno/a: ${alumno}`, 40, yOffset);
+      yOffset += 15;
+      doc.text(`Ciclo Formativo: ${cicloFormativo}`, 40, yOffset);
+      yOffset += 15;
+      doc.text(`Grado: ${grado}`, 40, yOffset);
+      yOffset += 25;
+
+      // 3) TABLA DE ACTIVIDADES POR DÍA
+      doc.setFontSize(10);
+      doc.text("Actividades por día:", 40, yOffset);
+      yOffset += 15;
+
+      // Encabezados de “tabla”
+      doc.setFontSize(9);
+      doc.text("Día", 40, yOffset);
+      doc.text("Descripción", 100, yOffset);
+      doc.text("Horas", 300, yOffset);
+      doc.text("Observaciones", 350, yOffset);
+      yOffset += 10;
+
+      diasSemana.forEach((diaKey) => {
+        const datosDia = ficha.dias[diaKey];
+        doc.text(mapDiaToEnglish[diaKey], 40, yOffset);
+        doc.text(datosDia.actividad, 100, yOffset, { maxWidth: 180 });
+        doc.text(`${datosDia.horas}h`, 300, yOffset);
+        doc.text(datosDia.observaciones || "", 350, yOffset, { maxWidth: 180 });
+        yOffset += 15;
+
+        // Si llegamos al final de la página, agregamos una nueva
+        if (yOffset > 720) {
+          doc.addPage();
+          yOffset = 40;
+        }
+      });
+
+      yOffset += 20;
+
+      // 4) FECHAS (fijas en este ejemplo; cámbialas si las necesitas dinámicas)
+      const weekStart = "2025-05-19T00:00:00Z";
+      const weekEnd = "2025-05-23T00:00:00Z";
+      const submissionDate = "2025-05-24T12:00:00Z";
+      const deadlineDate = "2025-05-26T23:59:59Z";
+
+      doc.setFontSize(9);
+      doc.text(`Semana: ${weekStart}  -  ${weekEnd}`, 40, yOffset);
+      yOffset += 15;
+      doc.text(`Fecha de envío: ${submissionDate}`, 40, yOffset);
+      yOffset += 15;
+      doc.text(`Fecha límite: ${deadlineDate}`, 40, yOffset);
+      yOffset += 30;
+
+      // 5) FIRMAS (cada ficha tiene sus propias imágenes en base64)
+      if (ficha.firmaAlumno) {
+        doc.text("Firma Alumno/a:", 40, yOffset);
+        doc.addImage(ficha.firmaAlumno, "PNG", 120, yOffset - 10, 100, 40);
+        yOffset += 50;
+      }
+      if (ficha.firmaProfesor) {
+        doc.text("Firma Profesor/a:", 40, yOffset);
+        doc.addImage(ficha.firmaProfesor, "PNG", 120, yOffset - 10, 100, 40);
+        yOffset += 50;
+      }
+      if (ficha.firmaTutor) {
+        doc.text("Firma Tutor/a:", 40, yOffset);
+        doc.addImage(ficha.firmaTutor, "PNG", 120, yOffset - 10, 100, 40);
+        yOffset += 50;
+      }
+    });
+
+    doc.save("todas_fichas_semanales.pdf");
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-4xl mx-auto p-4">
-      <h1 className="text-2xl font-semibold mb-4">Ficha Semanal</h1>
+    <div className="max-w-5xl mx-auto p-6 space-y-10 bg-gray-50">
+      <h1 className="text-3xl font-extrabold text-gray-800 text-center">
+        Fichas Semanales
+      </h1>
 
-      {/* ─── Cabecera de datos generales (ya sin fechas) ─── */}
-      <div className="grid grid-cols-2 gap-4 mb-6">
-        <div>
-          <label className="block mb-1 font-medium" htmlFor="centroDocente">
-            Centro Docente
-          </label>
-          <input
-            type="text"
-            id="centroDocente"
-            name="centroDocente"
-            value={formData.centroDocente}
-            onChange={handleHeaderChange}
-            className="w-full border rounded px-2 py-1"
-            required
-          />
-        </div>
-        <div>
-          <label className="block mb-1 font-medium" htmlFor="profesorResponsable">
-            Profesor/a Responsable Seguimiento
-          </label>
-          <input
-            type="text"
-            id="profesorResponsable"
-            name="profesorResponsable"
-            value={formData.profesorResponsable}
-            onChange={handleHeaderChange}
-            className="w-full border rounded px-2 py-1"
-            required
-          />
-        </div>
-        <div>
-          <label className="block mb-1 font-medium" htmlFor="centroTrabajo">
-            Centro de Trabajo Colaborador
-          </label>
-          <input
-            type="text"
-            id="centroTrabajo"
-            name="centroTrabajo"
-            value={formData.centroTrabajo}
-            onChange={handleHeaderChange}
-            className="w-full border rounded px-2 py-1"
-            required
-          />
-        </div>
-        <div>
-          <label className="block mb-1 font-medium" htmlFor="tutorCentro">
-            Tutor/a del Centro de Trabajo
-          </label>
-          <input
-            type="text"
-            id="tutorCentro"
-            name="tutorCentro"
-            value={formData.tutorCentro}
-            onChange={handleHeaderChange}
-            className="w-full border rounded px-2 py-1"
-            required
-          />
-        </div>
-        <div>
-          <label className="block mb-1 font-medium" htmlFor="alumno">
-            Alumno/a
-          </label>
-          <input
-            type="text"
-            id="alumno"
-            name="alumno"
-            value={formData.alumno}
-            onChange={handleHeaderChange}
-            className="w-full border rounded px-2 py-1"
-            required
-          />
-        </div>
-        <div>
-          <label className="block mb-1 font-medium" htmlFor="cicloFormativo">
-            Ciclo Formativo
-          </label>
-          <input
-            type="text"
-            id="cicloFormativo"
-            name="cicloFormativo"
-            value={formData.cicloFormativo}
-            onChange={handleHeaderChange}
-            className="w-full border rounded px-2 py-1"
-            required
-          />
-        </div>
-        <div className="col-span-2">
-          <label className="block mb-1 font-medium" htmlFor="grado">
-            Grado
-          </label>
-          <input
-            type="text"
-            id="grado"
-            name="grado"
-            value={formData.grado}
-            onChange={handleHeaderChange}
-            className="w-full border rounded px-2 py-1"
-            required
-          />
+      {/* ─── ENCABEZADO COMÚN: solo encima de la primera ficha ─── */}
+      <div className="bg-white rounded-lg p-6 shadow-sm">
+        <h2 className="text-xl font-semibold text-gray-700 mb-4">Datos Generales</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Centro Docente */}
+          <div>
+            <label className="block mb-1 font-medium text-gray-700" htmlFor="centroDocente">
+              Centro Docente
+            </label>
+            <input
+              type="text"
+              id="centroDocente"
+              name="centroDocente"
+              value={fichas[0].datos.centroDocente}
+              onChange={handleHeaderChange}
+              className="w-full border border-gray-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200"
+              placeholder="Nombre del centro docente"
+              required
+            />
+          </div>
+
+          {/* Profesor/a Responsable */}
+          <div>
+            <label className="block mb-1 font-medium text-gray-700" htmlFor="profesorResponsable">
+              Profesor/a Responsable
+            </label>
+            <input
+              type="text"
+              id="profesorResponsable"
+              name="profesorResponsable"
+              value={fichas[0].datos.profesorResponsable}
+              onChange={handleHeaderChange}
+              className="w-full border border-gray-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200"
+              placeholder="Nombre del profesor responsable"
+              required
+            />
+          </div>
+
+          {/* Centro de Trabajo */}
+          <div>
+            <label className="block mb-1 font-medium text-gray-700" htmlFor="centroTrabajo">
+              Centro de Trabajo
+            </label>
+            <input
+              type="text"
+              id="centroTrabajo"
+              name="centroTrabajo"
+              value={fichas[0].datos.centroTrabajo}
+              onChange={handleHeaderChange}
+              className="w-full border border-gray-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200"
+              placeholder="Nombre del centro de trabajo"
+              required
+            />
+          </div>
+
+          {/* Tutor/a del Centro */}
+          <div>
+            <label className="block mb-1 font-medium text-gray-700" htmlFor="tutorCentro">
+              Tutor/a del Centro
+            </label>
+            <input
+              type="text"
+              id="tutorCentro"
+              name="tutorCentro"
+              value={fichas[0].datos.tutorCentro}
+              onChange={handleHeaderChange}
+              className="w-full border border-gray-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200"
+              placeholder="Nombre del tutor del centro"
+              required
+            />
+          </div>
+
+          {/* Alumno/a */}
+          <div>
+            <label className="block mb-1 font-medium text-gray-700" htmlFor="alumno">
+              Alumno/a
+            </label>
+            <input
+              type="text"
+              id="alumno"
+              name="alumno"
+              value={fichas[0].datos.alumno}
+              onChange={handleHeaderChange}
+              className="w-full border border-gray-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200"
+              placeholder="Nombre del alumno/a"
+              required
+            />
+          </div>
+
+          {/* Grado */}
+          <div>
+            <label className="block mb-1 font-medium text-gray-700" htmlFor="grado">
+              Grado
+            </label>
+            <input
+              type="text"
+              id="grado"
+              name="grado"
+              value={fichas[0].datos.grado}
+              onChange={handleHeaderChange}
+              className="w-full border border-gray-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200"
+              placeholder="Grado académico"
+              required
+            />
+          </div>
+
+          {/* Ciclo Formativo */}
+          <div className="col-span-1 md:col-span-2 lg:col-span-3">
+            <label className="block mb-1 font-medium text-gray-700" htmlFor="cicloFormativo">
+              Ciclo Formativo
+            </label>
+            <input
+              type="text"
+              id="cicloFormativo"
+              name="cicloFormativo"
+              value={fichas[0].datos.cicloFormativo}
+              onChange={handleHeaderChange}
+              className="w-full border border-gray-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200"
+              placeholder="Nombre del ciclo formativo"
+              required
+            />
+          </div>
         </div>
       </div>
 
-      {/* ─── Tabla de actividades por día ─── */}
-      <div className="overflow-x-auto mb-6">
-        <table className="w-full border-collapse border">
-          <thead>
-            <tr className="bg-gray-100">
-              <th className="border px-2 py-1 text-left">Día</th>
-              <th className="border px-2 py-1 text-left">Actividad / Puesto Formativo</th>
-              <th className="border px-2 py-1 text-left">Horas (h)</th>
-              <th className="border px-2 py-1 text-left">Observaciones (opcional)</th>
-            </tr>
-          </thead>
-          <tbody>
-            {diasSemana.map((dia) => {
-              const datosDia = formData.dias[dia];
-              const err = errores[dia] || {};
+      {/* ─── FORMULARIOS DE CADA FICHA (solo tabla de actividades + firmas) ─── */}
+      {fichas.map((fichaObj, idx) => {
+        const { datos, errores } = fichaObj;
 
-              return (
-                <tr key={dia} className="hover:bg-gray-50">
-                  <td className="border px-2 py-1 font-medium">{dia}</td>
+        return (
+          <div
+            key={idx}
+            className="bg-white rounded-lg p-6 shadow-sm space-y-6 border border-gray-400"
+          >
+            <h2 className="text-lg font-semibold text-indigo-700">
+              Ficha #{idx + 1}
+            </h2>
 
-                  <td className="border px-2 py-1">
-                    <textarea
-                      rows={2}
-                      className={`w-full border rounded px-1 py-1 ${
-                        err.actividad ? "border-red-500" : ""
-                      }`}
-                      value={datosDia.actividad}
-                      onChange={(e) => handleDiaChange(dia, "actividad", e)}
-                      required
+            {/* Tabla de actividades por día */}
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-100">
+                <thead className="bg-gray-100">
+                  <tr>
+                    <th className="px-3 py-2 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
+                      Día
+                    </th>
+                    <th className="px-3 py-2 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
+                      Actividad
+                    </th>
+                    <th className="px-3 py-2 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
+                      Horas (h)
+                    </th>
+                    <th className="px-3 py-2 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
+                      Observaciones
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-100">
+                  {diasSemana.map((dia) => {
+                    const datosDia = datos.dias[dia];
+                    const err = errores[dia] || {};
+
+                    // Si es sábado o domingo, no aplicamos required
+                    const esFinSemana = dia === "SÁBADO" || dia === "DOMINGO";
+
+                    return (
+                      <tr key={dia} className="hover:bg-gray-50">
+                        <td className="px-3 py-2 whitespace-nowrap font-semibold text-gray-600">
+                          {dia}
+                        </td>
+
+                        {/* Actividad */}
+                        <td className="px-3 py-2">
+                          <textarea
+                            rows={2}
+                            className={`w-full border ${err.actividad ? "border-red-400" : "border-gray-400"
+                              } rounded-lg px-2 py-1 focus:outline-none focus:ring-2 ${err.actividad
+                                ? "focus:ring-red-300"
+                                : "focus:ring-indigo-200"
+                              }`}
+                            value={datosDia.actividad}
+                            onChange={(e) => handleDiaChange(idx, dia, "actividad", e)}
+                            placeholder={esFinSemana ? "Opcional..." : "Describe la actividad..."}
+                            required={!esFinSemana}
+                          />
+                          {err.actividad && (
+                            <p className="text-red-500 text-sm mt-1">{err.actividad}</p>
+                          )}
+                        </td>
+
+                        {/* Horas */}
+                        <td className="px-3 py-2">
+                          <input
+                            type="number"
+                            min="0"
+                            step="0.5"
+                            className={`w-full border ${err.horas ? "border-red-400" : "border-gray-400"
+                              } rounded-lg px-2 py-1 focus:outline-none focus:ring-2 ${err.horas
+                                ? "focus:ring-red-300"
+                                : "focus:ring-indigo-200"
+                              }`}
+                            value={datosDia.horas}
+                            onChange={(e) => handleDiaChange(idx, dia, "horas", e)}
+                            placeholder={esFinSemana ? "Opcional" : "0.0"}
+                            required={!esFinSemana}
+                          />
+                          {err.horas && (
+                            <p className="text-red-500 text-sm mt-1">{err.horas}</p>
+                          )}
+                        </td>
+
+                        {/* Observaciones */}
+                        <td className="px-3 py-2">
+                          <textarea
+                            rows={2}
+                            className="w-full border border-gray-400 rounded-lg px-2 py-1 focus:outline-none focus:ring-2 focus:ring-indigo-200"
+                            value={datosDia.observaciones}
+                            onChange={(e) =>
+                              handleDiaChange(idx, dia, "observaciones", e)
+                            }
+                            placeholder="Opcional..."
+                          />
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Sección de firmas para esta ficha */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
+              {/* Firma Alumno/a */}
+              <div className="border border-gray-400 rounded-lg p-4 flex flex-col items-center bg-gray-50">
+                <h3 className="font-medium text-gray-700 mb-2">Firma Alumno/a</h3>
+                {datos.firmaAlumno ? (
+                  <img
+                    src={datos.firmaAlumno}
+                    alt="Firma alumno"
+                    className="border border-gray-400 w-full h-24 object-contain rounded"
+                  />
+                ) : userRole === "alumno" ? (
+                  <>
+                    <SignatureCanvas
+                      penColor="black"
+                      canvasProps={{ className: "border border-gray-400 w-full h-24 rounded" }}
+                      ref={(ref) => {
+                        if (!sigPadsAlumnoRef.current[idx]) {
+                          sigPadsAlumnoRef.current[idx] = ref as SignatureCanvas;
+                        }
+                      }}
                     />
-                    {err.actividad && (
-                      <p className="text-red-600 text-sm mt-1">
-                        {err.actividad}
-                      </p>
-                    )}
-                  </td>
+                    <div className="mt-3 flex space-x-2">
+                      <button
+                        type="button"
+                        onClick={() => limpiarFirma(idx, "alumno")}
+                        className="bg-gray-100 text-gray-700 px-3 py-1 rounded shadow-sm hover:bg-gray-200"
+                      >
+                        Limpiar
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => guardarFirma(idx, "alumno")}
+                        className="bg-indigo-500 text-white px-3 py-1 rounded shadow-sm hover:bg-indigo-600"
+                      >
+                        Guardar Firma
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  <p className="text-gray-400 text-sm text-center">Solo rol “alumno”</p>
+                )}
+              </div>
 
-                  <td className="border px-2 py-1">
-                    <input
-                      type="number"
-                      min="0"
-                      step="0.5"
-                      className={`w-full border rounded px-1 py-1 ${
-                        err.horas ? "border-red-500" : ""
-                      }`}
-                      value={datosDia.horas}
-                      onChange={(e) => handleDiaChange(dia, "horas", e)}
-                      required
+              {/* Firma Profesor/a */}
+              <div className="border border-gray-400 rounded-lg p-4 flex flex-col items-center bg-gray-50">
+                <h3 className="font-medium text-gray-700 mb-2">Firma Profesor/a</h3>
+                {datos.firmaProfesor ? (
+                  <img
+                    src={datos.firmaProfesor}
+                    alt="Firma profesor"
+                    className="border border-gray-400 w-full h-24 object-contain rounded"
+                  />
+                ) : userRole === "profesor" ? (
+                  <>
+                    <SignatureCanvas
+                      penColor="black"
+                      canvasProps={{ className: "border border-gray-400 w-full h-24 rounded" }}
+                      ref={(ref) => {
+                        if (!sigPadsProfesorRef.current[idx]) {
+                          sigPadsProfesorRef.current[idx] = ref as SignatureCanvas;
+                        }
+                      }}
                     />
-                    {err.horas && (
-                      <p className="text-red-600 text-sm mt-1">{err.horas}</p>
-                    )}
-                  </td>
+                    <div className="mt-3 flex space-x-2">
+                      <button
+                        type="button"
+                        onClick={() => limpiarFirma(idx, "profesor")}
+                        className="bg-gray-100 text-gray-700 px-3 py-1 rounded shadow-sm hover:bg-gray-200"
+                      >
+                        Limpiar
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => guardarFirma(idx, "profesor")}
+                        className="bg-indigo-500 text-white px-3 py-1 rounded shadow-sm hover:bg-indigo-600"
+                      >
+                        Guardar Firma
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  <p className="text-gray-400 text-sm text-center">Solo rol “profesor”</p>
+                )}
+              </div>
 
-                  <td className="border px-2 py-1">
-                    <textarea
-                      rows={2}
-                      className="w-full border rounded px-1 py-1"
-                      value={datosDia.observaciones}
-                      onChange={(e) => handleDiaChange(dia, "observaciones", e)}
+              {/* Firma Tutor/a */}
+              <div className="border border-gray-400 rounded-lg p-4 flex flex-col items-center bg-gray-50">
+                <h3 className="font-medium text-gray-700 mb-2">Firma Tutor/a</h3>
+                {datos.firmaTutor ? (
+                  <img
+                    src={datos.firmaTutor}
+                    alt="Firma tutor"
+                    className="border border-gray-400 w-full h-24 object-contain rounded"
+                  />
+                ) : userRole === "tutor" ? (
+                  <>
+                    <SignatureCanvas
+                      penColor="black"
+                      canvasProps={{ className: "border border-gray-400 w-full h-24 rounded" }}
+                      ref={(ref) => {
+                        if (!sigPadsTutorRef.current[idx]) {
+                          sigPadsTutorRef.current[idx] = ref as SignatureCanvas;
+                        }
+                      }}
                     />
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-
-      {/* ─── Sección de firmas con react-signature-canvas ─── */}
-      <div className="grid grid-cols-3 gap-4 mt-6">
-        {/* Firma Alumno/a */}
-        <div className="border p-4 rounded flex flex-col items-center">
-          <h2 className="font-semibold mb-2">Firma Alumno/a</h2>
-          {formData.firmaAlumno ? (
-            <img
-              src={formData.firmaAlumno}
-              alt="Firma alumno"
-              className="border w-full h-24 object-contain"
-            />
-          ) : userRole === "alumno" ? (
-            <>
-              <SignatureCanvas
-                penColor="black"
-                canvasProps={{ className: "border w-full h-24" }}
-                ref={sigPadAlumno}
-              />
-              <div className="mt-2 flex space-x-2">
-                <button
-                  type="button"
-                  onClick={limpiarFirmaAlumno}
-                  className="bg-gray-200 text-gray-700 px-3 py-1 rounded hover:bg-gray-300"
-                >
-                  Limpiar
-                </button>
-                <button
-                  type="button"
-                  onClick={guardarFirmaAlumno}
-                  className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
-                >
-                  Guardar Firma
-                </button>
+                    <div className="mt-3 flex space-x-2">
+                      <button
+                        type="button"
+                        onClick={() => limpiarFirma(idx, "tutor")}
+                        className="bg-gray-100 text-gray-700 px-3 py-1 rounded shadow-sm hover:bg-gray-200"
+                      >
+                        Limpiar
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => guardarFirma(idx, "tutor")}
+                        className="bg-indigo-500 text-white px-3 py-1 rounded shadow-sm hover:bg-indigo-600"
+                      >
+                        Guardar Firma
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  <p className="text-gray-400 text-sm text-center">Solo rol “tutor”</p>
+                )}
               </div>
-            </>
-          ) : (
-            <p className="text-gray-500 text-center">
-              Solo accesible para rol “alumno”
-            </p>
-          )}
-        </div>
+            </div>
+          </div>
+        );
+      })}
 
-        {/* Firma Profesor/a */}
-        <div className="border p-4 rounded flex flex-col items-center">
-          <h2 className="font-semibold mb-2">Firma Profesor/a</h2>
-          {formData.firmaProfesor ? (
-            <img
-              src={formData.firmaProfesor}
-              alt="Firma profesor"
-              className="border w-full h-24 object-contain"
-            />
-          ) : userRole === "profesor" ? (
-            <>
-              <SignatureCanvas
-                penColor="black"
-                canvasProps={{ className: "border w-full h-24" }}
-                ref={sigPadProfesor}
-              />
-              <div className="mt-2 flex space-x-2">
-                <button
-                  type="button"
-                  onClick={limpiarFirmaProfesor}
-                  className="bg-gray-200 text-gray-700 px-3 py-1 rounded hover:bg-gray-300"
-                >
-                  Limpiar
-                </button>
-                <button
-                  type="button"
-                  onClick={guardarFirmaProfesor}
-                  className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
-                >
-                  Guardar Firma
-                </button>
-              </div>
-            </>
-          ) : (
-            <p className="text-gray-500 text-center">
-              Solo accesible para rol “profesor”
-            </p>
-          )}
-        </div>
-
-        {/* Firma Tutor/a */}
-        <div className="border p-4 rounded flex flex-col items-center">
-          <h2 className="font-semibold mb-2">Firma Tutor/a</h2>
-          {formData.firmaTutor ? (
-            <img
-              src={formData.firmaTutor}
-              alt="Firma tutor"
-              className="border w-full h-24 object-contain"
-            />
-          ) : userRole === "tutor" ? (
-            <>
-              <SignatureCanvas
-                penColor="black"
-                canvasProps={{ className: "border w-full h-24" }}
-                ref={sigPadTutor}
-              />
-              <div className="mt-2 flex space-x-2">
-                <button
-                  type="button"
-                  onClick={limpiarFirmaTutor}
-                  className="bg-gray-200 text-gray-700 px-3 py-1 rounded hover:bg-gray-300"
-                >
-                  Limpiar
-                </button>
-                <button
-                  type="button"
-                  onClick={guardarFirmaTutor}
-                  className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
-                >
-                  Guardar Firma
-                </button>
-              </div>
-            </>
-          ) : (
-            <p className="text-gray-500 text-center">
-              Solo accesible para rol “tutor”
-            </p>
-          )}
-        </div>
-      </div>
-
-      {/* ─── Botón final de envío ─── */}
-      <div className="mt-8 text-right">
+      {/* ─── Botones de acción ─── */}
+      <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
         <button
-          type="submit"
-          className="bg-green-600 text-white px-5 py-2 rounded hover:bg-green-700"
+          onClick={handleAgregarNuevaFicha}
+          className="w-full sm:w-auto bg-green-500 text-white px-6 py-2 rounded-lg shadow hover:bg-green-600 transition"
         >
-          Guardar Ficha Semanal
+          Agregar nueva ficha
+        </button>
+        <button
+          onClick={handleDescargarPDF}
+          className="w-full sm:w-auto bg-indigo-600 text-white px-6 py-2 rounded-lg shadow hover:bg-indigo-700 transition"
+        >
+          Descargar todas las fichas (PDF)
         </button>
       </div>
-    </form>
+    </div>
   );
 };
 
