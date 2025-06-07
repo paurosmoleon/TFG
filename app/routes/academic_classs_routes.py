@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends
+from fastapi.encoders import jsonable_encoder
 from auth.auth import verify_token
 from services.academic_class_services import *
 from models.academic_class_model import *
@@ -8,7 +9,7 @@ router = APIRouter(dependencies=[Depends(verify_token)])
 
 @router.post('/create')
 async def create(data:academicClassModel):
-    return createAcademicClassServices(data)
+    return createAcademicClassServices(jsonable_encoder(data))
 
 @router.get('/find/{id}')
 async def find(id):  
@@ -16,7 +17,7 @@ async def find(id):
 
 @router.put('/update/{id}')
 async def update(id,data):
-    return updateAcademicClassServices(id,data)
+    return updateAcademicClassServices(id,  data)
 
 @router.delete('/delete/{id}')
 async def delete(id):
