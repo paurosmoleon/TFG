@@ -5,7 +5,7 @@ import { useSearchParams, useNavigate } from 'react-router-dom';
 
 const PerfilChat: React.FC = () => {
   const [searchParams] = useSearchParams();
-  const token = searchParams.get('token'); // <-- aquí obtenemos el token correctamente
+  const token = searchParams.get('token'); 
   const navigate = useNavigate();
 
   const [currentUser, setCurrentUser] = useState<{

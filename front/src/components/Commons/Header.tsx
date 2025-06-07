@@ -14,7 +14,6 @@ interface User {
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const { pathname } = useLocation();
-  const [name, setName] = useState('');
   const [accountType, setAccountType] = useState<string | null>(null);
 
   const navItems = [
@@ -44,7 +43,6 @@ export default function Header() {
             },
           }
         );
-        setName(res.data[0].name);
         setAccountType(res.data[0].account_type);
       } catch (err) {
         console.log('Error al obtener el usuario:', err);
@@ -140,6 +138,21 @@ export default function Header() {
               {accountType === 'student' && <AlumnSVG />}
               {accountType === 'practices_tutor' && <TutorSVG />}
             </Link>
+
+            {/* --- AÑADIDO: botón hamburguesa SIEMPRE visible en móvil --- */}
+            <button
+              className="lg:hidden cursor-pointer"
+              onClick={() => setIsOpen(true)}
+            >
+              <svg className="w-7 h-7" fill="#333" viewBox="0 0 20 20">
+                <path
+                  fillRule="evenodd"
+                  d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </button>
+
             <button
               type="button"
               onClick={() => localStorage.removeItem('tokenUser')}
@@ -159,6 +172,7 @@ export default function Header() {
             <button className="px-4 py-2 text-sm rounded-sm font-medium cursor-pointer text-white border border-blue-600 bg-blue-600 transition-all duration-400 hover:bg-blue-500">
               <Link to="/teacher-register">Registrarse</Link>
             </button>
+
             <button
               className="lg:hidden cursor-pointer"
               onClick={() => setIsOpen(true)}
