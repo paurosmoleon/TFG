@@ -3,10 +3,13 @@ const Clases = () => {
   return (
     <div className="flex flex-col items-center justify-center">
       <Link to="/sign-up" className="flex items-center gap-2">
-        Añadir alumno o tutor laboral
+        Crear Alumno/ Tutor
       </Link>
       <Link to="/add-to-class" className="flex items-center gap-2">
-        Añadir Clase
+        Crear Clase
+      </Link>
+      <Link to="/add-to-class" className="flex items-center gap-2">
+        Crear Grupo de prácticas
       </Link>
     </div>
   )
