@@ -4,6 +4,7 @@ import SignatureCanvas from "react-signature-canvas";
 import { DiaData, FichaSemanalData, UserRole } from "../../types/ficha";
 import jsPDF from "jsPDF";
 
+
 const diasSemana: Array<keyof FichaSemanalData["dias"]> = [
   "LUNES",
   "MARTES",
