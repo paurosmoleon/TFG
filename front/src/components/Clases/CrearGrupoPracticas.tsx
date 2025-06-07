@@ -9,7 +9,7 @@ const CrearGrupoPracticas = () => {
 
   const getStudent = async () => {
     try {
-      const student: any = await axios.get(`https://tfg-production-f839.up.railway.app/users/get/${dni}`, {
+      const student: any = await axios.get(`https://tfg-production-f839.up.railway.app/users/get/${dniAlumno}`, {
         headers: {
           Authorization: localStorage.getItem('tokenUser') || '',
         },
@@ -20,21 +20,31 @@ const CrearGrupoPracticas = () => {
     }
   }
 
-  const createStudent = async (e: FormEvent) => {
-    e.preventDefault()
+  const getCompanyTutor = async () => {
     try {
-      const currentTeacher: any = await axios.get('https://tfg-production-f839.up.railway.app/users/me', {
+      const tutor: any = await axios.get(`https://tfg-production-f839.up.railway.app/users/get/${dniTutor}`, {
         headers: {
           Authorization: localStorage.getItem('tokenUser') || '',
         },
       })
-      const student_id = await getStudent()
+      return tutor.data[0].id
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  const createStudent = async (e: FormEvent) => {
+    e.preventDefault()
+    try {
+      let alumno = await getStudent()
+      let tutor = await getCompanyTutor()
       let obj = {
-        "student_id": 0,
-        "company_tutor_id": 0,
+        "practice_center_name": centroPracticas,
+        "student_id": alumno,
+        "company_tutor_id": tutor
       }
 
-      axios.post('https://tfg-production-f839.up.railway.app/AC/create', obj, {
+      axios.post('https://tfg-production-f839.up.railway.app/PG/create_practices_group', obj, {
         headers: {
           Authorization: localStorage.getItem('tokenUser') || '',
         },

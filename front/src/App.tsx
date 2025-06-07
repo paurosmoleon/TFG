@@ -18,7 +18,7 @@ import Clases from './components/Clases/Clases';
 import CrearClase from './components/Clases/CrearClase'
 import './index.css';
 import AddStudent from './components/Clases/CrearAlumno';
-
+import CrearGrupoPracticas from './components/Clases/CrearGrupoPracticas';
 function App() {
   return (
     <Routes>
@@ -35,6 +35,7 @@ function App() {
       <Route path="/becarios" element={<Becarios />} />
       <Route path="/clases" element={<Clases />} />
       <Route path="/create-class" element={<CrearClase />} />
+      <Route path="/create-group-practices" element={<CrearGrupoPracticas />} />
 
       <Route path="/add-to-class" element={< AddStudent />} />
       {/* Dashboard con rutas hijas */}

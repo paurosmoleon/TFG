@@ -8,7 +8,7 @@ const Clases = () => {
       <Link to="/create-class" className="flex items-center gap-2">
         Crear Clase
       </Link>
-      <Link to="/add-to-class" className="flex items-center gap-2">
+      <Link to="/create-group-practices" className="flex items-center gap-2">
         Crear Grupo de prácticas
       </Link>
     </div>
