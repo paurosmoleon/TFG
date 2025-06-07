@@ -27,20 +27,12 @@ const mapDiaToEnglish: Record<string, string> = {
 
 interface Props {
   userRole: UserRole; // "alumno", "profesor" o "tutor"
-  studentId: number;
-  companyTutorId: number;
-  academicTutorId: number;
-  practiceGroupId: number;
-  academicCenterId: number;
+
 }
 
 const FichaSemanal: FC<Props> = ({
   userRole,
-  studentId,
-  companyTutorId,
-  academicTutorId,
-  practiceGroupId,
-  academicCenterId,
+
 }) => {
   // Un objeto “vacío” para inicializar cada ficha
   const initialDias: FichaSemanalData["dias"] = {
