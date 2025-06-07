@@ -57,7 +57,7 @@ async def websocketEndpointServices(websocket: WebSocket):
         if content_decode:
             for message in json.loads(content_decode):
                 chatContent.append(message)
-                for name in message:
+                for name in message.items():
                     await websocket.send_text(f"{name}")
         
         # Escuchar mensajes nuevos
