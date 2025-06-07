@@ -1,7 +1,10 @@
+import Link from 'react-router-dom';
 const Clases = () => {
   return (
-    <div>Clases</div>
+    <Link to="/Sign Up" className="flex items-center gap-2">
+      Añadir alumno o tutor laboral
+      </Link>
   )
 }
 
-export default Clases
+      export default Clases
