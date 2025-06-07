@@ -45,7 +45,7 @@ const TiptapEditor = ({ onSave, id_student }: { onSave: (content: string) => voi
     try {
       let obj = {
         "student_id": id_student,
-        "school_tutor_id": await fetch(),
+        "school_tutor_id": 184,
         "content": editor?.getHTML().toString()
       }
 
