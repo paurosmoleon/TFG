@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import UserSVG from '../../assets/icons/UserSVG';
 import DNISVG from '../../assets/icons/DNISVG';
@@ -8,14 +8,11 @@ import PasswordSVG from '../../assets/icons/PasswordSVG';
 import AlumnSVG from '../../assets/icons/AlumnSVG';
 import TutorSVG from '../../assets/icons/TutorSVG';
 import '../../assets/styles/animacion.css';
-import { useEffect } from 'react';
 
 const SignUp = () => {
   interface RegisterResponse {
     access_token: string;
   }
-
-  const navigate = useNavigate();
 
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

@@ -13,26 +13,26 @@ const TiptapEditor = ({ onSave, id_student }: { onSave: (content: string) => voi
 
 
 
-  const fetch = async () => {
-    try {
+  // const fetch = async () => {
+  //   try {
 
 
-      const teacherr: any = await axios.get(`https://tfg-production-f839.up.railway.app/AC/find_by_student/${id_student}`, {
-        headers: {
-          Authorization: localStorage.getItem('tokenUser')
-        }
+  //     const teacherr: any = await axios.get(`https://tfg-production-f839.up.railway.app/AC/find_by_student/${id_student}`, {
+  //       headers: {
+  //         Authorization: localStorage.getItem('tokenUser')
+  //       }
 
-      })
-      const current2 = teacherr.data['Message'][0]
-
-
-      return current2['teacher_id']
+  //     })
+  //     const current2 = teacherr.data['Message'][0]
 
 
-    } catch (err) {
-      console.log(err)
-    }
-  }
+  //     return current2['teacher_id']
+
+
+  //   } catch (err) {
+  //     console.log(err)
+  //   }
+  // }
 
 
 

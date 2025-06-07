@@ -28,11 +28,6 @@ const mapDiaToEnglish: Record<string, string> = {
 
 interface Props {
   userRole: UserRole; // "alumno", "profesor" o "tutor"
-  studentId: number;
-  companyTutorId: number;
-  academicTutorId: number;
-  practiceGroupId: number;
-  academicCenterId: number;
 }
 
 const FichaSemanal: FC<Props> = ({
