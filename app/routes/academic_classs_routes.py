@@ -25,3 +25,8 @@ async def delete(id):
 @router.get('/find_by_student/{student_id}')
 async def findByStudent(student_id):
     return findDiariesServicesByStudent(student_id)
+
+
+@router.get('/find_by_teacher/{teache_id}')
+async def findByStudent(teache_id):
+    return findDiariesServicesByStudent(teache_id)

@@ -65,3 +65,19 @@ def findDiariesServicesByStudent(student_id):
         )
     except Exception as err:
         return {'Error': str(err)}
+    
+def findDiariesServicesBySteacher(teacher_id):
+    try:
+        response = supabase.table('academic_classes').select('*').eq('teacher_id',teacher_id).execute()
+            
+        return JSONResponse(
+            status_code=status.HTTP_200_OK,
+            content={'Message': response.data}
+        )
+    except SupabaseException as supaErr:
+        return JSONResponse(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            content={'Error supa': supaErr}
+        )
+    except Exception as err:
+        return {'Error': str(err)}
