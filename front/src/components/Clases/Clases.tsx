@@ -5,7 +5,7 @@ const Clases = () => {
       <Link to="/sign-up" className="flex items-center gap-2">
         Crear Alumno/ Tutor
       </Link>
-      <Link to="/add-to-class" className="flex items-center gap-2">
+      <Link to="/create-class" className="flex items-center gap-2">
         Crear Clase
       </Link>
       <Link to="/add-to-class" className="flex items-center gap-2">

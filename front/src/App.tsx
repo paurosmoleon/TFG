@@ -15,8 +15,9 @@ import NewPassword from './components/loginComponents/NewPassword';
 import TeacherRegister from './components/loginComponents/TeacherRegister';
 import Becarios from './components/Clases/Becarios';
 import Clases from './components/Clases/Clases';
-import AddToClass from './components/Clases/AddToClass';
+import CrearClase from './components/Clases/CrearClase'
 import './index.css';
+import AddStudent from './components/Clases/CrearAlumno';
 
 function App() {
   return (
@@ -33,7 +34,9 @@ function App() {
       <Route path="/teacher-register" element={<TeacherRegister />} />
       <Route path="/becarios" element={<Becarios />} />
       <Route path="/clases" element={<Clases />} />
-      <Route path="/add-to-class" element={<AddToClass />} />
+      <Route path="/create-class" element={<CrearClase />} />
+
+      <Route path="/add-to-class" element={< AddStudent />} />
       {/* Dashboard con rutas hijas */}
       <Route path="/dashboard" element={<Dashboard />}>
         <Route index element={<Navigate to="memoria-practicas" replace />} />
