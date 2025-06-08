@@ -13,7 +13,6 @@ const Chats: React.FC = () => {
   const [input, setInput] = useState('');
   const [selectedChat, setSelectedChat] = useState<Chat | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [currentName, setCurrentName] = useState('')
   const [accountType, setAccountType] = useState<'practices_tutor' | 'student' | 'teacher_class' | undefined>(undefined);
 
   const ws = useRef<WebSocket | null>(null);
@@ -27,7 +26,6 @@ const Chats: React.FC = () => {
           },
         });
 
-        setCurrentName(currentUser.data[0].name)
         setAccountType(currentUser.data[0].account_type);
 
         const res: any = await axios.get(
