@@ -1,37 +1,63 @@
 import DecryptedText from './StyleComponents/DecryptedText';
-
+import FadeContent from './StyleComponents/FadeContent';
+import AnimatedContent from './StyleComponents/AnimatedContent';
 export default function Home() {
   return (
     <div className="space-y-16">
       {/* Banner único con overlay */}
-      <div className="relative h-120 overflow-hidden">
-        <img
-          src="/banner inicio.png"
-          alt="Banner FCT"
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        <div className="absolute -inset-30 lg:inset-0 md:inset-0 xl:inset-0 bg-opacity-30 flex items-center justify-start px-50 mx-auto">
-          <div className="bg-white bg-opacity-90 p-6 rounded-lg w-70">
-            <h2 className="text-2xl font-bold mb-2 text-gray-800">
-              Gestión de FCT eficiente y colaborativa
-            </h2>
-            <p className="text-gray-600">
-              Centraliza tus fichas semanales, diarios y comunicaciones en un
-              solo lugar.
-            </p>
-          </div>
-        </div>
+<FadeContent blur={true} duration={1000} easing="ease-out" initialOpacity={0}>
+  <div className="relative h-120 overflow-hidden">
+    <img
+      src="/banner inicio.png"
+      alt="Banner FCT"
+      className="absolute inset-0 w-full h-full object-cover"
+    />
+    <div className="absolute -inset-30 lg:inset-0 md:inset-0 xl:inset-0 bg-opacity-30 flex items-center justify-start px-50 mx-auto">
+      <div className="bg-white bg-opacity-90 p-6 rounded-lg w-70">
+        <h2 className="text-2xl font-bold mb-2 text-gray-800">
+          Gestión de FCT eficiente y colaborativa
+        </h2>
+        <p className="text-gray-600">
+          Centraliza tus fichas semanales, diarios y comunicaciones en un solo lugar.
+        </p>
       </div>
-
-      <section className="py-12 bg-white">
+    </div>
+  </div>
+</FadeContent>
+<AnimatedContent
+  distance={150}
+  direction="vertical"
+  reverse={false}
+  duration={1.2}
+  ease="anticipate"
+  initialOpacity={0}
+  animateOpacity
+  scale={1.1}
+  threshold={0.2}
+  delay={0.3}
+>
+        <section className="py-12 bg-white">
         <div className="max-w-4xl mx-auto px-4">
           <h2 className="text-3xl font-bold text-center text-gray-800">
             Nuestras principales funcionalidades
           </h2>
         </div>
       </section>
+</AnimatedContent>
 
-      <section className="py-8 px-4 bg-gray-50">
+<AnimatedContent
+  distance={150}
+  direction="vertical"
+  reverse={false}
+  duration={1.2}
+  ease="anticipate"
+  initialOpacity={0}
+  animateOpacity
+  scale={1.1}
+  threshold={0.2}
+  delay={0.3}
+>
+  <section className="py-8 px-4 bg-gray-50">
         <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <div className="p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transition">
             <h3 className="font-semibold mb-2">Fichas Semanales</h3>
@@ -76,10 +102,23 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      <section className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center px-4 py-12">
+</AnimatedContent>
+      
+<AnimatedContent
+  distance={150}
+  direction="horizontal"
+  reverse={false}
+  duration={1.2}
+  ease="anticipate"
+  initialOpacity={0}
+  animateOpacity
+  scale={1.1}
+  threshold={0.2}
+  delay={0.3}
+>
+<section className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center px-4 py-12">
         <img
-          src="https://placehold.co/600x400?text=Requisitos&bg=ddd&fc=444"
+          src="/requirement.jpg"
           alt="Requisitos no funcionales"
           className="w-full h-auto rounded-lg shadow-lg"
         />
@@ -111,8 +150,21 @@ export default function Home() {
           </ul>
         </div>
       </section>
-
-      <section className="space-y-12 px-4 py-6 bg-white">
+</AnimatedContent>
+      
+<AnimatedContent
+  distance={150}
+  direction="horizontal"
+  reverse={true}
+  duration={1.2}
+  ease="anticipate"
+  initialOpacity={0}
+  animateOpacity
+  scale={1.1}
+  threshold={0.2}
+  delay={0.3}
+>
+<section className="space-y-12 px-4 py-6 bg-white">
         <div className="flex flex-col md:flex-row items-center gap-8">
           <div className="bg-indigo-50 p-8 rounded-lg md:w-1/2">
             <h2 className="text-3xl font-semibold mb-4 text-center">Misión</h2>
@@ -132,8 +184,20 @@ export default function Home() {
           />
         </div>
       </section>
-
-      <section className="space-y-12 px-4 py-6 bg-white">
+</AnimatedContent>
+<AnimatedContent
+  distance={150}
+  direction="horizontal"
+  reverse={false}
+  duration={1.0}
+  ease="anticipate"
+  initialOpacity={0}
+  animateOpacity
+  scale={1.1}
+  threshold={0.2}
+  delay={0.3}
+>
+       <section className="space-y-12 px-4 py-6 bg-white">
         <div className="flex flex-col md:flex-row-reverse items-center gap-8">
           <div className="bg-teal-50 p-8 rounded-lg md:w-1/2">
             <h2 className="text-3xl font-semibold mb-4 text-center">Visión</h2>
@@ -152,9 +216,22 @@ export default function Home() {
             className="w-full h-auto rounded-lg shadow-lg md:w-1/2"
           />
         </div>
-      </section>
+      </section> 
+  </AnimatedContent>      
 
-      <section className="px-4 py-12 bg-gray-50">
+<AnimatedContent
+  distance={150}
+  direction="vertical"
+  reverse={false}
+  duration={1.0}
+  ease="anticipate"
+  initialOpacity={0}
+  animateOpacity
+  scale={1.1}
+  threshold={0.2}
+  delay={0.3}
+>
+ <section className="px-4 py-12 bg-gray-50">
         <h2 className="text-3xl font-semibold mb-6 text-center">Valores</h2>
         <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <div className="p-6 bg-white rounded-lg shadow hover:shadow-lg transition">
@@ -187,6 +264,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+</AnimatedContent>
     </div>
   );
 }
