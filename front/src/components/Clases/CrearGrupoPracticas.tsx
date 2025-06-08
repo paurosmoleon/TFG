@@ -39,7 +39,7 @@ const CrearGrupoPracticas = () => {
       let alumno = await getStudent()
       let tutor = await getCompanyTutor()
       let obj = {
-        "practice_center_name": centroPracticas,
+        "practices_center_name": centroPracticas,
         "student_id": alumno,
         "company_tutor_id": tutor
       }
