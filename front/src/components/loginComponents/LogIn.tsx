@@ -35,10 +35,8 @@ const LogIn = () => {
         }
       );
 
-      // Guarda el token en localStorage también (por si quieres usarlo en otros sitios)
       localStorage.setItem('tokenUser', 'Bearer ' + res.data.access_token);
 
-      // Navega a la página perfil-chat con el token como query param
       navigate(`/dashboard/perfil-chat?token=${res.data.access_token}`);
     } catch (err) {
       console.log(err);

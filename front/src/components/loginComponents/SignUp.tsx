@@ -8,12 +8,12 @@ import PasswordSVG from '../../assets/icons/PasswordSVG';
 import AlumnSVG from '../../assets/icons/AlumnSVG';
 import TutorSVG from '../../assets/icons/TutorSVG';
 import '../../assets/styles/animacion.css';
+import { toast, Toaster } from 'react-hot-toast';
 
 const SignUp = () => {
   interface RegisterResponse {
     access_token: string;
   }
-
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -40,12 +40,12 @@ const SignUp = () => {
       !phone.value ||
       !role.value
     ) {
-      alert('Por favor, completa todos los campos.');
+      toast.error('Por favor, completa todos los campos.');
       return;
     }
 
     if (password.value !== confirmPassword.value) {
-      alert('Las contraseñas no coinciden.');
+      toast.error('Las contraseñas no coinciden.');
       return;
     }
 
@@ -63,13 +63,13 @@ const SignUp = () => {
       );
 
       if (res.status === 200) {
-        alert('Usuario creado con éxito');
+        toast.success('Usuario creado con éxito');
       }
     } catch (err: any) {
       if (err.response?.data?.message) {
-        alert(err.response.data.message);
+        toast.error(err.response.data.message);
       } else {
-        alert('Error al registrar el usuario.');
+        toast.error('Error al registrar el usuario.');
       }
       console.error(err);
     }
@@ -77,6 +77,7 @@ const SignUp = () => {
 
   return (
     <div className="h-screen md:flex">
+      <Toaster position="top-center" />
       {/* Formulario con logo */}
       <div className="flex md:w-1/2 flex-col justify-center py-10 items-center bg-white">
         <form className="bg-white w-full max-w-md px-8" onSubmit={handleSubmit}>
