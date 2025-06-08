@@ -67,7 +67,7 @@ export default function Header() {
 
         {/* Logo móvil */}
         <Link to="/home" className="hidden max-sm:block">
-          <LogoSVG className="w-9" />
+          <LogoSVG className="w-24 pb-12" />
         </Link>
 
         {/* Menú móvil */}
