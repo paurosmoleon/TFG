@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Alumno from '../ProfileComponents/Alumno';
 import TutorLaboral from '../ProfileComponents/TutorLaboral';
 import TutorDePrácticas from '../ProfileComponents/TutorDePrácticas';
+import {Toaster, toast} from 'react-hot-toast';
 
 type ProfileProps = {
   name: string;
@@ -31,12 +32,13 @@ const Profile: React.FC<ProfileProps> = ({
   };
 
   const handleSave = () => {
-    // Lógica para guardar los datos
+    toast.success('Perfil actualizado correctamente');
   };
 
   return (
     (
       <div className="mt-6">
+        <Toaster position="top-center" reverseOrder={false} />
         {form.account_type === 'student' && (
           <Alumno
             form={form}

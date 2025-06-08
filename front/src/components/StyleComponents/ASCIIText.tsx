@@ -484,7 +484,7 @@ export default function ASCIIText({
     text = 'David!',
     asciiFontSize = 8,
     textFontSize = 200,
-    textColor = '#fdf9f3',
+    textColor = 'white',
     planeBaseHeight = 8,
     enableWaves = true
 }: ASCIITextProps) {

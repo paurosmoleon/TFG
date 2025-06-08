@@ -11,6 +11,7 @@ export default function Landing() {
           <LogoSVG className="h-40 sm:h-60 md:h-80 lg:h-[400px] xl:h-[500px] w-auto cursor-default" />
         </div>
 
+
         {/* Tarjetas: diseño flexible y adaptativo */}
         <section className="flex flex-col sm:flex-row flex-wrap justify-center items-stretch gap-6 sm:gap-8 lg:gap-10 px-4 sm:px-6 md:px-8 lg:px-10 mb-10 w-full max-w-6xl">
           <AnimatedContent
@@ -67,6 +68,7 @@ export default function Landing() {
             <h2 className="text-xl sm:text-2xl mb-2 text-gray-700">Utilidad</h2>
             <p className="text-sm sm:text-base text-gray-700">
               Una herramienta útil que ahorre tiempo y esfuerzo. Cuando un profesor piense en facilitar el control de las FCT, esta app debe ser la primera opción.
+
             </p>
           </div>
           </AnimatedContent>

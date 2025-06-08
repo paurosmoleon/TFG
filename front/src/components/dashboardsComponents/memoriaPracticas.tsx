@@ -47,7 +47,7 @@ const MemoriaPracticas = () => {
     <div className="w-full sm:w-3/4  md:w-2/3 lg:w-1/2 mx-auto mt-4 border border-gray-300 bg-white p-6 rounded-lg shadow-lg">
       <Toaster position="top-center" reverseOrder={false} />
 
-      <h1 className="text-xl text-center py-2 border-b w-full">Memoria Practicas</h1>
+      <h1 className="text-xl text-center py-2 border-b w-full">Memoria de Prácticas</h1>
 
       <TiptapEditor onSave={handleSaveContent} content={editorText} />
 

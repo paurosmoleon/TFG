@@ -17,7 +17,7 @@ const TutorDePrácticas: React.FC<TutorDePrácticasProps> = ({
   handleChange,
   handleSave,
 }) => (
-  <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4 py-10">
+  <div className="min-h-screen flex items-center justify-center px-4 py-10">
     <div className="flex flex-col gap-y-10 items-center justify-center w-full max-w-4xl">
 
       {/* Formulario */}
