@@ -13,6 +13,7 @@ const Chats: React.FC = () => {
   const [input, setInput] = useState('');
   const [selectedChat, setSelectedChat] = useState<Chat | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [currentName, setCurrentName] = useState('')
   const [accountType, setAccountType] = useState<'practices_tutor' | 'student' | 'teacher_class' | undefined>(undefined);
 
   const ws = useRef<WebSocket | null>(null);
@@ -26,6 +27,7 @@ const Chats: React.FC = () => {
           },
         });
 
+        setCurrentName(currentUser.data[0].name)
         setAccountType(currentUser.data[0].account_type);
 
         const res: any = await axios.get(
@@ -112,9 +114,8 @@ const Chats: React.FC = () => {
               <div
                 key={chat.id}
                 onClick={() => handleSelectChat(chat)}
-                className={`flex items-center p-4 mb-4 rounded-lg cursor-pointer transition ${
-                  isActive ? 'bg-gray-100' : 'hover:bg-gray-50'
-                }`}
+                className={`flex items-center p-4 mb-4 rounded-lg cursor-pointer transition ${isActive ? 'bg-gray-100' : 'hover:bg-gray-50'
+                  }`}
               >
                 <Link to="/dashboard/perfil-chat" className="flex-shrink-0 mr-3">
                   <RoleIcon

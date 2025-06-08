@@ -15,9 +15,10 @@ import NewPassword from './components/loginComponents/NewPassword';
 import TeacherRegister from './components/loginComponents/TeacherRegister';
 import Becarios from './components/Clases/Becarios';
 import Clases from './components/Clases/Clases';
-import AddToClass from './components/Clases/AddToClass';
+import CrearClase from './components/Clases/CrearClase'
 import './index.css';
-
+import AddStudent from './components/Clases/CrearAlumno';
+import CrearGrupoPracticas from './components/Clases/CrearGrupoPracticas';
 function App() {
   return (
     <Routes>
@@ -33,12 +34,15 @@ function App() {
       <Route path="/teacher-register" element={<TeacherRegister />} />
       <Route path="/becarios" element={<Becarios />} />
       <Route path="/clases" element={<Clases />} />
-      <Route path="/add-to-class" element={<AddToClass />} />
+      <Route path="/create-class" element={<CrearClase />} />
+      <Route path="/create-group-practices" element={<CrearGrupoPracticas />} />
+
+      <Route path="/add-to-class" element={< AddStudent />} />
       {/* Dashboard con rutas hijas */}
       <Route path="/dashboard" element={<Dashboard />}>
         <Route index element={<Navigate to="memoria-practicas" replace />} />
         <Route path="memoria-practicas" element={<MemoriaPracticas />} />
-        <Route path="ficha-semanal" element={<FichaSemanal userRole="profesor" />} />
+        <Route path="ficha-semanal" element={<FichaSemanal userRole={'alumno'} />} />
         <Route path="chats" element={<Chats />} />
         <Route path="perfil-chat" element={<PerfilChat />} />
       </Route>
