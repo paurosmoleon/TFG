@@ -4,7 +4,6 @@ import SignatureCanvas from "react-signature-canvas";
 import { DiaData, FichaSemanalData, UserRole } from "../../types/ficha";
 import jsPDF from "jspdf";
 
-
 const diasSemana: Array<keyof FichaSemanalData["dias"]> = [
   "LUNES",
   "MARTES",
@@ -28,10 +27,12 @@ const mapDiaToEnglish: Record<string, string> = {
 
 interface Props {
   userRole: UserRole; // "alumno", "profesor" o "tutor"
+
 }
 
 const FichaSemanal: FC<Props> = ({
-  userRole
+  userRole,
+
 }) => {
   // Un objeto “vacío” para inicializar cada ficha
   const initialDias: FichaSemanalData["dias"] = {
@@ -738,8 +739,9 @@ const FichaSemanal: FC<Props> = ({
           onClick={handleDescargarPDF}
           className="w-full sm:w-auto bg-indigo-600 text-white px-6 py-2 rounded-lg shadow hover:bg-indigo-700 transition"
         >
-          Descargar todas las fichas (PDF)
+          Descargar fichas (PDF)
         </button>
+
       </div>
     </div>
   );
