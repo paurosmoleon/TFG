@@ -9,6 +9,8 @@ import AlumnSVG from '../../assets/icons/AlumnSVG';
 import TutorSVG from '../../assets/icons/TutorSVG';
 import '../../assets/styles/animacion.css';
 import { toast, Toaster } from 'react-hot-toast';
+import BlurText from '../StyleComponents/BlurText';
+
 
 const SignUp = () => {
   interface RegisterResponse {
@@ -205,11 +207,21 @@ const SignUp = () => {
       {/* Fondo decorativo */}
       <div className="animated-body relative overflow-hidden md:flex w-1/2 bg-gradient-to-b from-blue-700 to-blue-500 justify-center items-center hidden">
         <div>
-          <h1 className="text-white font-bold text-4xl font-sans">eFCT</h1>
-          <p className="text-white mt-1 italic">
-            "Tus prácticas de empresa no tienen que ser un dolor de cabeza para
-            nadie"
-          </p>
+          <h1 className="text-white font-bold text-4xl font-sans">
+            <BlurText
+              text="eFCT"
+              delay={10}
+              animateBy="words"
+              direction="top"
+            />
+          </h1>
+          <BlurText
+            text='"Tus prácticas de empresa no tienen que ser un dolor de cabeza para nadie"'
+            delay={10}
+            animateBy="words"
+            direction="top"
+            className="text-white mt-1 italic"
+          />
           <button
             type="button"
             className="block w-28 bg-none text-white mt-4 py-2 rounded-2xl font-bold mb-2 cursor-pointer transition-all duration-500 hover:w-30 hover:bg-white hover:text-blue-500 hover:border-none"

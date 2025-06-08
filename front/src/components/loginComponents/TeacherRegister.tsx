@@ -8,6 +8,8 @@ import EmailSVG from '../../assets/icons/EmailSVG';
 import PasswordSVG from '../../assets/icons/PasswordSVG';
 import '../../assets/styles/animacion.css';
 import { useEffect } from 'react';
+import BlurText from '../StyleComponents/BlurText';
+
 
 const TeacherRegister = () => {
     interface RegisterResponse {
@@ -84,7 +86,6 @@ const TeacherRegister = () => {
 
     return (
         <div className="h-screen md:flex">
-            {/* Toast container */}
             <Toaster position="top-center" reverseOrder={false} />
 
             <div className="flex md:w-1/2 flex-col justify-center py-10 items-center bg-white">
@@ -149,15 +150,6 @@ const TeacherRegister = () => {
                             placeholder="Repetir contraseña"
                         />
                     </div>
-
-                    <div className="flex items-center border-1 py-2 px-3 rounded-2xl mb-4">
-                        <input
-                            className="pl-2 outline-none border-none w-full"
-                            type="text"
-                            placeholder="Empresa/ Centro educativo"
-                        />
-                    </div>
-
                     <button
                         type="submit"
                         className="block w-full bg-blue-600 mt-4 py-2 rounded-2xl text-white font-semibold mb-2 cursor-pointer hover:bg-blue-500 transition duration-300"
@@ -184,15 +176,27 @@ const TeacherRegister = () => {
             {/* Parte derecha con animación */}
             <div className="animated-body relative overflow-hidden md:flex w-1/2 bg-gradient-to-b from-blue-700 to-blue-500 justify-center items-center hidden">
                 <div>
-                    <h1 className="text-white font-bold text-4xl font-sans">eFCT</h1>
-                    <p className="text-white mt-1 italic">
-                        "Tus prácticas de empresa no tienen que ser un dolor de cabeza para nadie"
-                    </p>
+                    <h1 className="text-white font-bold text-4xl font-sans">
+                        <BlurText
+                            text="eFCT"
+                            delay={10}
+                            animateBy="words"
+                            direction="top"
+                        />
+                    </h1>
+                    <BlurText
+                        text='"Tus prácticas de empresa no tienen que ser un dolor de cabeza para nadie"'
+                        delay={10}
+                        animateBy="words"
+                        direction="top"
+                        className="text-white mt-1 italic"
+                    />
                     <button
                         type="button"
                         className="block w-28 bg-none text-white mt-4 py-2 rounded-2xl font-bold mb-2 cursor-pointer transition-all duration-500 hover:w-30 hover:bg-white hover:text-blue-500 hover:border-none"
                     >
-                        <Link to="/home">Saber más →</Link>
+                        <Link to="/home">
+                        Saber más →</Link>
                     </button>
                 </div>
                 <div className="absolute -bottom-32 -left-40 w-80 h-80 border-4 border-white rounded-full border-opacity-30 border-t-8"></div>
