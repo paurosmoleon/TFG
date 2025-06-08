@@ -1,65 +1,80 @@
-import { useEffect, useState } from 'react';
-import TiptapEditor from '../Tiptap';
-import axios from 'axios';
+import { useState, useEffect } from "react";
+import TiptapEditor from "../Tiptap";
+import { Toaster, toast } from 'react-hot-toast';
+
 const MemoriaPracticas = () => {
-  const [currentUser, setCurrentUser] = useState()
-
-  const handleSaveContent = (content: string) => {
-    console.log('Contenido guardado:', content);
-  };
-
+  const [editorText, setEditorText] = useState<string>("");
 
   useEffect(() => {
-    const currentusers = async () => {
-      try {
-        const student: any = await axios.get('https://tfg-production-f839.up.railway.app/users/me', {
-          headers: {
-            Authorization: localStorage.getItem('tokenUser')
-          }
-        })
-        const current = student.data[0]['id']
-
-        setCurrentUser(current)
-      } catch (err) {
-        console.log(err)
-      }
+    const savedContent = localStorage.getItem("memoriaPracticasContent");
+    if (savedContent) {
+      setEditorText(savedContent);
     }
-    currentusers()
-  }, [])
+  }, []);
 
+  const handleSaveContent = (content: string) => {
+    setEditorText(content);
+  };
 
-  function downloadPDF() {
-    axios.get(`https://tfg-production-f839.up.railway.app/PD/pdf/${currentUser}`, {
-      responseType: 'blob',  // ¡Importante!
-      headers: {
-        Authorization: localStorage.getItem('tokenUser')
+  const saveToLocalStorage = () => {
+    localStorage.setItem("memoriaPracticasContent", editorText);
+    toast.success("Contenido guardado");
+  };
+
+  const downloadPDF = () => {
+    import("jspdf").then(({ default: jsPDF }) => {
+      const doc = new jsPDF();
+      doc.setFontSize(16);
+      doc.text("Memoria de prácticas", 10, 10);
+
+      function htmlToPlainTextWithLineBreaks(html: string): string {
+        const tmp = document.createElement("div");
+        tmp.innerHTML = html;
+
+        const elements = tmp.querySelectorAll("p, h1, h2, br");
+        elements.forEach((el) => {
+          el.insertAdjacentText("afterend", "\n\n");
+        });
+
+        return tmp.textContent || tmp.innerText || "";
       }
-    })
-      .then((response: any) => {
-        const blob = new Blob([response.data], { type: 'application/pdf' });
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'Memoria de prácticas.pdf';
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        window.URL.revokeObjectURL(url);
-      })
-      .catch((error) => {
-        console.error("Error al descargar el PDF", error);
-      });
-  }
+
+      const plainText = htmlToPlainTextWithLineBreaks(
+        editorText || "No hay contenido para mostrar."
+      );
+
+      const splitText = doc.splitTextToSize(plainText, 180);
+      doc.setFontSize(12);
+      doc.text(splitText, 10, 20);
+
+      doc.save("MemoriaPracticas.pdf");
+    });
+  };
 
 
 
   return (
-    <div className="w-1/2 mx-auto mt-4 border border-gray-300 bg-white p-6 rounded-lg shadow-lg">
-      <h1 className="text-xl text-center py-2 border-b w-full ">Memoria Practicas</h1>
+    <div className="w-full sm:w-3/4 sm md:w-2/3 lg:w-1/2 mx-auto mt-4 border border-gray-300 bg-white p-6 rounded-lg shadow-lg">
+      <Toaster position="top-center" reverseOrder={false} />
 
-      <TiptapEditor onSave={handleSaveContent} id_student={currentUser} />
+      <h1 className="text-xl text-center py-2 border-b w-full">Memoria de Prácticas</h1>
+
+      <TiptapEditor onSave={handleSaveContent} content={editorText} />
+
       <div className="flex justify-center space-x-4 mt-4">
-        <button onClick={downloadPDF} className='mt-4 px-4 mb-3 py-2 rounded border text-block border-black bg-white hover:bg-black hover:border-white hover:text-white transition-all duration-200   cursor-pointer' >Descargar como PDF</button>
+        <button
+          onClick={saveToLocalStorage}
+          className="mt-4 px-4 py-2 rounded border border-green-600 text-green-700 hover:bg-green-700 hover:text-white transition duration-200 cursor-pointer"
+        >
+          Guardar
+        </button>
+
+        <button
+          onClick={downloadPDF}
+          className="mt-4 px-4 py-2 rounded border border-black text-black hover:bg-black hover:text-white transition duration-200 cursor-pointer"
+        >
+          Descargar como PDF
+        </button>
       </div>
     </div>
   );

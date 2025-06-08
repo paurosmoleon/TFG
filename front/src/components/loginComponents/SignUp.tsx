@@ -8,12 +8,14 @@ import PasswordSVG from '../../assets/icons/PasswordSVG';
 import AlumnSVG from '../../assets/icons/AlumnSVG';
 import TutorSVG from '../../assets/icons/TutorSVG';
 import '../../assets/styles/animacion.css';
+import { toast, Toaster } from 'react-hot-toast';
+import BlurText from '../StyleComponents/BlurText';
+
 
 const SignUp = () => {
   interface RegisterResponse {
     access_token: string;
   }
-
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -40,12 +42,12 @@ const SignUp = () => {
       !phone.value ||
       !role.value
     ) {
-      alert('Por favor, completa todos los campos.');
+      toast.error('Por favor, completa todos los campos.');
       return;
     }
 
     if (password.value !== confirmPassword.value) {
-      alert('Las contraseñas no coinciden.');
+      toast.error('Las contraseñas no coinciden.');
       return;
     }
 
@@ -63,13 +65,13 @@ const SignUp = () => {
       );
 
       if (res.status === 200) {
-        alert('Usuario creado con éxito');
+        toast.success('Usuario creado con éxito');
       }
     } catch (err: any) {
       if (err.response?.data?.message) {
-        alert(err.response.data.message);
+        toast.error(err.response.data.message);
       } else {
-        alert('Error al registrar el usuario.');
+        toast.error('Error al registrar el usuario.');
       }
       console.error(err);
     }
@@ -77,6 +79,7 @@ const SignUp = () => {
 
   return (
     <div className="h-screen md:flex">
+      <Toaster position="top-center" />
       {/* Formulario con logo */}
       <div className="flex md:w-1/2 flex-col justify-center py-10 items-center bg-white">
         <form className="bg-white w-full max-w-md px-8" onSubmit={handleSubmit}>
@@ -204,11 +207,21 @@ const SignUp = () => {
       {/* Fondo decorativo */}
       <div className="animated-body relative overflow-hidden md:flex w-1/2 bg-gradient-to-b from-blue-700 to-blue-500 justify-center items-center hidden">
         <div>
-          <h1 className="text-white font-bold text-4xl font-sans">eFCT</h1>
-          <p className="text-white mt-1 italic">
-            "Tus prácticas de empresa no tienen que ser un dolor de cabeza para
-            nadie"
-          </p>
+          <h1 className="text-white font-bold text-4xl font-sans">
+            <BlurText
+              text="eFCT"
+              delay={10}
+              animateBy="words"
+              direction="top"
+            />
+          </h1>
+          <BlurText
+            text='"Tus prácticas de empresa no tienen que ser un dolor de cabeza para nadie"'
+            delay={10}
+            animateBy="words"
+            direction="top"
+            className="text-white mt-1 italic"
+          />
           <button
             type="button"
             className="block w-28 bg-none text-white mt-4 py-2 rounded-2xl font-bold mb-2 cursor-pointer transition-all duration-500 hover:w-30 hover:bg-white hover:text-blue-500 hover:border-none"

@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import ChatsSVG from '../../assets/icons/ChatsSVG';
 
 interface TutorDePrácticasProps {
   form: {
@@ -18,7 +17,7 @@ const TutorDePrácticas: React.FC<TutorDePrácticasProps> = ({
   handleChange,
   handleSave,
 }) => (
-  <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4 py-10">
+  <div className="min-h-screen flex items-center justify-center px-4 py-10">
     <div className="flex flex-col gap-y-10 items-center justify-center w-full max-w-4xl">
 
       {/* Formulario */}
@@ -46,7 +45,8 @@ const TutorDePrácticas: React.FC<TutorDePrácticasProps> = ({
           <div>
             <label className="block text-sm text-gray-600">DNI:</label>
             <input
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-gray-900 text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+              disabled
+              className="w-full bg-gray-100 border border-gray-300 rounded-lg px-3 py-2 text-gray-900 text-base cursor-not-allowed"
               name="dni"
               value={form.dni}
               onChange={handleChange}
@@ -76,47 +76,13 @@ const TutorDePrácticas: React.FC<TutorDePrácticasProps> = ({
           </Link>
           <button
             onClick={handleSave}
-            className="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition"
+            className="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition cursor-pointer"
           >
             Guardar cambios
           </button>
         </div>
       </div>
 
-      {/* Tabla responsive */}
-      <div className="w-full overflow-x-auto bg-white shadow-lg rounded-2xl p-4">
-        <table className="w-full text-left text-sm border-collapse">
-          <thead className="bg-gray-100">
-            <tr>
-              <th className="px-4 py-3 border-b border-gray-300 font-semibold">Alumno</th>
-              <th className="px-4 py-3 border-b border-gray-300 font-semibold">Enviar Mensaje</th>
-              <th className="px-4 py-3 border-b border-gray-300 font-semibold">Tutor Laboral</th>
-              <th className="px-4 py-3 border-b border-gray-300 font-semibold">Enviar Mensaje</th>
-            </tr>
-          </thead>
-          <tbody>
-            {[
-              { student: 'Lucía Gómez', tutor: 'Jorge Martínez' },
-              { student: 'David López', tutor: 'Ana Torres' },
-            ].map((row, index) => (
-              <tr key={index} className="hover:bg-gray-50">
-                <td className="px-4 py-2 border-b border-gray-200">{row.student}</td>
-                <td className="px-4 py-2 border-b border-gray-200">
-                  <Link to="/dashboard/chats">
-                    <ChatsSVG className="w-6 h-6 text-blue-600 hover:text-blue-800 transition" />
-                  </Link>
-                </td>
-                <td className="px-4 py-2 border-b border-gray-200">{row.tutor}</td>
-                <td className="px-4 py-2 border-b border-gray-200">
-                  <Link to="/dashboard/chats">
-                    <ChatsSVG className="w-6 h-6 text-blue-600 hover:text-blue-800 transition" />
-                  </Link>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
 
     </div>
   </div>
