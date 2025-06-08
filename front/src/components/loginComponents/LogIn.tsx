@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import EmailSVG from '../../assets/icons/EmailSVG';
 import PasswordSVG from '../../assets/icons/PasswordSVG';
+import BlurText from '../StyleComponents/BlurText';
 
 const LogIn = () => {
   const navigate = useNavigate();
@@ -12,12 +13,14 @@ const LogIn = () => {
     if (token) {
       navigate('/Dashboard');
     }
-  });
+  }, [navigate]);
+
 
 
   interface LoginResponse {
     access_token: string;
   }
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -46,13 +49,23 @@ const LogIn = () => {
   return (
     <div className="h-screen md:flex">
       {/* Sección izquierda */}
-      <div className="relative overflow-hidden md:flex w-1/2  animated-body justify-around items-center hidden">
+      <div className="relative overflow-hidden md:flex w-1/2 animated-body justify-around items-center hidden">
         <div>
-          <h1 className="text-white font-bold text-4xl font-sans">eFCT</h1>
-          <p className="text-white mt-1 italic">
-            "Las prácticas de empresa no tienen que ser un dolor de cabeza para
-            nadie"
-          </p>
+          <h1 className="text-white font-bold text-4xl font-sans">
+            <BlurText
+              text="eFCT"
+              delay={10}
+              animateBy="words"
+              direction="top"
+            />
+          </h1>
+          <BlurText
+            text='"Tus prácticas de empresa no tienen que ser un dolor de cabeza para nadie"'
+            delay={10}
+            animateBy="words"
+            direction="top"
+            className="text-white mt-1 italic"
+          />
           <button
             type="button"
             className="block w-28 bg-none text-white mt-4 py-2 rounded-2xl font-bold mb-2 cursor-pointer transition-all duration-500 hover:w-30 hover:bg-white hover:text-blue-500 hover:border-none"
@@ -61,7 +74,7 @@ const LogIn = () => {
           </button>
         </div>
         {/* Círculos decorativos */}
-        <div className="absolute border-white -bottom-32 -left-40 w-80 h-80 border-4  rounded-full border-opacity-30 border-t-8"></div>
+        <div className="absolute border-white -bottom-32 -left-40 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
         <div className="absolute border-white -bottom-40 -left-20 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
         <div className="absolute border-white -top-40 -right-0 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
         <div className="absolute border-white -top-20 -right-20 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
