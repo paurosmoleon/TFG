@@ -375,11 +375,17 @@ Instala eFCT usando uno de los siguientes métodos:
 ❯ git clone https://github.com/paurosmoleon/TFG
 ```
 
-2. Accede al README.md del front y del back para obtener instrucciones de instalación.
+2. Abre los entornos de front y back:
 
 ```sh
 ❯ cd TFG/front
+		- npm install
+		- npm run dev
 ❯ cd TFG/back
+		- pip install -r requirements.txt
+		- python main.py
+		- python manage.py runserver
+		
 ```
 
 ## Hoja de Ruta del Proyecto
