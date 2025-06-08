@@ -1,15 +1,15 @@
+import DecryptedText from './StyleComponents/DecryptedText';
+
 export default function Home() {
   return (
     <div className="space-y-16">
       {/* Banner único con overlay */}
       <div className="relative h-120 overflow-hidden">
-        {/* Imagen apaisada */}
         <img
           src="/banner inicio.png"
           alt="Banner FCT"
           className="absolute inset-0 w-full h-full object-cover"
         />
-        {/* Overlay con tarjeta alineada a la izquierda */}
         <div className="absolute -inset-30 lg:inset-0 md:inset-0 xl:inset-0 bg-opacity-30 flex items-center justify-start px-50 mx-auto">
           <div className="bg-white bg-opacity-90 p-6 rounded-lg w-70">
             <h2 className="text-2xl font-bold mb-2 text-gray-800">
@@ -42,23 +42,30 @@ export default function Home() {
           <div className="p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transition">
             <h3 className="font-semibold mb-2">Diario de prácticas</h3>
             <p>
-              Escribe y consulta tu memoria de prácticas para descargarla al final de tus prácticas.
+              Escribe y consulta tu memoria de prácticas para descargarla al
+              final de tus prácticas.
             </p>
           </div>
           <div className="p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transition">
             <h3 className="font-semibold mb-2">Login y Seguridad</h3>
-            <p>
-              Acceso protegido con datos cifrados y hash de alta
-              seguridad.
-            </p>
+            <DecryptedText
+              text="Acceso protegido con datos cifrados y hash de alta seguridad."
+              animateOn="view"
+              revealDirection="center"
+              speed={120}
+            />
           </div>
+
           <div className="p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transition">
             <h3 className="font-semibold mb-2">Firma digital</h3>
-            <p>
-              Firma y consulta fichas semanales directamente desde la
-              plataforma.
-            </p>
+            <DecryptedText
+              text="Firma y consulta fichas semanales directamente desde la plataforma."
+              animateOn="view"
+              revealDirection="center"
+              speed={120}
+            />
           </div>
+
           <div className="p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transition">
             <h3 className="font-semibold mb-2">Exportación a PDF</h3>
             <p>Descarga tu diario y fichas en PDF listos para entrega.</p>
@@ -80,9 +87,16 @@ export default function Home() {
           <h2 className="text-3xl font-semibold mb-4">Y no solo eso...</h2>
           <ul className="list-disc list-inside space-y-2 text-gray-600">
             <li>
-              <strong>Seguridad:</strong> Cifrado y protección de datos
-              sensibles.
+              <strong>Seguridad:</strong>{" "}
+              <DecryptedText
+                text="Cifrado y protección de datos sensibles."
+                animateOn="view"
+                revealDirection="center"
+                speed={120}
+
+              />
             </li>
+
             <li>
               <strong>Disponibilidad:</strong> Acceso continuo y alta tolerancia
               a fallos.
@@ -161,7 +175,11 @@ export default function Home() {
           </div>
           <div className="p-6 bg-white rounded-lg shadow hover:shadow-lg transition">
             <h3 className="font-bold mb-2">Seguridad</h3>
-            <p>Protección de datos y confidencialidad.</p>
+            <DecryptedText
+              text="Protección de datos y confidencialidad."
+              animateOn="view"
+              revealDirection="center"
+            />
           </div>
           <div className="p-6 bg-white rounded-lg shadow hover:shadow-lg transition">
             <h3 className="font-bold mb-2">Y no parar</h3>
