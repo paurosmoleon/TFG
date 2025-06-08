@@ -1,5 +1,6 @@
 import axios from "axios"
 import { FormEvent, useState } from "react"
+import Iridescence from '../StyleComponents/Iridescence'  // Ajusta ruta si hace falta
 
 const CrearGrupoPracticas = () => {
   const [dniTutor, setDniTutor] = useState('')
@@ -54,10 +55,27 @@ const CrearGrupoPracticas = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white px-4">
+    <div className="relative min-h-screen flex items-center justify-center px-4">
+      {/* Fondo iridiscente fijo */}
+      <div
+        style={{
+          position: 'fixed',
+          inset: 0,
+          zIndex: -10,
+        }}
+      >
+        <Iridescence
+          color={[0, 0, 1]}
+          mouseReact={true}
+          amplitude={0.1}
+          speed={2.0}
+        />
+      </div>
+
+      {/* Formulario arriba del fondo */}
       <form
         onSubmit={createStudent}
-        className="bg-white border border-gray-300 rounded-2xl shadow-lg p-8 w-full max-w-md space-y-6"
+        className="bg-white border border-gray-300 rounded-2xl shadow-lg p-8 w-full max-w-md space-y-6 relative z-10"
       >
         <h2 className="text-2xl font-semibold text-black text-center">Crear Grupo de Prácticas</h2>
 

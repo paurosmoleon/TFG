@@ -45,7 +45,8 @@ const TutorDePrácticas: React.FC<TutorDePrácticasProps> = ({
           <div>
             <label className="block text-sm text-gray-600">DNI:</label>
             <input
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-gray-900 text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+              disabled
+              className="w-full bg-gray-100 border border-gray-300 rounded-lg px-3 py-2 text-gray-900 text-base cursor-not-allowed"
               name="dni"
               value={form.dni}
               onChange={handleChange}
@@ -75,7 +76,7 @@ const TutorDePrácticas: React.FC<TutorDePrácticasProps> = ({
           </Link>
           <button
             onClick={handleSave}
-            className="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition"
+            className="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition cursor-pointer"
           >
             Guardar cambios
           </button>

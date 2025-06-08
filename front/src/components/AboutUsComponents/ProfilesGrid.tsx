@@ -55,7 +55,7 @@ const ProfilesGrid = () => {
           animateOpacity
           scale={1.1}
           threshold={0.2}
-          delay={index * 0.2} // efecto de cascada
+          delay={index * 0.2}
         >
           <div className="m-10 w-60">
             <div className="rounded-lg border bg-white px-5 pt-8 pb-10 shadow-lg">
