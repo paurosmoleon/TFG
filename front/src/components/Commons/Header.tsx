@@ -141,7 +141,6 @@ export default function Header() {
               {accountType === 'practices_tutor' && <TutorSVG />}
             </Link>
 
-            {/* --- AÑADIDO: botón hamburguesa SIEMPRE visible en móvil --- */}
             <button
               className="lg:hidden cursor-pointer"
               onClick={() => setIsOpen(true)}
@@ -157,11 +156,15 @@ export default function Header() {
 
             <button
               type="button"
-              onClick={() => localStorage.removeItem('tokenUser')}
+              onClick={() => {
+                localStorage.removeItem('tokenUser');
+                window.location.reload();
+              }}
               className="cursor-pointer border border-red-600 text-red-600 rounded-lg p-1.5 transition-all duration-300 hover:bg-red-600 hover:text-white"
             >
               <LogOutSVG className="w-5 h-5" />
             </button>
+
           </div>
         ) : (
           <div className="flex items-center ml-auto space-x-6">
