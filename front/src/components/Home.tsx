@@ -34,22 +34,21 @@ export default function Home() {
       <section className="py-8 px-4 bg-gray-50">
         <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <div className="p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transition">
-            <h3 className="font-semibold mb-2">Subida de plantillas</h3>
+            <h3 className="font-semibold mb-2">Fichas Semanales</h3>
             <p>
-              Sube tus plantillas semanales, con una opción por defecto
-              integrada.
+              Crea, edita y firma fichas semanales de forma sencilla y rápida.
             </p>
           </div>
           <div className="p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transition">
             <h3 className="font-semibold mb-2">Diario de prácticas</h3>
             <p>
-              Escribe y consulta en vistas calendario o página según prefieras.
+              Escribe y consulta tu memoria de prácticas para descargarla al final de tus prácticas.
             </p>
           </div>
           <div className="p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transition">
             <h3 className="font-semibold mb-2">Login y Seguridad</h3>
             <p>
-              Acceso protegido con datos cifrados y protocolos de alta
+              Acceso protegido con datos cifrados y hash de alta
               seguridad.
             </p>
           </div>
@@ -62,7 +61,7 @@ export default function Home() {
           </div>
           <div className="p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transition">
             <h3 className="font-semibold mb-2">Exportación a PDF</h3>
-            <p>Descarga tu diario en PDF listo para entrega.</p>
+            <p>Descarga tu diario y fichas en PDF listos para entrega.</p>
           </div>
           <div className="p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transition">
             <h3 className="font-semibold mb-2">Mensajería directa</h3>
@@ -158,7 +157,7 @@ export default function Home() {
           </div>
           <div className="p-6 bg-white rounded-lg shadow hover:shadow-lg transition">
             <h3 className="font-bold mb-2">Colaboración</h3>
-            <p>Comunicación transparente entre actores.</p>
+            <p>Comunicación transparente entre usuarios.</p>
           </div>
           <div className="p-6 bg-white rounded-lg shadow hover:shadow-lg transition">
             <h3 className="font-bold mb-2">Seguridad</h3>

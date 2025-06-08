@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import ChatsSVG from '../../assets/icons/ChatsSVG';
 interface AlumnoProps {
   form: {
     name: string;
@@ -13,7 +12,7 @@ interface AlumnoProps {
 }
 
 const Alumno: React.FC<AlumnoProps> = ({ form, handleChange, handleSave }) => (
-  <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+  <div className="min-h-screen flex items-center justify-center">
     <div className="bg-white shadow-lg rounded-2xl p-8 max-w-md w-full">
       <h2 className="text-2xl font-bold mb-6 text-gray-800">Perfil</h2>
       <div className="space-y-4">
@@ -74,20 +73,6 @@ const Alumno: React.FC<AlumnoProps> = ({ form, handleChange, handleSave }) => (
           Guardar cambios
         </button>
       </div>
-    </div>
-    <div className="flex justify-center mt-4">
-      <p className="text-gray-600 text-sm">Tutor de prácticas:</p>
-      {form.name}
-      <Link to="/dashboard/chats">
-        <ChatsSVG className="w-6 h-6 ml-2 cursor-pointer" />
-      </Link>
-    </div>
-    <div className="flex justify-center mt-4">
-      <p className="text-gray-600 text-sm">Tutor laboral:</p>
-      {form.name}
-      <Link to="/dashboard/chats">
-        <ChatsSVG className="w-6 h-6 ml-2 cursor-pointer" />
-      </Link>
     </div>
   </div>
 );

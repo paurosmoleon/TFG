@@ -5,7 +5,7 @@ const AboutUs = () => {
       <div className="lg:w-1/2 space-y-6 flex flex-col justify-center">
         <h2 className="text-4xl font-bold">Sobre nosotros</h2>
         <p className="text-base text-gray-700 font-normal leading-relaxed">
-          Nuestro equipo está conformado por 4 amigos que han hecho tanto el grado medio de Microinformática,
+          Nuestro equipo está conformado por 4 amigos que han hecho tanto el Grado Medio de Sistemas Microinformáticos y Redes,
           como el grado superior de Desarrollo de aplicaciones web. Llevamos creando proyectos en conjunto a lo largo de estos 4 años
           que llevamos conociéndonos y culmina con la creación de este proyecto ambicioso "eFCT" con el cual ponemos todo nuestro
           empeño, dedicación y conocimiento para su desarrollo y creación.

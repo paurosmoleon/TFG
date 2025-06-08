@@ -34,8 +34,8 @@ const Chats: React.FC = () => {
 
         const mappedChats = res.data.map((chat: any) => ({
           id: chat.IdChat,
-          name: chat.nombre || 'Chat sin nombre',
-          role: chat.role || 'student', // Aquí el role para iconos en listado
+          name: chat.nombre || 'Alumno',
+          role: chat.role || 'student', 
           last: chat.lastMessage || '',
         }));
 

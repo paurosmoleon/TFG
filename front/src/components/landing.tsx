@@ -30,7 +30,7 @@ export default function Landing() {
             <h2 className="text-2xl mb-2">Utilidad</h2>
             <p>
               Hacer de esta aplicación una herramienta que sea usada para evitar
-              largas horas de esperas entre participantes de fct. Una aplicación
+              largas horas de esperas entre participantes de las FCT. Una aplicación
               que venga a la mente cuando un profesor diga: “Voy a buscar en
               Internet una manera de facilitarme el control de las FCT con mis
               alumnos”
