@@ -27,13 +27,22 @@ const MemoriaPracticas = () => {
       doc.setFontSize(16);
       doc.text("Memoria de prácticas", 10, 10);
 
-      function htmlToPlainText(html: string): string {
+      function htmlToPlainTextWithLineBreaks(html: string): string {
         const tmp = document.createElement("div");
         tmp.innerHTML = html;
+
+        const elements = tmp.querySelectorAll("p, h1, h2, br");
+        elements.forEach((el) => {
+          el.insertAdjacentText("afterend", "\n\n");
+        });
+
         return tmp.textContent || tmp.innerText || "";
       }
 
-      const plainText = htmlToPlainText(editorText || "No hay contenido para mostrar.");
+      const plainText = htmlToPlainTextWithLineBreaks(
+        editorText || "No hay contenido para mostrar."
+      );
+
       const splitText = doc.splitTextToSize(plainText, 180);
       doc.setFontSize(12);
       doc.text(splitText, 10, 20);
@@ -43,8 +52,9 @@ const MemoriaPracticas = () => {
   };
 
 
+
   return (
-    <div className="w-full sm:w-3/4  md:w-2/3 lg:w-1/2 mx-auto mt-4 border border-gray-300 bg-white p-6 rounded-lg shadow-lg">
+    <div className="w-full sm:w-3/4 sm md:w-2/3 lg:w-1/2 mx-auto mt-4 border border-gray-300 bg-white p-6 rounded-lg shadow-lg">
       <Toaster position="top-center" reverseOrder={false} />
 
       <h1 className="text-xl text-center py-2 border-b w-full">Memoria de Prácticas</h1>

@@ -1,6 +1,15 @@
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+
+const isHTML = (str: string) => /<\/?[a-z][\s\S]*>/i.test(str);
+
+const convertPlainTextToHTML = (text: string): string => {
+  return text
+    .split("\n")
+    .map((line) => `<p>${line.trim() || "<br>"}</p>`)
+    .join("");
+};
 
 const TiptapEditor = ({
   onSave,
@@ -9,32 +18,48 @@ const TiptapEditor = ({
   onSave: (content: string) => void;
   content?: string;
 }) => {
+  const wasUpdatedByEditor = useRef(false);
+
+  const initialContent = isHTML(content)
+    ? content
+    : convertPlainTextToHTML(content);
+
   const editor = useEditor({
     extensions: [StarterKit],
-    content: content || "<h1>Semana del ... al ... de ...</h1><h2>Día:</h2><p>Escribe aquí el contenido de tu memoria de prácticas...</p>",
+    content: initialContent,
   });
 
   useEffect(() => {
     if (!editor) return;
 
-    if (content && editor.getHTML() !== content) {
-      editor.commands.setContent(content);
-    }
-
     const updateHandler = () => {
-      const htmlContent = editor.getHTML();
-      onSave(htmlContent);
+      wasUpdatedByEditor.current = true;
+      onSave(editor.getHTML());
+      setTimeout(() => {
+        wasUpdatedByEditor.current = false;
+      }, 0);
     };
 
     editor.on("update", updateHandler);
 
-    onSave(editor.getHTML());
-
     return () => {
       editor.off("update", updateHandler);
     };
-  }, [editor, onSave, content]);
+  }, [editor, onSave]);
 
+  useEffect(() => {
+    if (!editor) return;
+
+    if (!wasUpdatedByEditor.current && content) {
+      const htmlContent = isHTML(content)
+        ? content
+        : convertPlainTextToHTML(content);
+
+      if (editor.getHTML() !== htmlContent) {
+        editor.commands.setContent(htmlContent, false);
+      }
+    }
+  }, [content, editor]);
 
   return <EditorContent editor={editor} />;
 };

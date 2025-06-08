@@ -7,12 +7,11 @@ export default function Landing() {
     <main className="flex flex-col min-h-screen animated-landing bg-gradient-to-br from-indigo-500 to-purple-700 text-white text-center">
       <div className="flex flex-col items-center px-4 py-0 ">
         {/* Logo: se adapta según el tamaño de pantalla */}
-        <div className="flex justify-center items-center ">
+        <div className="flex justify-center items-center mb-12 sm:mb-1">
           <LogoSVG className="h-40 sm:h-60 md:h-80 lg:h-[400px] xl:h-[500px] w-auto cursor-default" />
         </div>
 
 
-        {/* Tarjetas: diseño flexible y adaptativo */}
         <section className="flex flex-col sm:flex-row flex-wrap justify-center items-stretch gap-6 sm:gap-8 lg:gap-10 px-4 sm:px-6 md:px-8 lg:px-10 mb-10 w-full max-w-6xl">
           <AnimatedContent
             distance={150}
@@ -64,13 +63,13 @@ export default function Landing() {
             threshold={0}
             delay={0.3}
           >
-          <div className="bg-white bg-opacity-10 p-6 rounded-lg flex-1 max-w-sm min-w-[260px] invisible sm:visible ">
-            <h2 className="text-xl sm:text-2xl mb-2 text-gray-700">Utilidad</h2>
-            <p className="text-sm sm:text-base text-gray-700">
-              Una herramienta útil que ahorre tiempo y esfuerzo. Cuando un profesor piense en facilitar el control de las FCT, esta app debe ser la primera opción.
+            <div className="bg-white bg-opacity-10 p-6 rounded-lg flex-1 max-w-sm min-w-[260px]  sm:visible ">
+              <h2 className="text-xl sm:text-2xl mb-2 text-gray-700">Utilidad</h2>
+              <p className="text-sm sm:text-base text-gray-700">
+                Una herramienta útil que ahorre tiempo y esfuerzo. Cuando un profesor piense en facilitar el control de las FCT, esta app debe ser la primera opción.
 
-            </p>
-          </div>
+              </p>
+            </div>
           </AnimatedContent>
 
         </section>

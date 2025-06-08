@@ -7,7 +7,7 @@ const LogoSVG = (props: SVGProps<SVGSVGElement>) => (
         style={{
             transform: "matrix(1, 0, 0, 1, 5, 23)",
             transformOrigin: "50% 50%",
-            cursor: "move",
+            cursor: "pointer    ",
             maxHeight: "none",
             transition: "none"
         }}
