@@ -188,7 +188,7 @@ const FichaSemanal: FC<Props> = ({
 
     const sigPad = refArray[fichaIndex];
     if (sigPad && !sigPad.isEmpty()) {
-      const dataURL = sigPad.getTrimmedCanvas().toDataURL("image/png");
+      const dataURL = sigPad.getCanvas().toDataURL("image/png");
       setFichas((prev) => {
         const clon = [...prev];
         const ficha = { ...clon[fichaIndex] };
