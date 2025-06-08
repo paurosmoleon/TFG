@@ -1,15 +1,12 @@
 import { Link } from 'react-router-dom';
 import '../assets/styles/animacion.css';
+import LogoSVG from '../assets/icons/LogoSVG';
 export default function Landing() {
   return (
     <main className="flex flex-col min-h-screen animated-landing bg-gradient-to-br from-indigo-500 to-purple-700 text-white text-center">
       <div className="flex flex-col items-center px-4">
         <div className="flex justify-center items-center">
-          <img
-            src="/whale-no-background.png"
-            alt="logo"
-            className="h-[500px]"
-          />
+          <LogoSVG className="h-[500px]" />
         </div>
 
         <section className="flex flex-wrap justify-center items-stretch items-center gap-10 p-8 text-gray-500">
@@ -43,7 +40,7 @@ export default function Landing() {
         <div className="flex justify-center gap-4 mb-6">
           <Link
             to="/home"
-             className="block w-28 bg-none text-white mt-4 py-2 rounded-2xl font-bold mb-2 cursor-pointer transition-all duration-500 hover:w-30 hover:bg-white hover:text-blue-500 hover:border-none"
+            className="block w-28 bg-none text-white mt-4 py-2 rounded-2xl font-bold mb-2 cursor-pointer transition-all duration-500 hover:w-30 hover:bg-white hover:text-blue-500 hover:border-none"
           >
             Saber más →
           </Link>

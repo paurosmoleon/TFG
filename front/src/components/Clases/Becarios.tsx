@@ -1,6 +1,8 @@
+import LogoSVG
+  from "../../assets/icons/LogoSVG"
 const Becarios = () => {
   return (
-    <div>Becarios</div>
+    <LogoSVG />
   )
 }
 
