@@ -1,5 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { Toaster, toast } from 'react-hot-toast';
 import UserSVG from '../../assets/icons/UserSVG';
 import DNISVG from '../../assets/icons/DNISVG';
 import PhoneSVG from '../../assets/icons/PhoneSVG';
@@ -20,7 +21,7 @@ const TeacherRegister = () => {
         if (token) {
             navigate('/Dashboard');
         }
-    });
+    }, [navigate]);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -44,12 +45,12 @@ const TeacherRegister = () => {
             !email.value ||
             !phone.value
         ) {
-            alert('Por favor, completa todos los campos.');
+            toast.error('Por favor, completa todos los campos.');
             return;
         }
 
         if (password.value !== confirmPassword.value) {
-            alert('Las contraseñas no coinciden.');
+            toast.error('Las contraseñas no coinciden.');
             return;
         }
 
@@ -68,14 +69,14 @@ const TeacherRegister = () => {
 
             if (res.status === 200) {
                 localStorage.setItem('tokenUser', 'Bearer ' + res.data.access_token);
-                alert('Usuario creado con éxito');
+                toast.success('Usuario creado con éxito');
                 navigate('/dashboard');
             }
         } catch (err: any) {
             if (err.response?.data?.message) {
-                alert(err.response.data.message);
+                toast.error(err.response.data.message);
             } else {
-                alert('Error al registrar el usuario.');
+                toast.error('Error al registrar el usuario.');
             }
             console.error(err);
         }
@@ -83,8 +84,12 @@ const TeacherRegister = () => {
 
     return (
         <div className="h-screen md:flex">
+            {/* Toast container */}
+            <Toaster position="top-center" reverseOrder={false} />
+
             <div className="flex md:w-1/2 flex-col justify-center py-10 items-center bg-white">
                 <form className="bg-white w-full max-w-md px-8" onSubmit={handleSubmit}>
+                    {/* Inputs */}
                     <div className="flex items-center border-1 py-2 px-3 rounded-2xl mb-4">
                         <UserSVG className="h-5 w-5 mx-auto my-auto text-gray-400" />
                         <input
@@ -176,6 +181,7 @@ const TeacherRegister = () => {
                 </form>
             </div>
 
+            {/* Parte derecha con animación */}
             <div className="animated-body relative overflow-hidden md:flex w-1/2 bg-gradient-to-b from-blue-700 to-blue-500 justify-center items-center hidden">
                 <div>
                     <h1 className="text-white font-bold text-4xl font-sans">eFCT</h1>
