@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-
+import LogoSVG from '../../assets/icons/LogoSVG';
 export default function Footer() {
   return (
     <footer className="bg-white border-t border-b border-gray-200 filter drop-shadow-[0_-4px_6px_rgba(0,0,0,0.1)]">
@@ -9,7 +9,7 @@ export default function Footer() {
             to="/home"
             className="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse"
           >
-            <img src="/whale-no-background.png" alt="logo" className="w-36" />
+            <LogoSVG className="w-36" />
             <span className="self-center text-2xl font-semibold whitespace-nowrap text-slate-900">
               eFCT
             </span>

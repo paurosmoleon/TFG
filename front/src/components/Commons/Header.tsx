@@ -5,6 +5,8 @@ import ProfesorSVG from '../../assets/icons/ProfesorSVG';
 import AlumnSVG from '../../assets/icons/AlumnSVG';
 import TutorSVG from '../../assets/icons/TutorSVG';
 import LogOutSVG from '../../assets/icons/LogOutSVG';
+import LogoSVG from '../../assets/icons/LogoSVG';
+
 
 interface User {
   name: string;
@@ -26,7 +28,7 @@ export default function Header() {
     accountType === 'practices_tutor'
       ? [...navItems, { name: 'Becarios', to: '/becarios' }]
       : accountType === 'teacher_class'
-      ? [...navItems, { name: 'Clases', to: '/clases' }]
+        ? [...navItems, { name: 'Clases', to: '/clases' }]
         : navItems;
 
   const isActive = (to: string) =>
@@ -60,12 +62,12 @@ export default function Header() {
           to="/home"
           className="lg:absolute max-lg:left-10 lg:top-2/4 lg:left-2/4 lg:-translate-x-1/2 lg:-translate-y-1/2 max-sm:hidden"
         >
-          <img src="/whale-no-background.png" alt="logo" className="w-36" />
+          <LogoSVG className="w-36 pb-12" />
         </Link>
 
         {/* Logo móvil */}
         <Link to="/home" className="hidden max-sm:block">
-          <img src="/whale-no-background.png" alt="logo" className="w-9" />
+          <LogoSVG className="w-9" />
         </Link>
 
         {/* Menú móvil */}
@@ -93,7 +95,7 @@ export default function Header() {
               <ul className="space-y-3">
                 <li>
                   <Link to="/" className="block w-36 mb-6">
-                    <img src="/whale-no-background.png" alt="logo" />
+                    <LogoSVG />
                   </Link>
                 </li>
                 {extendedNavItems.map((item, i) => (
