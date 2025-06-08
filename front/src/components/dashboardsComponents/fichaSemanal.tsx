@@ -4,7 +4,6 @@ import SignatureCanvas from "react-signature-canvas";
 import { DiaData, FichaSemanalData, UserRole } from "../../types/ficha";
 import jsPDF from "jspdf";
 
-
 const diasSemana: Array<keyof FichaSemanalData["dias"]> = [
   "LUNES",
   "MARTES",
@@ -31,7 +30,7 @@ interface Props {
 }
 
 const FichaSemanal: FC<Props> = ({
-  userRole
+  userRole,
 }) => {
   // Un objeto “vacío” para inicializar cada ficha
   const initialDias: FichaSemanalData["dias"] = {
@@ -75,6 +74,26 @@ const FichaSemanal: FC<Props> = ({
   const sigPadsAlumnoRef = useRef<SignatureCanvas[]>([]);
   const sigPadsProfesorRef = useRef<SignatureCanvas[]>([]);
   const sigPadsTutorRef = useRef<SignatureCanvas[]>([]);
+
+  // ─── FUNCIÓN PARA ELIMINAR FICHA ───
+  const handleEliminarFicha = (index: number) => {
+    // No permitimos eliminar la primera ficha
+    if (index === 0) return;
+
+    if (window.confirm("¿Estás seguro de que quieres eliminar esta ficha?")) {
+      setFichas(prev => {
+        const nuevasFichas = [...prev];
+        nuevasFichas.splice(index, 1);
+
+        // Actualizamos las referencias de las firmas
+        sigPadsAlumnoRef.current.splice(index, 1);
+        sigPadsProfesorRef.current.splice(index, 1);
+        sigPadsTutorRef.current.splice(index, 1);
+
+        return nuevasFichas;
+      });
+    }
+  };
 
   // ─── VALIDACIÓN de días para cada ficha (skip SÁBADO y DOMINGO) ───
   const validarFicha = (datos: FichaSemanalData) => {
@@ -496,8 +515,20 @@ const FichaSemanal: FC<Props> = ({
         return (
           <div
             key={idx}
-            className="bg-white rounded-lg p-6 shadow-sm space-y-6 border border-gray-400"
+            className="bg-white rounded-lg p-6 shadow-sm space-y-6 border border-gray-400 relative"
           >
+            {/* Botón de eliminar (solo para fichas adicionales) */}
+            {idx > 0 && (
+              <button
+                type="button"
+                onClick={() => handleEliminarFicha(idx)}
+                className="absolute top-4 right-4 text-gray-500 hover:text-red-500 text-xl"
+                title="Eliminar ficha"
+              >
+                ❌
+              </button>
+            )}
+
             <h2 className="text-lg font-semibold text-indigo-700">
               Ficha #{idx + 1}
             </h2>
@@ -738,8 +769,9 @@ const FichaSemanal: FC<Props> = ({
           onClick={handleDescargarPDF}
           className="w-full sm:w-auto bg-indigo-600 text-white px-6 py-2 rounded-lg shadow hover:bg-indigo-700 transition"
         >
-          Descargar todas las fichas (PDF)
+          Descargar fichas (PDF)
         </button>
+
       </div>
     </div>
   );

@@ -1,24 +1,22 @@
 import React from 'react';
-import { Role } from '../../types/chat';
 import TutorSVG from '../../assets/icons/TutorSVG';
 import ProfesorSVG from '../../assets/icons/ProfesorSVG';
 import AlumnSVG from '../../assets/icons/AlumnSVG';
+
 interface RoleIconProps {
-  role: Role;
+  accountType?: 'practices_tutor' | 'student' | 'teacher_class';
   className?: string;
 }
 
-const RoleIcon: React.FC<RoleIconProps> = ({ role }) => {
-  switch (role) {
-
+const RoleIcon: React.FC<RoleIconProps> = ({ accountType, className }) => {
+  switch (accountType) {
     case 'practices_tutor':
-      return <TutorSVG className="h-20 w-20" />;
-    case 'student':
-      return <AlumnSVG className="h-20 w-20" />;
+      return <TutorSVG className={className} />;
     case 'teacher_class':
-      return <ProfesorSVG className="h-20 w-20" />;
+      return <ProfesorSVG className={className} />;
+    case 'student':
     default:
-      return null;
+      return <AlumnSVG className={className} />;
   }
 };
 
